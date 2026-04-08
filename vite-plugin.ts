@@ -66,7 +66,23 @@ const HMR_PATCH_SCRIPT = `
 })();
 </script>`;
 
-export function svibeServerLogs(): Plugin {
+function svibeStub(): Plugin {
+  const EMPTY_MODULE = "export const Svibe = null; export default {};";
+  return {
+    name: "svibe-stub",
+    enforce: "pre",
+    apply: "build",
+    resolveId(source) {
+      if (source.includes("svibe") && !source.includes("vite-plugin")) return "\0svibe:stub";
+    },
+    load(id) {
+      if (id === "\0svibe:stub") return EMPTY_MODULE;
+    },
+  };
+}
+
+export function svibeServerLogs(): Plugin[] {
+  const serverPlugin: Plugin = {
   let originalInfo: typeof console.info | null = null;
   let originalWarn: typeof console.warn | null = null;
   let originalError: typeof console.error | null = null;
@@ -175,4 +191,6 @@ export function svibeServerLogs(): Plugin {
       });
     },
   };
+
+  return [svibeStub(), serverPlugin];
 }

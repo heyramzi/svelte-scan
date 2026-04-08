@@ -51,7 +51,7 @@ describe("createLeakDetector", () => {
     const detector = createLeakDetector(collector);
     detector.start();
 
-    const el = document.createElement("div");
+    const el = new EventTarget();
     // eslint-disable-next-line unicorn/consistent-function-scoping -- test helper
     const fn = () => {};
 

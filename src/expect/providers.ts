@@ -13,12 +13,12 @@ function createAnthropicProvider(): AIProvider {
       if (!apiKey) {
         throw new Error("ANTHROPIC_API_KEY environment variable is required");
       }
-      const body = JSON.stringify({
+      const payload: Record<string, unknown> = {
         model: "claude-sonnet-4-20250514",
-        // oxlint-ignore-next-line upsys/no-snake-case-props -- Anthropic API parameter
-        max_tokens: 4096,
         messages: [{ role: "user", content: prompt }],
-      });
+      };
+      payload["max_tokens"] = 4096;
+      const body = JSON.stringify(payload);
       const result = execSync(
         `curl -s https://api.anthropic.com/v1/messages -H "x-api-key: ${apiKey}" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" -d '${body.replace(/'/g, "'\\''")}'`,
         { encoding: "utf-8" },

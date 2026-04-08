@@ -7,10 +7,8 @@ import {
 } from "../core/types";
 import { isSupportedSvelteVersion } from "../core/compat";
 
-type SvelteInternals = {
-  // oxlint-ignore-next-line no-snake-case-props -- Svelte internal API uses snake_case
-  user_effect: (fn: () => void | (() => void)) => void;
-};
+type UserEffect = (fn: () => void | (() => void)) => void;
+type SvelteInternals = Record<string, unknown>;
 
 type EffectEntry = {
   id: string;
@@ -49,18 +47,18 @@ export function createEffectTracker(collector: Collector, internals: SvelteInter
     return { start() {}, stop() {}, destroy() {} };
   }
 
-  let original: SvelteInternals["user_effect"] | null = null;
+  let original: UserEffect | null = null;
   let pollInterval: ReturnType<typeof setInterval> | null = null;
   const effects = new Map<string, EffectEntry>();
 
   function start(): void {
     if (original) return;
 
-    original = internals.user_effect;
+    original = internals["user_effect"] as UserEffect;
 
     // oxlint-ignore-next-line no-raw-try-catch -- intentional safety wrapper for monkey-patching Svelte internals
     try {
-      internals.user_effect = function patchedUserEffect(fn) {
+      internals["user_effect"] = function patchedUserEffect(fn) {
         const stack = new Error().stack ?? "";
         const id = effectIdFromStack(stack);
         const component = componentFromStack(stack);
@@ -101,7 +99,7 @@ export function createEffectTracker(collector: Collector, internals: SvelteInter
 
   function stop(): void {
     if (original) {
-      internals.user_effect = original;
+      internals["user_effect"] = original;
       original = null;
     }
     if (pollInterval) {

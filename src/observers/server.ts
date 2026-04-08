@@ -1,5 +1,11 @@
 import { type Collector, type Observer, type ServerLogPayload } from "../core/types";
 
+type HotModule = {
+  on(event: string, handler: (payload: ServerLogPayload | ServerLogPayload[]) => void): void;
+  off(event: string, handler: (payload: ServerLogPayload | ServerLogPayload[]) => void): void;
+  send(event: string, payload: Record<string, never>): void;
+};
+
 function dedupKey(p: ServerLogPayload): string {
   return `${p.timestamp}:${p.level}:${p.message}`;
 }
@@ -25,8 +31,7 @@ export function createServerObserver(collector: Collector): Observer {
   function start(): void {
     if (cleanup) return;
 
-    // oxlint-ignore-next-line no-unsafe-type-assertion -- Vite's import.meta.hot is not in standard TS types
-    const hot = (import.meta as any).hot;
+    const hot = (import.meta as ImportMeta & { hot?: HotModule }).hot;
     if (!hot) return;
 
     const handler = (payload: ServerLogPayload) => {

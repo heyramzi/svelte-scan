@@ -1,6 +1,6 @@
 {
   "name": "@heyramzi/svibe",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
   "type": "module",
   "svelte": "./src/index.ts",

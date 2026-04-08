@@ -7,6 +7,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./vite-plugin": "./vite-plugin.ts",
+    "./stub": "./stub.ts",
     "./expect": "./src/expect/index.ts"
   },
   "scripts": {

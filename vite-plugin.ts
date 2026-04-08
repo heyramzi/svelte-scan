@@ -1,6 +1,10 @@
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Plugin } from "vite";
 import type { ServerLogPayload, SerializableHealthReport } from "./src/core/types";
 import { argsToString } from "./src/core/format";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Cached report from browser, shared across plugin instances
 let cachedReport: SerializableHealthReport | null = null;
@@ -66,17 +70,35 @@ const HMR_PATCH_SCRIPT = `
 })();
 </script>`;
 
+const STUB_PATH = resolve(__dirname, "stub.ts");
+
+// Regex matches the svibe directory path (or /src/index.ts) but NOT subpaths
+// like /vite-plugin or /stub. This lets the alias redirect $lib/svibe to
+// stub.ts without intercepting other svibe exports.
+const SVIBE_ENTRY_RE = new RegExp(
+  `${__dirname.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:/(?:src/)?index\\.ts)?$`,
+);
+
 function svibeStub(): Plugin {
-  const EMPTY_MODULE = "export const Svibe = null; export default {};";
   return {
     name: "svibe-stub",
     enforce: "pre",
     apply: "build",
-    resolveId(source) {
-      if (source.includes("svibe") && !source.includes("vite-plugin")) return "\0svibe:stub";
+    config() {
+      return {
+        resolve: {
+          alias: [{ find: SVIBE_ENTRY_RE, replacement: STUB_PATH }],
+        },
+      };
     },
-    load(id) {
-      if (id === "\0svibe:stub") return EMPTY_MODULE;
+    resolveId(source) {
+      if (
+        source.includes("svibe") &&
+        !source.includes("vite-plugin") &&
+        !source.includes("stub") &&
+        !source.includes("expect")
+      )
+        return STUB_PATH;
     },
   };
 }

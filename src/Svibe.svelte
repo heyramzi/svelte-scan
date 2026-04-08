@@ -3,6 +3,7 @@
 // IMPORTS
 // =========================
 import { onDestroy, mount, unmount } from 'svelte'
+import { dev, browser } from '$app/environment'
 import { getSvelteInternals } from './core/internals'
 import { DEFAULT_CONFIG, type SvibeConfig } from './core/types'
 import { svibe } from './api'
@@ -44,8 +45,9 @@ let {
 // =========================
 // STATE
 // =========================
-// Skip mounting inside iframes to avoid duplicate toolbars
-const isIframe = typeof window !== 'undefined' && window.self !== window.top
+// Skip in prod, SSR, or iframes
+const isIframe = browser && window.self !== window.top
+const skip = !dev || !browser || isIframe
 
 // svelte-ignore state_referenced_locally
 let config = $state<SvibeConfig>({
@@ -56,7 +58,7 @@ let config = $state<SvibeConfig>({
   workspaceRoot,
 })
 
-if (!isIframe) {
+if (!skip) {
   svibe.start()
 }
 const collector = !isIframe ? svibe.getCollector()! : null
@@ -64,7 +66,7 @@ const hmrObserver = !isIframe ? createHmrObserver() : null
 const activeObservers: { destroy(): void }[] = []
 
 let canvasOverlay: ReturnType<typeof createCanvasOverlay> | null = null
-if (!isIframe && collector && config.overlay) {
+if (!skip && collector && config.overlay) {
   canvasOverlay = createCanvasOverlay(collector)
   canvasOverlay.mount(document.body)
 }
@@ -76,7 +78,7 @@ let toolbarInstance: Record<string, unknown> | null = null
 // EFFECTS
 // =========================
 $effect(() => {
-  if (isIframe || !config.toolbar || !collector || !hmrObserver) return
+  if (skip || !config.toolbar || !collector || !hmrObserver) return
 
   toolbarHostEl = document.createElement('div')
   toolbarHostEl.setAttribute('data-svibe-toolbar', '')
@@ -111,7 +113,7 @@ $effect(() => {
 // =========================
 // Console and DOM observers start synchronously so they catch errors
 // that fire during hydration, before any async microtask resolves.
-if (!isIframe && collector) {
+if (!skip && collector) {
   if (config.observers.console) {
     const consoleObs = createConsoleObserver(collector)
     consoleObs.start()
@@ -132,7 +134,7 @@ if (!isIframe && collector) {
 }
 
 async function initObservers() {
-  if (isIframe || !collector) return
+  if (skip || !collector) return
   const internals = await getSvelteInternals()
   if (internals) {
     if (config.observers.effects && internals.user_effect) {
@@ -165,7 +167,7 @@ initObservers()
 
 // Push stats to Vite dev server so CLI can query them
 const PUSH_INTERVAL = 2000
-const pushInterval = !isIframe && collector && import.meta.hot ? setInterval(() => {
+const pushInterval = !skip && collector && import.meta.hot ? setInterval(() => {
   const stats = collector.getStats()
   import.meta.hot!.send('svibe:push-report', {
     mutationsPerSec: stats.mutationsPerSec,
@@ -186,7 +188,7 @@ onDestroy(() => {
     obs.destroy()
   }
   canvasOverlay?.destroy()
-  if (!isIframe) svibe.stop()
+  if (!skip) svibe.stop()
   hmrObserver?.destroy()
 })
 </script>

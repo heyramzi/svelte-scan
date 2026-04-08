@@ -2,33 +2,6 @@
   "name": "@heyramzi/svibe",
   "version": "0.3.0",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
-  "keywords": [
-    "ai",
-    "devtools",
-    "inspector",
-    "performance",
-    "svelte",
-    "sveltekit",
-    "testing"
-  ],
-  "homepage": "https://github.com/heyramzi/svibe#readme",
-  "bugs": {
-    "url": "https://github.com/heyramzi/svibe/issues"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/heyramzi/svibe.git"
-  },
-  "bin": {
-    "svibe": "./bin/svibe.mjs"
-  },
-  "files": [
-    "src",
-    "bin",
-    "index.ts",
-    "vite-plugin.ts"
-  ],
   "type": "module",
   "svelte": "./src/index.ts",
   "exports": {
@@ -38,10 +11,11 @@
   },
   "scripts": {
     "test": "vitest run",
-    "svibe": "tsx bin/svibe.ts",
-    "build:cli": "echo 'TODO: bundle with esbuild for npm publish. Dev usage: pnpm svibe'"
+    "svibe": "tsx bin/svibe.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@lucide/svelte": "^1.7.0"
+  },
   "devDependencies": {
     "jsdom": "^29.0.1",
     "tsx": "^4.19.0",
@@ -49,10 +23,5 @@
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
-  },
-  "peerDependenciesMeta": {
-    "svelte": {
-      "optional": true
-    }
   }
 }

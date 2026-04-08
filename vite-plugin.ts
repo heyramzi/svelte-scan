@@ -82,7 +82,6 @@ function svibeStub(): Plugin {
 }
 
 export function svibeServerLogs(): Plugin[] {
-  const serverPlugin: Plugin = {
   let originalInfo: typeof console.info | null = null;
   let originalWarn: typeof console.warn | null = null;
   let originalError: typeof console.error | null = null;
@@ -94,7 +93,7 @@ export function svibeServerLogs(): Plugin[] {
     ws?.send("svibe:server-log", payload);
   }
 
-  return {
+  const serverPlugin: Plugin = {
     name: "svibe-server-logs",
     apply: "serve",
 
@@ -193,4 +192,5 @@ export function svibeServerLogs(): Plugin[] {
   };
 
   return [svibeStub(), serverPlugin];
+
 }

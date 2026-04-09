@@ -49,7 +49,7 @@ describe("toolbar-utils", () => {
   it("separates frontend and server issue counts", () => {
     const stats = createStats({
       consoleErrors: [
-        { level: "error", message: "Hydration failed", source: "src/routes/+page.svelte" },
+        { level: "error", message: "Hydration failed", source: "src/routes/+page.svelte", timestamp: Date.now() },
       ],
       hotSpots: [{ component: "App", mutations: 100 }],
       serverLogs: [
@@ -81,7 +81,7 @@ describe("toolbar-utils", () => {
   it("keeps frontend copy separate from server logs", () => {
     const stats = createStats({
       consoleErrors: [
-        { level: "error", message: "Hydration failed", source: "src/routes/+page.svelte" },
+        { level: "error", message: "Hydration failed", source: "src/routes/+page.svelte", timestamp: Date.now() },
       ],
       serverLogs: [{ level: "error", message: "SSR failed", timestamp: 1 }],
     });

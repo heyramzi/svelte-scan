@@ -214,5 +214,4 @@ export function svibeServerLogs(): Plugin[] {
   };
 
   return [svibeStub(), serverPlugin];
-
 }

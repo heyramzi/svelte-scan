@@ -5,8 +5,8 @@ export const svibe = null;
 export function registerPlugin() {}
 export function unregisterPlugin() {}
 export function getPlugins() {
-	return [];
+  return [];
 }
 export function getPluginActions() {
-	return [];
+  return [];
 }

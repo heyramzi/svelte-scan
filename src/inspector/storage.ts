@@ -5,8 +5,8 @@ function notesKey(pageKey: string): string {
   return `${STORAGE_PREFIX}:notes:${pageKey}`;
 }
 
-function settingsKey(pageKey: string): string {
-  return `${STORAGE_PREFIX}:settings:${pageKey}`;
+function settingsKey(_pageKey?: string): string {
+  return `${STORAGE_PREFIX}:settings`;
 }
 
 export function readNotes(pageKey: string): InspectorNote[] {

@@ -366,9 +366,7 @@ export class InspectorController {
 
     // "F" to toggle freeze
     if (this.enabled && !this.composer && key === "f") {
-      if (this.settings.pauseAnimations) this.freezer.unfreeze();
-      else this.freezer.freeze();
-      this.settings = { ...this.settings, pauseAnimations: !this.settings.pauseAnimations };
+      this.setPauseAnimations(!this.settings.pauseAnimations);
     }
   };
 

@@ -24,12 +24,12 @@
     "svibe": "tsx bin/svibe.ts"
   },
   "dependencies": {
-    "@lucide/svelte": "^1.7.0"
+    "@lucide/svelte": "^1.8.0"
   },
   "devDependencies": {
-    "jsdom": "^29.0.1",
-    "tsx": "^4.19.0",
-    "vitest": "^4.1.2"
+    "jsdom": "^29.0.2",
+    "tsx": "^4.21.0",
+    "vitest": "^4.1.4"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"

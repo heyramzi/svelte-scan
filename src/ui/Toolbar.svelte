@@ -383,7 +383,7 @@ function formatTabForLLM(tab: Tab): string {
 	}
 }
 
-let hasContent = $derived(
+let _hasContent = $derived(
 	stats.hotSpots.length > 0
 		|| stats.effectOffenders.length > 0
 		|| stats.leaks.length > 0
@@ -436,7 +436,7 @@ function onWindowClick(e: MouseEvent) {
 
 function setSettingsTab(tab: typeof settingsTab) {
 	settingsTab = tab
-	try { localStorage.setItem(SETTINGS_TAB_KEY, tab) } catch {}
+	try { localStorage.setItem(SETTINGS_TAB_KEY, tab) } catch { /* storage unavailable */ }
 }
 
 function cycleOutputMode() {

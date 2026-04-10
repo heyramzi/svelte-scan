@@ -6,7 +6,6 @@ import { backOut, cubicInOut } from 'svelte/easing'
 import { fade, scale } from 'svelte/transition'
 import type { InspectorController } from '../inspector/controller.svelte'
 import { resolveDomPath } from '../inspector/dom-path'
-import type { InspectorNote } from '../inspector/types'
 import { buildRenderedMarkers } from './marker-utils'
 
 // =========================
@@ -35,15 +34,6 @@ let renderedMarkers = $derived(
 // =========================
 // FUNCTIONS
 // =========================
-function resolveNoteElement(note: InspectorNote): Element | null {
-	switch (note.kind) {
-		case 'element': return resolveDomPath(note.anchor.domPath)
-		case 'text': return resolveDomPath(note.anchor.commonAncestorPath)
-		case 'group': return resolveDomPath(note.anchor.anchorDomPath)
-		case 'area': return null
-	}
-}
-
 function setHoveredNote(noteId: string | null) {
 	if (controller.composer && noteId !== null) return
 	hoveredNoteId = noteId

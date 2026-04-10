@@ -189,15 +189,18 @@ If your bundler doesn't support conditional exports, use one of these approaches
 ```typescript
 // Option 1: Dynamic import with @vite-ignore (recommended)
 if (browser && dev) {
-  import(/* @vite-ignore */ '$lib/svibe/index').then((m) => (Svibe = m.Svibe));
+  import(/* @vite-ignore */ "$lib/svibe/index").then((m) => (Svibe = m.Svibe));
 }
 
 // Option 2: Vite alias to stub in production builds
 // vite.config.ts
 export default defineConfig(({ command }) => ({
-  resolve: command === 'build' ? {
-    alias: { '$lib/svibe/index': resolve('src/lib/svibe/stub.ts') }
-  } : undefined,
+  resolve:
+    command === "build"
+      ? {
+          alias: { "$lib/svibe/index": resolve("src/lib/svibe/stub.ts") },
+        }
+      : undefined,
 }));
 ```
 

@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, it, expect } from "vitest";
 import { formatElementsForAI, formatOptimizationPrompt } from "./formatter";
 import type { SelectedElement } from "./types";

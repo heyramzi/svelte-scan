@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 /* oxlint-disable unbound-method -- test captures prototype refs to verify restore behavior */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createLeakDetector } from "./leaks";

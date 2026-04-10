@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 /* oxlint-disable no-unsafe-type-assertion -- test code casts Element to HTMLElement for style access */
 import { describe, it, expect, afterEach, vi, beforeEach } from "vitest";
 import { createCanvasOverlay } from "./canvas-overlay";

@@ -56,7 +56,7 @@ describe("toolbar-utils", () => {
           timestamp: Date.now(),
         },
       ],
-      hotSpots: [{ component: "App", mutations: 100 }],
+      hotSpots: [{ component: "App", mutations: 100, element: document.createElement("div") }],
       serverLogs: [
         { level: "error", message: "SSR failed", timestamp: 1 },
         { level: "warn", message: "SSR warning", timestamp: 2 },

@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, it, expect } from "vitest";
 import { createCollector } from "./core/collector";
 import { createDomObserver } from "./observers/dom";

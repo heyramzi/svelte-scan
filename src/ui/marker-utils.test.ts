@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
 import type { InspectorNote } from "../inspector/types";
 import { buildRenderedMarkers } from "./marker-utils";

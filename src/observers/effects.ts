@@ -58,7 +58,7 @@ export function createEffectTracker(collector: Collector, internals: SvelteInter
 
     // oxlint-ignore-next-line no-raw-try-catch -- intentional safety wrapper for monkey-patching Svelte internals
     try {
-      internals["user_effect"] = function patchedUserEffect(fn) {
+      internals["user_effect"] = function patchedUserEffect(fn: () => void | (() => void)) {
         const stack = new Error().stack ?? "";
         const id = effectIdFromStack(stack);
         const component = componentFromStack(stack);

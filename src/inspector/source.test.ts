@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 /* oxlint-disable no-unsafe-type-assertion -- test mocks assign __svelte_meta to DOM elements */
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { resolveSource, openInEditor } from "./source";

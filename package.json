@@ -5,10 +5,19 @@
   "type": "module",
   "svelte": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./vite-plugin": "./vite-plugin.ts",
+    ".": {
+      "development": "./src/index.ts",
+      "default": "./stub.ts"
+    },
+    "./vite-plugin": {
+      "development": "./vite-plugin.ts",
+      "default": "./stub.ts"
+    },
     "./stub": "./stub.ts",
-    "./expect": "./src/expect/index.ts"
+    "./expect": {
+      "development": "./src/expect/index.ts",
+      "default": "./stub.ts"
+    }
   },
   "scripts": {
     "test": "vitest run",

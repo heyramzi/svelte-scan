@@ -175,6 +175,32 @@ npx @heyramzi/svibe expect --cookies            # Forward cookies from base URL
 
 Requires an API key for your chosen provider (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY`).
 
+## Production Safety
+
+svibe is dev-only and must never be bundled in production. The package uses [conditional exports](https://nodejs.org/api/packages.html#conditional-exports) to enforce this:
+
+- **`development`** condition: resolves to the real source code
+- **`default`** condition: resolves to `stub.ts` (all exports are `null`/no-ops)
+
+Bundlers that support the `development` condition (Vite in dev mode, webpack with `resolve.conditionNames`) will load svibe. Production builds automatically get the zero-cost stub.
+
+If your bundler doesn't support conditional exports, use one of these approaches:
+
+```typescript
+// Option 1: Dynamic import with @vite-ignore (recommended)
+if (browser && dev) {
+  import(/* @vite-ignore */ '$lib/svibe/index').then((m) => (Svibe = m.Svibe));
+}
+
+// Option 2: Vite alias to stub in production builds
+// vite.config.ts
+export default defineConfig(({ command }) => ({
+  resolve: command === 'build' ? {
+    alias: { '$lib/svibe/index': resolve('src/lib/svibe/stub.ts') }
+  } : undefined,
+}));
+```
+
 ## Requirements
 
 - Svelte 5+ (for the dev tool component, optional for CLI-only usage)

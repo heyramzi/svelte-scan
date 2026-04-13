@@ -3,6 +3,7 @@
 // IMPORTS
 // =========================
 import { onDestroy } from 'svelte'
+import { version } from '../../package.json'
 import { IGNORE_ATTR, type Collector, type AggregatedStats, type SvibeConfig } from '../core/types'
 import { createFpsMeter } from '../core/fps'
 import type { HmrObserver } from '../observers/hmr'
@@ -554,6 +555,7 @@ function toggleOverlay() {
 				<div class="sv-header-brand">
 					{@render svibeLogo()}
 					<span>svibe</span>
+					<span class="sv-version">v{version}</span>
 				</div>
 				<div class="sv-header-actions">
 					<button class="sv-header-btn" class:sv-hmr-paused={hmrPaused} onclick={toggleHmr} title={hmrPaused ? 'Resume HMR' : 'Pause HMR'}>

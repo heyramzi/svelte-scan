@@ -295,6 +295,14 @@ export const TOOLBAR_STYLES = `
   color: var(--sv-text-muted);
 }
 
+[data-svibe-toolbar] .sv-version {
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  opacity: 0.45;
+}
+
 [data-svibe-toolbar] .sv-header-actions {
   display: flex;
   align-items: center;

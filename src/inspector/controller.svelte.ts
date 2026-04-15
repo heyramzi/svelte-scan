@@ -282,7 +282,7 @@ export class InspectorController {
     const target = e.target as Element;
     if (
       !target ||
-      target.closest?.("[data-svibe-toolbar]") ||
+      target.closest?.("[data-svelte-scan-toolbar]") ||
       target.closest?.("[data-inspector-ui]")
     )
       return;
@@ -307,7 +307,7 @@ export class InspectorController {
     const target = e.target as Element;
     if (
       !target ||
-      target.closest?.("[data-svibe-toolbar]") ||
+      target.closest?.("[data-svelte-scan-toolbar]") ||
       target.closest?.("[data-inspector-ui]")
     )
       return;

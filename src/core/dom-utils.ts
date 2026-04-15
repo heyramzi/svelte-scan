@@ -1,7 +1,7 @@
 /* oxlint-ignore no-unsafe-type-assertion -- Svelte meta access requires unsafe narrowing */
 import { IGNORE_ATTR } from "./types";
 
-const TOOLBAR_ATTR = "data-svibe-toolbar";
+const TOOLBAR_ATTR = "data-svelte-scan-toolbar";
 
 /**
  * Walk up the DOM checking for an attribute on any ancestor.
@@ -26,15 +26,15 @@ export function isInsideToolbar(node: Node): boolean {
 }
 
 /**
- * Check if a node belongs to svibe's own UI (toolbar, canvas overlay, etc.).
- * Matches any element with a `data-svibe-*` attribute.
+ * Check if a node belongs to svelte-scan's own UI (toolbar, canvas overlay, etc.).
+ * Matches any element with a `data-svelte-scan-*` attribute.
  */
 export function isSvibeOwned(node: Node): boolean {
   let el: Element | null =
     node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
   while (el) {
     for (const attr of el.attributes) {
-      if (attr.name.startsWith("data-svibe-")) return true;
+      if (attr.name.startsWith("data-svelte-scan-")) return true;
     }
     el = el.parentElement;
   }

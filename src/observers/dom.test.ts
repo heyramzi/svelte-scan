@@ -38,7 +38,7 @@ describe("createDomObserver", () => {
     observer.destroy();
   });
 
-  it("ignores mutations inside data-svibe-ignore", async () => {
+  it("ignores mutations inside data-svelte-scan-ignore", async () => {
     const collector = createCollector();
     const handler = vi.fn();
     collector.subscribe("dom", handler);

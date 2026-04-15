@@ -24,7 +24,7 @@ Three modules, all dev-mode only:
 - **Observers** (7 total): DOM mutations, effects, leaks, reactivity, console, server, interactions. Each implements `{ start(), stop(), destroy() }`.
 - **Toolbar** (`ui/Toolbar.svelte`): Pill + expandable panel with tabs. CSS injected via JS string (no external stylesheet).
 - **Canvas overlay** (`ui/canvas-overlay.ts`): Color-coded DOM mutation highlights using a single `<canvas>` with RAF-driven fading rects.
-- **Vite plugin** (`vite-plugin.ts`): Patches server-side console methods, forwards via HMR WebSocket (`svibe:server-log`).
+- **Vite plugin** (`vite-plugin.ts`): Patches server-side console methods, forwards via HMR WebSocket (`svelte-scan:server-log`).
 
 ### Element Inspector (`inspector/`)
 
@@ -52,9 +52,9 @@ Three modules, all dev-mode only:
 - `type` not `interface` for TypeScript object types
 - CSS classes: `sv-*` prefix
 - CSS variables: `--sv-*` prefix
-- Data attributes: `data-svibe-*`
-- Ignore attribute: `data-svibe-ignore`
-- HMR event: `svibe:server-log`
+- Data attributes: `data-svelte-scan-*`
+- Ignore attribute: `data-svelte-scan-ignore`
+- HMR event: `svelte-scan:server-log`
 - Peer dep: `svelte ^5.0.0`
 - Svelte 5 runes: `$state`, `$derived`, `$effect`, `$props`
 - Section comments in .svelte files (IMPORTS, TYPES, PROPS, STATE, DERIVED, EFFECTS, FUNCTIONS, MARKUP)

@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, vi } from "vitest";
 import { readConfig, writeConfig } from "./config-storage";
-import type { SvibeConfig } from "./types";
+import type { SvelteScanConfig } from "./types";
 import { DEFAULT_CONFIG } from "./types";
 
 const store: Record<string, string> = {};
@@ -39,7 +39,7 @@ describe("config-storage", () => {
   });
 
   test("persists and restores observer toggles", () => {
-    const config: SvibeConfig = {
+    const config: SvelteScanConfig = {
       ...DEFAULT_CONFIG,
       observers: { ...DEFAULT_CONFIG.observers, dom: false, leaks: false },
     };
@@ -60,7 +60,7 @@ describe("config-storage", () => {
   });
 
   test("merges with defaults when stored config is partial", () => {
-    mockLocalStorage.setItem("svibe:config", JSON.stringify({ overlay: false }));
+    mockLocalStorage.setItem("svelte-scan:config", JSON.stringify({ overlay: false }));
     const restored = readConfig();
     expect(restored.overlay).toBe(false);
     expect(restored.observers.dom).toBe(true);

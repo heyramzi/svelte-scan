@@ -4,7 +4,7 @@ export const INSPECTOR_STYLES = `
    svibe inspector overlay
    Hover outlines, note markers, composer panel,
    selection rects, drag rect, block overlay.
-   All scoped under [data-svibe-toolbar].
+   All scoped under [data-svelte-scan-toolbar].
    ============================================= */
 
 /* =============================================
@@ -12,7 +12,7 @@ export const INSPECTOR_STYLES = `
    Tracks hovered element with smooth transitions.
    ============================================= */
 
-[data-svibe-toolbar] .sv-hover-outline {
+[data-svelte-scan-toolbar] .sv-hover-outline {
   position: fixed;
   z-index: 9998;
   box-sizing: border-box;
@@ -34,7 +34,7 @@ export const INSPECTOR_STYLES = `
    Tag name + source info + open button below outline.
    ============================================= */
 
-[data-svibe-toolbar] .sv-hover-badge {
+[data-svelte-scan-toolbar] .sv-hover-badge {
   position: fixed;
   z-index: 9999;
   display: inline-flex;
@@ -56,7 +56,7 @@ export const INSPECTOR_STYLES = `
   will-change: transform;
 }
 
-[data-svibe-toolbar] .sv-hover-label {
+[data-svelte-scan-toolbar] .sv-hover-label {
   display: block;
   flex: 1;
   min-width: 0;
@@ -71,7 +71,7 @@ export const INSPECTOR_STYLES = `
   font-family: var(--sv-mono);
 }
 
-[data-svibe-toolbar] .sv-hover-source {
+[data-svelte-scan-toolbar] .sv-hover-source {
   display: block;
   flex-shrink: 0;
   color: var(--sv-text-dim);
@@ -80,7 +80,7 @@ export const INSPECTOR_STYLES = `
   white-space: nowrap;
 }
 
-[data-svibe-toolbar] .sv-hover-action {
+[data-svelte-scan-toolbar] .sv-hover-action {
   display: inline-flex;
   flex-shrink: 0;
   gap: 0.34rem;
@@ -102,17 +102,17 @@ export const INSPECTOR_STYLES = `
     transform 160ms ease;
 }
 
-[data-svibe-toolbar] .sv-hover-action:hover:not(:disabled) {
+[data-svelte-scan-toolbar] .sv-hover-action:hover:not(:disabled) {
   color: var(--sv-text);
   transform: translateY(-0.5px);
 }
 
-[data-svibe-toolbar] .sv-hover-action:disabled {
+[data-svelte-scan-toolbar] .sv-hover-action:disabled {
   opacity: 0.38;
   cursor: not-allowed;
 }
 
-[data-svibe-toolbar] .sv-hover-kbd {
+[data-svelte-scan-toolbar] .sv-hover-kbd {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +132,7 @@ export const INSPECTOR_STYLES = `
    Fixed numbered circles anchored to elements.
    ============================================= */
 
-[data-svibe-toolbar] .sv-note-marker {
+[data-svelte-scan-toolbar] .sv-note-marker {
   position: fixed;
   z-index: 9997;
   display: inline-flex;
@@ -159,25 +159,25 @@ export const INSPECTOR_STYLES = `
     filter 180ms ease;
 }
 
-[data-svibe-toolbar] .sv-note-marker:hover,
-[data-svibe-toolbar] .sv-note-marker.sv-marker-hovered,
-[data-svibe-toolbar] .sv-note-marker:focus-visible {
+[data-svelte-scan-toolbar] .sv-note-marker:hover,
+[data-svelte-scan-toolbar] .sv-note-marker.sv-marker-hovered,
+[data-svelte-scan-toolbar] .sv-note-marker:focus-visible {
   transform: translate(-50%, -50%) scale(1.06);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-[data-svibe-toolbar] .sv-note-marker.sv-marker-active {
+[data-svelte-scan-toolbar] .sv-note-marker.sv-marker-active {
   filter: saturate(1.14);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-[data-svibe-toolbar] .sv-note-marker.sv-marker-hidden {
+[data-svelte-scan-toolbar] .sv-note-marker.sv-marker-hidden {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.9);
 }
 
-[data-svibe-toolbar] .sv-note-marker.sv-marker-unresolved {
+[data-svelte-scan-toolbar] .sv-note-marker.sv-marker-unresolved {
   opacity: 0.78;
 }
 
@@ -186,7 +186,7 @@ export const INSPECTOR_STYLES = `
    Floating input panel for note creation/editing.
    ============================================= */
 
-[data-svibe-toolbar] .sv-composer {
+[data-svelte-scan-toolbar] .sv-composer {
   position: fixed;
   z-index: 9999;
   width: min(280px, calc(100vw - 28px));
@@ -202,7 +202,7 @@ export const INSPECTOR_STYLES = `
   color: var(--sv-text);
 }
 
-[data-svibe-toolbar] .sv-composer-quote {
+[data-svelte-scan-toolbar] .sv-composer-quote {
   margin-bottom: 8px;
   padding: 7px 8px;
   border-radius: 8px;
@@ -213,7 +213,7 @@ export const INSPECTOR_STYLES = `
   line-height: 1.4;
 }
 
-[data-svibe-toolbar] .sv-composer-textarea {
+[data-svelte-scan-toolbar] .sv-composer-textarea {
   width: 100%;
   min-height: 64px;
   padding: 10px 11px;
@@ -230,33 +230,33 @@ export const INSPECTOR_STYLES = `
   -webkit-font-smoothing: antialiased;
 }
 
-[data-svibe-toolbar] .sv-composer-textarea::placeholder {
+[data-svelte-scan-toolbar] .sv-composer-textarea::placeholder {
   color: var(--sv-text-dim);
 }
 
-[data-svibe-toolbar] .sv-composer-textarea:focus {
+[data-svelte-scan-toolbar] .sv-composer-textarea:focus {
   border-color: var(--sv-marker-color, var(--sv-accent));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 20%, transparent);
 }
 
-[data-svibe-toolbar] .sv-composer-textarea::-webkit-scrollbar {
+[data-svelte-scan-toolbar] .sv-composer-textarea::-webkit-scrollbar {
   width: 6px;
 }
 
-[data-svibe-toolbar] .sv-composer-textarea::-webkit-scrollbar-track {
+[data-svelte-scan-toolbar] .sv-composer-textarea::-webkit-scrollbar-track {
   background: transparent;
 }
 
-[data-svibe-toolbar] .sv-composer-textarea::-webkit-scrollbar-thumb {
+[data-svelte-scan-toolbar] .sv-composer-textarea::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
 }
 
-[data-svibe-toolbar] .sv-composer-textarea::-webkit-scrollbar-thumb:hover {
+[data-svelte-scan-toolbar] .sv-composer-textarea::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
 }
 
-[data-svibe-toolbar] .sv-composer-actions {
+[data-svelte-scan-toolbar] .sv-composer-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -264,9 +264,9 @@ export const INSPECTOR_STYLES = `
   margin-top: 8px;
 }
 
-[data-svibe-toolbar] .sv-composer-delete,
-[data-svibe-toolbar] .sv-composer-cancel,
-[data-svibe-toolbar] .sv-composer-submit {
+[data-svelte-scan-toolbar] .sv-composer-delete,
+[data-svelte-scan-toolbar] .sv-composer-cancel,
+[data-svelte-scan-toolbar] .sv-composer-submit {
   border: none;
   background: transparent;
   font: inherit;
@@ -278,7 +278,7 @@ export const INSPECTOR_STYLES = `
     color 160ms ease;
 }
 
-[data-svibe-toolbar] .sv-composer-delete {
+[data-svelte-scan-toolbar] .sv-composer-delete {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -289,11 +289,11 @@ export const INSPECTOR_STYLES = `
   color: var(--sv-red);
 }
 
-[data-svibe-toolbar] .sv-composer-delete:hover {
+[data-svelte-scan-toolbar] .sv-composer-delete:hover {
   background: rgba(248, 113, 113, 0.12);
 }
 
-[data-svibe-toolbar] .sv-composer-cancel {
+[data-svelte-scan-toolbar] .sv-composer-cancel {
   padding: 0.4rem 0.875rem;
   border-radius: 999px;
   color: var(--sv-text-muted);
@@ -301,17 +301,17 @@ export const INSPECTOR_STYLES = `
   font-weight: 500;
 }
 
-[data-svibe-toolbar] .sv-composer-cancel:hover {
+[data-svelte-scan-toolbar] .sv-composer-cancel:hover {
   opacity: 0.92;
   background: rgba(255, 255, 255, 0.08);
   color: var(--sv-text);
 }
 
-[data-svibe-toolbar] .sv-composer-cancel.sv-inactive {
+[data-svelte-scan-toolbar] .sv-composer-cancel.sv-inactive {
   opacity: 0.4;
 }
 
-[data-svibe-toolbar] .sv-composer-submit {
+[data-svelte-scan-toolbar] .sv-composer-submit {
   padding: 0.4rem 0.875rem;
   border-radius: 999px;
   background: var(--sv-marker-color, var(--sv-accent));
@@ -320,19 +320,19 @@ export const INSPECTOR_STYLES = `
   font-weight: 500;
 }
 
-[data-svibe-toolbar] .sv-composer-submit:hover:not(:disabled) {
+[data-svelte-scan-toolbar] .sv-composer-submit:hover:not(:disabled) {
   opacity: 0.92;
   transform: translateY(-1px);
 }
 
-[data-svibe-toolbar] .sv-composer-submit:disabled {
+[data-svelte-scan-toolbar] .sv-composer-submit:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 /* Anchor marker (+ icon at element origin) */
-[data-svibe-toolbar] .sv-composer-anchor {
+[data-svelte-scan-toolbar] .sv-composer-anchor {
   position: fixed;
   z-index: 9998;
   display: inline-flex;
@@ -352,7 +352,7 @@ export const INSPECTOR_STYLES = `
   cursor: default;
 }
 
-[data-svibe-toolbar] .sv-composer-anchor span {
+[data-svelte-scan-toolbar] .sv-composer-anchor span {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,27 +365,27 @@ export const INSPECTOR_STYLES = `
    Solid for elements, dashed for groups/areas.
    ============================================= */
 
-[data-svibe-toolbar] .sv-selection-outline {
+[data-svelte-scan-toolbar] .sv-selection-outline {
   position: fixed;
   z-index: 9996;
   box-sizing: border-box;
   pointer-events: none;
 }
 
-[data-svibe-toolbar] .sv-selection-outline.sv-solid {
+[data-svelte-scan-toolbar] .sv-selection-outline.sv-solid {
   border: 1.5px solid color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 70%, transparent);
   border-radius: 4px;
   background: color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 5%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 12%, transparent) inset;
 }
 
-[data-svibe-toolbar] .sv-selection-outline.sv-dashed {
+[data-svelte-scan-toolbar] .sv-selection-outline.sv-dashed {
   border: 2px dashed color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 72%, transparent);
   border-radius: 4px;
   background: color-mix(in srgb, var(--sv-marker-color, var(--sv-accent)) 6%, transparent);
 }
 
-[data-svibe-toolbar] .sv-selection-highlight {
+[data-svelte-scan-toolbar] .sv-selection-highlight {
   position: fixed;
   z-index: 9996;
   box-sizing: border-box;
@@ -399,7 +399,7 @@ export const INSPECTOR_STYLES = `
    Dashed rect drawn during rubber-band selection.
    ============================================= */
 
-[data-svibe-toolbar] .sv-area-drag {
+[data-svelte-scan-toolbar] .sv-area-drag {
   position: fixed;
   z-index: 9997;
   box-sizing: border-box;
@@ -418,7 +418,7 @@ export const INSPECTOR_STYLES = `
    events during inspect mode.
    ============================================= */
 
-[data-svibe-toolbar] .sv-block-overlay {
+[data-svelte-scan-toolbar] .sv-block-overlay {
   position: fixed;
   inset: 0;
   z-index: 9990;
@@ -432,7 +432,7 @@ export const INSPECTOR_STYLES = `
    Tooltip shown when hovering a note marker.
    ============================================= */
 
-[data-svibe-toolbar] .sv-note-preview {
+[data-svelte-scan-toolbar] .sv-note-preview {
   position: fixed;
   z-index: 9998;
   width: min(236px, calc(100vw - 24px));
@@ -447,7 +447,7 @@ export const INSPECTOR_STYLES = `
   pointer-events: none;
 }
 
-[data-svibe-toolbar] .sv-note-preview-title {
+[data-svelte-scan-toolbar] .sv-note-preview-title {
   margin-bottom: 4px;
   overflow: hidden;
   color: var(--sv-text-muted);
@@ -459,7 +459,7 @@ export const INSPECTOR_STYLES = `
   white-space: nowrap;
 }
 
-[data-svibe-toolbar] .sv-note-preview-body {
+[data-svelte-scan-toolbar] .sv-note-preview-body {
   font-size: 0.78rem;
   line-height: 1.28;
   color: var(--sv-text);

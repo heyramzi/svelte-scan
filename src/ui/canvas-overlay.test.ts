@@ -17,13 +17,13 @@ describe("createCanvasOverlay", () => {
   afterEach(() => {
     container.remove();
     collector.destroy();
-    document.querySelectorAll("[data-svibe-canvas-overlay]").forEach((el) => el.remove());
+    document.querySelectorAll("[data-svelte-scan-canvas-overlay]").forEach((el) => el.remove());
   });
 
   it("mount creates a canvas element in the container", () => {
     const overlay = createCanvasOverlay(collector);
     overlay.mount(container);
-    const canvas = container.querySelector("canvas[data-svibe-canvas-overlay]");
+    const canvas = container.querySelector("canvas[data-svelte-scan-canvas-overlay]");
     expect(canvas).toBeTruthy();
     expect((canvas as HTMLElement)?.style.pointerEvents).toBe("none");
     overlay.destroy();

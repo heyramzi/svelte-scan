@@ -4,7 +4,7 @@
 // =========================
 import { onDestroy } from 'svelte'
 import { version } from '../../package.json'
-import { IGNORE_ATTR, type Collector, type AggregatedStats, type SvibeConfig } from '../core/types'
+import { IGNORE_ATTR, type Collector, type AggregatedStats, type SvelteScanConfig } from '../core/types'
 import { createFpsMeter } from '../core/fps'
 import type { HmrObserver } from '../observers/hmr'
 import { Copy, Check, X, Pause, Play, Settings, StickyNote, Trash2, Type, MousePointer, SquareDashedMousePointer, Group, Monitor, Server } from '@lucide/svelte'
@@ -21,11 +21,11 @@ import NoteComposer from './NoteComposer.svelte'
 // =========================
 type Props = {
 	collector: Collector
-	config: SvibeConfig
+	config: SvelteScanConfig
 	hmrObserver: HmrObserver
 }
 
-type Corner = SvibeConfig['position']
+type Corner = SvelteScanConfig['position']
 type Tab = 'overview' | 'issues' | 'console' | 'server' | 'inp' | 'notes'
 
 // =========================
@@ -83,7 +83,7 @@ const HMR_LABEL = 'P'
 const LOGS_KEY = 'l'
 const LOGS_LABEL = 'L'
 
-const OBSERVER_LABELS: { key: keyof SvibeConfig['observers']; label: string; desc: string }[] = [
+const OBSERVER_LABELS: { key: keyof SvelteScanConfig['observers']; label: string; desc: string }[] = [
 	{ key: 'dom', label: 'DOM Mutations', desc: 'Tracks element additions, removals, and attribute changes' },
 	{ key: 'effects', label: 'Effects', desc: 'Flags $effect calls that fire too frequently' },
 	{ key: 'leaks', label: 'Leak Detection', desc: 'Finds uncleared listeners, intervals, and timeouts' },
@@ -181,7 +181,7 @@ function onKeydownGlobal(e: KeyboardEvent) {
 	}
 	// Handle C key when focused on svibe's composer textarea
 	if (!e.metaKey && !e.ctrlKey && !e.altKey && isInput && inspectorController.composer && key === COPY_KEY) {
-		const isSvibeInput = (target as HTMLElement).closest?.('[data-svibe-overlay]')
+		const isSvibeInput = (target as HTMLElement).closest?.('[data-svelte-scan-overlay]')
 		if (isSvibeInput) {
 			e.preventDefault()
 			inspectorController.saveComposer()
@@ -457,7 +457,7 @@ function toggleHmr(e?: MouseEvent) {
 	}
 }
 
-function toggleObserver(key: keyof SvibeConfig['observers']) {
+function toggleObserver(key: keyof SvelteScanConfig['observers']) {
 	config.observers[key] = !config.observers[key]
 	writeConfig(config)
 }
@@ -490,7 +490,7 @@ function toggleOverlay() {
 {#if visible}
 <div
 	{...{ [IGNORE_ATTR]: '' }}
-	data-svibe-toolbar
+	data-svelte-scan-toolbar
 	class:sv-dragging={dragging}
 	class:sv-animating={animating}
 	class:sv-pos-bottom={config.position.includes('bottom')}

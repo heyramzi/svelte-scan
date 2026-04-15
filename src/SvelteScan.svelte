@@ -5,7 +5,7 @@
 import { onDestroy, mount, unmount } from 'svelte'
 import { dev, browser } from '$app/environment'
 import { getSvelteInternals } from './core/internals'
-import { DEFAULT_CONFIG, type SvibeConfig } from './core/types'
+import { DEFAULT_CONFIG, type SvelteScanConfig } from './core/types'
 import { svibe } from './api'
 import { createDomObserver } from './observers/dom'
 import { createEffectTracker } from './observers/effects'
@@ -24,10 +24,10 @@ import Toolbar from './ui/Toolbar.svelte'
 // TYPES
 // =========================
 type Props = {
-  observers?: Partial<SvibeConfig['observers']>
+  observers?: Partial<SvelteScanConfig['observers']>
   toolbar?: boolean
   overlay?: boolean
-  position?: SvibeConfig['position']
+  position?: SvelteScanConfig['position']
   workspaceRoot?: string
 }
 
@@ -50,7 +50,7 @@ const isIframe = browser && window.self !== window.top
 const skip = !dev || !browser || isIframe
 
 // svelte-ignore state_referenced_locally
-let config = $state<SvibeConfig>({
+let config = $state<SvelteScanConfig>({
   observers: { ...DEFAULT_CONFIG.observers, ...observerConfig },
   toolbar,
   overlay,
@@ -81,7 +81,7 @@ $effect(() => {
   if (skip || !config.toolbar || !collector || !hmrObserver) return
 
   toolbarHostEl = document.createElement('div')
-  toolbarHostEl.setAttribute('data-svibe-toolbar', '')
+  toolbarHostEl.setAttribute('data-svelte-scan-toolbar', '')
   document.body.appendChild(toolbarHostEl)
 
   const shadow = toolbarHostEl.attachShadow({ mode: 'open' })
@@ -169,7 +169,7 @@ initObservers()
 const PUSH_INTERVAL = 2000
 const pushInterval = !skip && collector && import.meta.hot ? setInterval(() => {
   const stats = collector.getStats()
-  import.meta.hot!.send('svibe:push-report', {
+  import.meta.hot!.send('svelte-scan:push-report', {
     mutationsPerSec: stats.mutationsPerSec,
     hotSpots: stats.hotSpots.map((s) => ({ component: s.component, mutations: s.mutations })),
     effectOffenders: stats.effectOffenders,

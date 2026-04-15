@@ -22,7 +22,7 @@ const EMPTY_STATS: AggregatedStats = {
   reactivity: { signals: 0, deriveds: 0, effects: 0, maxDepth: 0 },
 };
 
-export type SvibeAPI = {
+export type SvelteScanAPI = {
   on<T extends ScanEvent["type"]>(
     type: T,
     cb: (event: Extract<ScanEvent, { type: T }>) => void,
@@ -36,7 +36,10 @@ export type SvibeAPI = {
   destroy(): void;
 };
 
-function createSvibeAPI(): SvibeAPI {
+/** @deprecated Use SvelteScanAPI instead */
+export type SvibeAPI = SvelteScanAPI;
+
+function createSvelteScanAPI(): SvelteScanAPI {
   let collector: Collector | null = null;
   let running = false;
 
@@ -95,6 +98,9 @@ function createSvibeAPI(): SvibeAPI {
   return { on, getReport, getCollector, start, stop, isRunning, destroy };
 }
 
-export { createSvibeAPI };
+/** @deprecated Use createSvelteScanAPI instead */
+export { createSvelteScanAPI as createSvibeAPI };
 
-export const svibe: SvibeAPI = createSvibeAPI();
+export { createSvelteScanAPI };
+
+export const svibe: SvelteScanAPI = createSvelteScanAPI();

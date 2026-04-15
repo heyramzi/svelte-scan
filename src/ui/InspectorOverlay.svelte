@@ -59,14 +59,14 @@ function getPreviewStyle(left: number, top: number) {
 	{#if controller.hoverInfo && !controller.composer}
 		<div
 			class="sv-hover-outline"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style="left:{controller.hoverInfo.rect.left}px;top:{controller.hoverInfo.rect.top}px;width:{controller.hoverInfo.rect.width}px;height:{controller.hoverInfo.rect.height}px;--sv-marker-color:{controller.settings.markerColor}"
 			in:fade={{ duration: 100 }}
 			out:fade={{ duration: 90 }}
 		></div>
 		<div
 			class="sv-hover-badge"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style="left:{controller.hoverInfo.rect.left}px;top:{controller.hoverInfo.rect.bottom + 6}px"
 			in:scale={{ duration: 120, start: 0.97 }}
 			out:fade={{ duration: 90 }}
@@ -74,7 +74,7 @@ function getPreviewStyle(left: number, top: number) {
 			<span class="sv-hover-label">{controller.hoverInfo.tagName}{controller.hoverInfo.source ? ` — ${controller.hoverInfo.source.component}:${controller.hoverInfo.source.line}` : ''}</span>
 			<span class="sv-hover-source">{controller.hoverInfo.dimensions.width}×{controller.hoverInfo.dimensions.height}</span>
 			{#if controller.hoverInfo.source}
-				<button class="sv-hover-action" data-svibe-overlay onclick={controller.open}>
+				<button class="sv-hover-action" data-svelte-scan-overlay onclick={controller.open}>
 					open <kbd class="sv-hover-kbd">o</kbd>
 				</button>
 			{/if}
@@ -86,7 +86,7 @@ function getPreviewStyle(left: number, top: number) {
 		{#each controller.selectionPreview.rects as rect, index (`group-${index}`)}
 			<div
 				class="sv-selection-outline sv-dashed"
-				data-svibe-overlay
+				data-svelte-scan-overlay
 				style="left:{rect.left}px;top:{rect.top}px;width:{rect.width}px;height:{rect.height}px;--sv-marker-color:{controller.settings.markerColor}"
 			></div>
 		{/each}
@@ -96,7 +96,7 @@ function getPreviewStyle(left: number, top: number) {
 	{#if controller.dragSelection}
 		<div
 			class="sv-area-drag"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style="left:{controller.dragSelection.left}px;top:{controller.dragSelection.top}px;width:{controller.dragSelection.width}px;height:{controller.dragSelection.height}px;--sv-marker-color:{controller.settings.markerColor}"
 		></div>
 	{/if}
@@ -109,7 +109,7 @@ function getPreviewStyle(left: number, top: number) {
 		class:sv-marker-active={controller.activeNoteId === marker.id}
 		class:sv-marker-hovered={hoveredNoteId === marker.id}
 		class:sv-marker-hidden={!controller.toolbar.notesVisible}
-		data-svibe-overlay
+		data-svelte-scan-overlay
 		style="left:{marker.left}px;top:{marker.top}px;--sv-marker-color:{controller.settings.markerColor}"
 		onclick={() => controller.openNote(marker.id)}
 		onmouseenter={() => setHoveredNote(marker.id)}
@@ -125,7 +125,7 @@ function getPreviewStyle(left: number, top: number) {
 	{#if controller.toolbar.notesVisible && !controller.composer && hoveredNoteId === marker.id}
 		<div
 			class="sv-note-preview"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style={getPreviewStyle(marker.left, marker.top)}
 			in:scale={{ duration: 150, start: 0.96 }}
 			out:fade={{ duration: 120 }}

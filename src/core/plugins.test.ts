@@ -6,10 +6,10 @@ import {
   getPluginActions,
   destroyAllPlugins,
 } from "./plugins";
-import type { SvibeAPI } from "../api";
-import type { SvibePlugin } from "./plugins";
+import type { SvelteScanAPI } from "../api";
+import type { SvelteScanPlugin } from "./plugins";
 
-function createMockAPI(): SvibeAPI {
+function createMockAPI(): SvelteScanAPI {
   return {
     on: vi.fn(() => vi.fn()),
     getReport: vi.fn(() => ({
@@ -31,7 +31,7 @@ function createMockAPI(): SvibeAPI {
 }
 
 describe("plugin system", () => {
-  let mockAPI: SvibeAPI;
+  let mockAPI: SvelteScanAPI;
 
   beforeEach(() => {
     destroyAllPlugins();
@@ -40,7 +40,7 @@ describe("plugin system", () => {
 
   it("registers a plugin and calls setup", () => {
     const setup = vi.fn();
-    const plugin: SvibePlugin = { name: "test-plugin", setup };
+    const plugin: SvelteScanPlugin = { name: "test-plugin", setup };
 
     registerPlugin(plugin, mockAPI);
 
@@ -50,7 +50,7 @@ describe("plugin system", () => {
 
   it("unregisters a plugin and calls cleanup", () => {
     const cleanup = vi.fn();
-    const plugin: SvibePlugin = {
+    const plugin: SvelteScanPlugin = {
       name: "test-plugin",
       setup: () => cleanup,
     };
@@ -68,13 +68,13 @@ describe("plugin system", () => {
 
   it("re-registering a plugin cleans up the old one", () => {
     const cleanup1 = vi.fn();
-    const plugin1: SvibePlugin = {
+    const plugin1: SvelteScanPlugin = {
       name: "my-plugin",
       setup: () => cleanup1,
     };
 
     const cleanup2 = vi.fn();
-    const plugin2: SvibePlugin = {
+    const plugin2: SvelteScanPlugin = {
       name: "my-plugin",
       setup: () => cleanup2,
     };
@@ -88,7 +88,7 @@ describe("plugin system", () => {
 
   it("registers plugin actions", () => {
     const onClick = vi.fn();
-    const plugin: SvibePlugin = {
+    const plugin: SvelteScanPlugin = {
       name: "action-plugin",
       setup: () => undefined,
       actions: [{ label: "Do Thing", shortcut: "Ctrl+D", onClick }],
@@ -120,7 +120,7 @@ describe("plugin system", () => {
   });
 
   it("handles plugins with no cleanup function", () => {
-    const plugin: SvibePlugin = {
+    const plugin: SvelteScanPlugin = {
       name: "no-cleanup",
       setup: () => undefined,
     };

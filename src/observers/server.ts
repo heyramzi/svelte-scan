@@ -42,15 +42,15 @@ export function createServerObserver(collector: Collector): Observer {
       for (const entry of logs) emitIfNew(entry);
     };
 
-    hot.on("svibe:server-log", handler);
-    hot.on("svibe:replay-logs", replayHandler);
+    hot.on("svelte-scan:server-log", handler);
+    hot.on("svelte-scan:replay-logs", replayHandler);
 
     // Request buffered logs from the server (catches SSR errors that fired before we connected)
-    hot.send("svibe:request-replay", {});
+    hot.send("svelte-scan:request-replay", {});
 
     cleanup = () => {
-      hot.off("svibe:server-log", handler);
-      hot.off("svibe:replay-logs", replayHandler);
+      hot.off("svelte-scan:server-log", handler);
+      hot.off("svelte-scan:replay-logs", replayHandler);
     };
   }
 

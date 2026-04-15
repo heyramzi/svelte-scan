@@ -17,10 +17,10 @@ const replayBuffer: ServerLogPayload[] = [];
  * Inline script injected before /@vite/client to patch WebSocket.prototype.
  * Because this is a classic (non-module) script, it executes synchronously
  * before Vite's module-type client script registers its message listener.
- * This lets Svibe's pause/resume actually block HMR updates.
+ * This lets svelte-scan's pause/resume actually block HMR updates.
  */
 const HMR_PATCH_SCRIPT = `
-<script data-svibe-hmr>
+<script data-svelte-scan-hmr>
 (function(){
   var HMR_TYPES = ["update","full-reload","prune","custom"];
   var paused = false;
@@ -57,7 +57,7 @@ const HMR_PATCH_SCRIPT = `
     return origRemove.call(this, type, listener, options);
   };
 
-  window.__svibe_hmr = {
+  window.__svelteScanHmr = {
     pause: function() { paused = true; },
     resume: function() { paused = false; },
     get paused() { return paused; },
@@ -73,15 +73,15 @@ const HMR_PATCH_SCRIPT = `
 const STUB_PATH = resolve(__dirname, "stub.ts");
 
 // Regex matches the svibe directory path (or /src/index.ts) but NOT subpaths
-// like /vite-plugin or /stub. This lets the alias redirect $lib/svibe to
-// stub.ts without intercepting other svibe exports.
+// like /vite-plugin or /stub. This lets the alias redirect $lib/svelte-scan to
+// stub.ts without intercepting other svelte-scan exports.
 const SVIBE_ENTRY_RE = new RegExp(
   `${__dirname.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:/(?:src/)?index\\.ts)?$`,
 );
 
-function svibeStub(): Plugin {
+function svelteScanStub(): Plugin {
   return {
-    name: "svibe-stub",
+    name: "svelte-scan-stub",
     enforce: "pre",
     apply: "build",
     config() {
@@ -103,12 +103,12 @@ function svibeStub(): Plugin {
   };
 }
 
-export function svelteScanServerLogs(): Plugin[] {
-  return svibeServerLogs();
+/** @deprecated Use svelteScanStub instead (internal) */
+function svibeStub(): Plugin {
+  return svelteScanStub();
 }
 
-/** @deprecated Use svelteScanServerLogs instead */
-export function svibeServerLogs(): Plugin[] {
+export function svelteScanServerLogs(): Plugin[] {
   let originalInfo: typeof console.info | null = null;
   let originalWarn: typeof console.warn | null = null;
   let originalError: typeof console.error | null = null;
@@ -117,11 +117,11 @@ export function svibeServerLogs(): Plugin[] {
   function sendAndBuffer(payload: ServerLogPayload): void {
     if (replayBuffer.length >= SERVER_REPLAY_BUFFER_SIZE) replayBuffer.shift();
     replayBuffer.push(payload);
-    ws?.send("svibe:server-log", payload);
+    ws?.send("svelte-scan:server-log", payload);
   }
 
   const serverPlugin: Plugin = {
-    name: "svibe-server-logs",
+    name: "svelte-scan-server-logs",
     apply: "serve",
 
     transformIndexHtml: {
@@ -137,19 +137,19 @@ export function svibeServerLogs(): Plugin[] {
       ws = server.ws;
 
       // Listen for health reports pushed from the browser
-      server.ws.on("svibe:push-report", (data: SerializableHealthReport) => {
+      server.ws.on("svelte-scan:push-report", (data: SerializableHealthReport) => {
         cachedReport = data;
       });
 
       // Serve health report via HTTP for CLI consumption
-      server.middlewares.use("/__svibe/report", (_req, res) => {
+      server.middlewares.use("/__svelte-scan/report", (_req, res) => {
         res.setHeader("Content-Type", "application/json");
         res.setHeader("Access-Control-Allow-Origin", "*");
         if (!cachedReport) {
           res.statusCode = 503;
           res.end(
             JSON.stringify({
-              error: "No report available. Is the app running with <Svibe /> mounted?",
+              error: "No report available. Is the app running with <SvelteScan /> mounted?",
             }),
           );
           return;
@@ -162,8 +162,8 @@ export function svibeServerLogs(): Plugin[] {
       originalError = console.error;
 
       // Replay buffered logs when browser connects
-      server.ws.on("svibe:request-replay", () => {
-        ws?.send("svibe:replay-logs", replayBuffer.slice());
+      server.ws.on("svelte-scan:request-replay", () => {
+        ws?.send("svelte-scan:replay-logs", replayBuffer.slice());
       });
 
       console.info = (...args: unknown[]) => {
@@ -218,5 +218,10 @@ export function svibeServerLogs(): Plugin[] {
     },
   };
 
-  return [svibeStub(), serverPlugin];
+  return [svelteScanStub(), serverPlugin];
+}
+
+/** @deprecated Use svelteScanServerLogs instead */
+export function svibeServerLogs(): Plugin[] {
+  return svelteScanServerLogs();
 }

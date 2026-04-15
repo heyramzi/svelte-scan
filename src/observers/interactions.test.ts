@@ -136,7 +136,7 @@ describe("createInteractionObserver", () => {
     observer.destroy();
   });
 
-  it("skips events on elements with data-svibe-ignore", async () => {
+  it("skips events on elements with data-svelte-scan-ignore", async () => {
     const collector = createCollector();
     const handler = vi.fn();
     collector.subscribe("interaction", handler);
@@ -166,7 +166,7 @@ describe("createInteractionObserver", () => {
     observer.destroy();
   });
 
-  it("skips events inside data-svibe-toolbar", async () => {
+  it("skips events inside data-svelte-scan-toolbar", async () => {
     const collector = createCollector();
     const handler = vi.fn();
     collector.subscribe("interaction", handler);
@@ -182,7 +182,7 @@ describe("createInteractionObserver", () => {
     observer.start();
 
     const toolbar = document.createElement("div");
-    toolbar.setAttribute("data-svibe-toolbar", "");
+    toolbar.setAttribute("data-svelte-scan-toolbar", "");
     container.appendChild(toolbar);
 
     const button = document.createElement("button");

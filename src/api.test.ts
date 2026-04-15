@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { createSvibeAPI } from "./api";
-import type { SvibeAPI } from "./api";
+import { createSvelteScanAPI } from "./api";
+import type { SvelteScanAPI } from "./api";
 
-describe("svibe API", () => {
-  let api: SvibeAPI;
+describe("svelte-scan API", () => {
+  let api: SvelteScanAPI;
 
   beforeEach(() => {
-    api = createSvibeAPI();
+    api = createSvelteScanAPI();
   });
 
   afterEach(() => {

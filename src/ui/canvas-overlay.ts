@@ -123,7 +123,7 @@ export function createCanvasOverlay(collector: Collector): CanvasOverlay {
     mount(container: HTMLElement) {
       if (canvas) return;
       canvas = document.createElement("canvas");
-      canvas.setAttribute("data-svibe-canvas-overlay", "");
+      canvas.setAttribute("data-svelte-scan-canvas-overlay", "");
       canvas.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:99998;";
       container.appendChild(canvas);
       ctx = canvas.getContext("2d");

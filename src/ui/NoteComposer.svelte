@@ -50,7 +50,7 @@ function handleKeyDown(e: KeyboardEvent) {
 	{#each controller.composer.outlineRects as rect, index (`outline-${index}`)}
 		<div
 			class="sv-selection-outline sv-solid"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style="left:{rect.left}px;top:{rect.top}px;width:{rect.width}px;height:{rect.height}px;--sv-marker-color:{controller.composer.accentColor}"
 			in:fade={{ duration: 130 }}
 			out:fade={{ duration: 100 }}
@@ -61,7 +61,7 @@ function handleKeyDown(e: KeyboardEvent) {
 	{#each controller.composer.highlightRects as rect, index (`highlight-${index}`)}
 		<div
 			class="sv-selection-highlight"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			style="left:{rect.left}px;top:{rect.top}px;width:{rect.width}px;height:{rect.height}px;--sv-marker-color:{controller.composer.accentColor}"
 			in:fade={{ duration: 120 }}
 			out:fade={{ duration: 90 }}
@@ -71,7 +71,7 @@ function handleKeyDown(e: KeyboardEvent) {
 	<!-- Anchor marker -->
 	<button
 		class="sv-composer-anchor"
-		data-svibe-overlay
+		data-svelte-scan-overlay
 		style="left:{controller.composer.markerLeft}px;top:{controller.composer.markerTop}px;--sv-marker-color:{controller.composer.accentColor}"
 		type="button"
 		in:scale|global={{ duration: 150, start: 0.74, opacity: 0 }}
@@ -83,7 +83,7 @@ function handleKeyDown(e: KeyboardEvent) {
 	<!-- Composer panel -->
 	<div
 		class="sv-composer"
-		data-svibe-overlay
+		data-svelte-scan-overlay
 		style="left:{Math.min(controller.composer.markerLeft + 16, (typeof window !== 'undefined' ? window.innerWidth : 1000) - 296)}px;top:{controller.composer.markerTop + 16}px"
 		in:scale={{ duration: 180, start: 0.94, opacity: 0.18 }}
 		out:scale|global={{ duration: 180, start: 0.85, opacity: 0 }}
@@ -95,7 +95,7 @@ function handleKeyDown(e: KeyboardEvent) {
 		<textarea
 			bind:this={textareaEl}
 			class="sv-composer-textarea"
-			data-svibe-overlay
+			data-svelte-scan-overlay
 			placeholder={controller.composer.placeholder}
 			rows="2"
 			style="--sv-marker-color:{controller.composer.accentColor}"

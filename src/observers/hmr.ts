@@ -27,7 +27,7 @@ type GlobalHmrPatch = {
 
 declare global {
   interface Window {
-    __svibe_hmr?: GlobalHmrPatch;
+    __svelteScanHmr?: GlobalHmrPatch;
   }
 }
 
@@ -45,8 +45,8 @@ function isHmrMessage(event: Event): boolean {
  */
 export function createHmrObserver(): HmrObserver {
   // Use the early-injected global patch when available
-  if (typeof window !== "undefined" && window.__svibe_hmr) {
-    return window.__svibe_hmr;
+  if (typeof window !== "undefined" && window.__svelteScanHmr) {
+    return window.__svelteScanHmr;
   }
 
   // Fallback: runtime patching (tests, non-Vite environments)

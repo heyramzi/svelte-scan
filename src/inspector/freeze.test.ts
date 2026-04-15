@@ -19,7 +19,7 @@ describe("createPageFreezer", () => {
     freezer = createPageFreezer();
     freezer.freeze();
 
-    const styleEl = document.querySelector("style[data-svibe-freeze]");
+    const styleEl = document.querySelector("style[data-svelte-scan-freeze]");
     expect(styleEl).not.toBeNull();
     expect(styleEl!.textContent).toContain("animation-play-state: paused");
     expect(styleEl!.textContent).toContain("transition-duration: 0s");
@@ -36,7 +36,7 @@ describe("createPageFreezer", () => {
     freezer.freeze();
     freezer.unfreeze();
 
-    const styleEl = document.querySelector("style[data-svibe-freeze]");
+    const styleEl = document.querySelector("style[data-svelte-scan-freeze]");
     expect(styleEl).toBeNull();
     expect(freezer.isFrozen()).toBe(false);
   });
@@ -46,7 +46,7 @@ describe("createPageFreezer", () => {
     freezer.freeze();
     freezer.freeze();
 
-    const styles = document.querySelectorAll("style[data-svibe-freeze]");
+    const styles = document.querySelectorAll("style[data-svelte-scan-freeze]");
     expect(styles.length).toBe(1);
   });
 
@@ -65,7 +65,7 @@ describe("createPageFreezer", () => {
     freezer.destroy();
     expect(freezer.isFrozen()).toBe(false);
 
-    const styleEl = document.querySelector("style[data-svibe-freeze]");
+    const styleEl = document.querySelector("style[data-svelte-scan-freeze]");
     expect(styleEl).toBeNull();
   });
 

@@ -136,7 +136,7 @@ export type AggregatedStats = {
 
 // === Configuration ===
 
-export type SvibeConfig = {
+export type SvelteScanConfig = {
   observers: {
     dom: boolean;
     effects: boolean;
@@ -155,7 +155,7 @@ export type SvibeConfig = {
   };
 };
 
-export const DEFAULT_CONFIG: SvibeConfig = {
+export const DEFAULT_CONFIG: SvelteScanConfig = {
   observers: {
     dom: true,
     effects: true,
@@ -233,7 +233,7 @@ export type SerializableHealthReport = {
 
 // === Constants ===
 
-export const IGNORE_ATTR = "data-svibe-ignore";
+export const IGNORE_ATTR = "data-svelte-scan-ignore";
 export const EFFECT_WARN_THRESHOLD = 10;
 export const EFFECT_CRITICAL_THRESHOLD = 50;
 export const NOTIFICATION_EXPIRY_MS = 5 * 60 * 1000;

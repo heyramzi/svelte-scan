@@ -1,4 +1,4 @@
-import type { SvibeAPI } from "../api";
+import type { SvelteScanAPI } from "../api";
 
 export type PluginAction = {
   label: string;
@@ -6,11 +6,14 @@ export type PluginAction = {
   onClick(): void;
 };
 
-export type SvibePlugin = {
+export type SvelteScanPlugin = {
   name: string;
-  setup(api: SvibeAPI): void | (() => void);
+  setup(api: SvelteScanAPI): void | (() => void);
   actions?: PluginAction[];
 };
+
+/** @deprecated Use SvelteScanPlugin instead */
+export type SvibePlugin = SvelteScanPlugin;
 
 type RegisteredPlugin = {
   name: string;
@@ -20,7 +23,7 @@ type RegisteredPlugin = {
 
 const plugins = new Map<string, RegisteredPlugin>();
 
-export function registerPlugin(plugin: SvibePlugin, api: SvibeAPI): void {
+export function registerPlugin(plugin: SvelteScanPlugin, api: SvelteScanAPI): void {
   if (plugins.has(plugin.name)) {
     unregisterPlugin(plugin.name);
   }

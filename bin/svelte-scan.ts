@@ -640,7 +640,7 @@ function formatHealthMarkdown(report: HealthReport): string {
 }
 
 async function runHealth(args: CliArgs): Promise<void> {
-  const url = `${args.healthUrl.replace(/\/$/, "")}/__svibe/report`;
+  const url = `${args.healthUrl.replace(/\/$/, "")}/__svelte-scan/report`;
 
   try {
     const response = await fetch(url);

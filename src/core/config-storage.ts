@@ -1,9 +1,9 @@
-import type { SvibeConfig } from "./types";
+import type { SvelteScanConfig } from "./types";
 import { DEFAULT_CONFIG } from "./types";
 
-const STORAGE_KEY = "svibe:config";
+const STORAGE_KEY = "svelte-scan:config";
 
-export function readConfig(): SvibeConfig {
+export function readConfig(): SvelteScanConfig {
   navailable
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -19,7 +19,7 @@ export function readConfig(): SvibeConfig {
   }
 }
 
-export function writeConfig(config: SvibeConfig): void {
+export function writeConfig(config: SvelteScanConfig): void {
   navailable
   try {
     localStorage.setItem(

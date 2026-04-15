@@ -14,7 +14,7 @@ export function createPageFreezer() {
 
     // CSS: pause animations and kill transitions
     styleEl = document.createElement("style");
-    styleEl.setAttribute("data-svibe-freeze", "");
+    styleEl.setAttribute("data-svelte-scan-freeze", "");
     styleEl.textContent = `
 *, *::before, *::after {
   animation-play-state: paused !important;

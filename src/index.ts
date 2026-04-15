@@ -1,6 +1,6 @@
-export { default as Svibe } from "./Svibe.svelte";
+export { default as SvelteScan } from "./SvelteScan.svelte";
 export { svibe } from "./api";
-export type { SvibeAPI } from "./api";
-export type { SvibeConfig } from "./core/types";
+export type { SvelteScanAPI } from "./api";
+export type { SvelteScanConfig } from "./core/types";
 export { registerPlugin, unregisterPlugin, getPlugins, getPluginActions } from "./core/plugins";
-export type { SvibePlugin, PluginAction } from "./core/plugins";
+export type { SvelteScanPlugin, PluginAction } from "./core/plugins";

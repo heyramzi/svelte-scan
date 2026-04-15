@@ -1,4 +1,4 @@
-/* oxlint-disable stop-slop/no-raw-try-catch -- standalone package, no @heyramzi/utils dependency */
+
 import {
   EFFECT_WARN_THRESHOLD,
   STATS_POLL_INTERVAL_MS,

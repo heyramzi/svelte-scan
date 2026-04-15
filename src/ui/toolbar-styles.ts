@@ -1,4 +1,4 @@
-/* oxlint-disable stop-slop/no-em-dash -- CSS template string, not prose */
+
 export const TOOLBAR_STYLES = `
 /* =============================================
    svibe toolbar

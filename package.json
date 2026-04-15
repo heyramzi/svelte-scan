@@ -1,7 +1,20 @@
 {
-  "name": "@heyramzi/svibe",
-  "version": "0.3.1",
+  "name": "@heyramzi/svelte-scan",
+  "version": "0.4.0",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyramzi/svelte-scan.git"
+  },
+  "files": [
+    "src",
+    "bin",
+    "index.ts",
+    "stub.ts",
+    "vite-plugin.ts",
+    "logo.svg"
+  ],
   "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -27,14 +40,23 @@
       "default": "./stub.ts"
     }
   },
+  "bin": {
+    "svelte-scan": "./bin/svelte-scan.mjs"
+  },
   "scripts": {
     "test": "vitest run",
-    "svibe": "tsx bin/svibe.ts"
+    "release": "changeset publish"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
     "@lucide/svelte": "^1.8.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
+    "agent-browser": "^0.24.0",
     "jsdom": "^29.0.2",
     "tsx": "^4.21.0",
     "vitest": "^4.1.4"

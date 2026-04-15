@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-/* oxlint-disable stop-slop/no-raw-try-catch, stop-slop/no-em-dash, stop-slop/no-emoji -- standalone CLI tool */
+
 
 import { execSync } from "node:child_process";
 import { createInterface } from "node:readline";
@@ -14,17 +14,17 @@ import { DEFAULT_EXPECT_CONFIG, EXPECT_STATE_DIR } from "../src/expect/constants
 import type { ExpectConfig, TestPlan } from "../src/expect/types";
 
 const HELP = `
-svibe: SvelteKit dev tool CLI
+svelte-scan: SvelteKit dev tool CLI
 
 Usage:
-  svibe install [target]      Install svibe into a SvelteKit project (default: .)
-  svibe health [options]      Get live health report from running app
-  svibe init [--ci]           Set up svibe expect (--ci generates GitHub Actions workflow)
-  svibe expect [options]      Generate and run tests from git diff
-  svibe expect --plan-only    Generate test plan without running
-  svibe expect --run <file>   Run an existing test plan
-  svibe expect --list         List saved test plans
-  svibe help                  Show this help
+  svelte-scan install [target]      Install svibe into a SvelteKit project (default: .)
+  svelte-scan health [options]      Get live health report from running app
+  svelte-scan init [--ci]           Set up svibe expect (--ci generates GitHub Actions workflow)
+  svelte-scan expect [options]      Generate and run tests from git diff
+  svelte-scan expect --plan-only    Generate test plan without running
+  svelte-scan expect --run <file>   Run an existing test plan
+  svelte-scan expect --list         List saved test plans
+  svelte-scan help                  Show this help
 
 Install options:
   target                      Path to SvelteKit project (default: current directory)
@@ -214,7 +214,7 @@ function loadPlan(filepath: string): TestPlan {
 function listPlans(): void {
   const dir = resolve(process.cwd(), EXPECT_STATE_DIR);
   if (!existsSync(dir)) {
-    console.log("No saved plans. Run `svibe expect` first.");
+    console.log("No saved plans. Run `svelte-scan expect` first.");
     return;
   }
   const { readdirSync } = require("node:fs");
@@ -267,7 +267,7 @@ async function runInstall(args: CliArgs): Promise<void> {
   const relativeSvibePath = svibePath.replace(workspaceRoot + "/", "");
   if (!existsSync(svibePath)) {
     console.log("Adding svibe submodule...");
-    execSync(`git submodule add https://github.com/heyramzi/svibe.git ${relativeSvibePath}`, {
+    execSync(`git submodule add https://github.com/heyramzi/svelte-scan.git ${relativeSvibePath}`, {
       cwd: workspaceRoot,
       stdio: "inherit",
     });
@@ -481,11 +481,11 @@ async function runInit(): Promise<void> {
     }
   }
 
-  console.log("\nReady. Run `svibe expect` to generate tests from your git diff.");
+  console.log("\nReady. Run `svelte-scan expect` to generate tests from your git diff.");
 }
 
-// oxlint-ignore-next-line stop-slop/no-em-dash -- YAML template, not prose
-const GITHUB_ACTIONS_WORKFLOW = `name: svibe expect
+not prose
+const GITHUB_ACTIONS_WORKFLOW = `name: svelte-scan expect
 
 on:
   pull_request:
@@ -519,7 +519,7 @@ jobs:
         run: npx wait-on http://localhost:3000 --timeout 30000
 
       - name: Run svibe expect
-        run: npx @heyramzi/svibe expect --ci --base-url http://localhost:3000
+        run: npx @heyramzi/svelte-scan expect --ci --base-url http://localhost:3000
         env:
           ANTHROPIC_API_KEY: \${{ secrets.ANTHROPIC_API_KEY }}
 
@@ -737,7 +737,7 @@ async function runExpect(args: CliArgs): Promise<void> {
   // Run with Playwright
   const hasPlaywright = await checkPlaywrightAvailable();
   if (!hasPlaywright) {
-    console.error("Playwright not installed. Run `svibe init` first.");
+    console.error("Playwright not installed. Run `svelte-scan init` first.");
     process.exit(1);
   }
 
@@ -767,7 +767,7 @@ async function runExpect(args: CliArgs): Promise<void> {
   const runTests = async () => {
     return executePlan(page, plan, config, (result) => {
       if (!args.ci) {
-        // oxlint-ignore-next-line stop-slop/no-emoji -- CLI output, not UI component
+        not UI component
         const icon =
           result.status === "passed" ? "\u2713" : result.status === "failed" ? "\u2717" : "-";
         const duration =

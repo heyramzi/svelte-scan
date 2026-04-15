@@ -1,4 +1,4 @@
-/* oxlint-disable upsys/no-snake-case-props, no-unsafe-type-assertion -- Svelte internal API uses snake_case (user_effect); test mocks use `as any` */
+
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { createReactivityObserver } from "./reactivity";
 import { createCollector } from "../core/collector";

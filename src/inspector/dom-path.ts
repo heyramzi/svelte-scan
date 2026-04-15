@@ -37,7 +37,7 @@ export function buildDomPath(element: Element): string | null {
 export function resolveDomPath(path: string): Element | null {
   if (!path) return null;
 
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch
+  
   try {
     const parts = path.split(" > ");
     let current: Element | null = null;

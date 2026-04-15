@@ -10,7 +10,7 @@ function settingsKey(_pageKey?: string): string {
 }
 
 export function readNotes(pageKey: string): InspectorNote[] {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     const raw = localStorage.getItem(notesKey(pageKey));
     if (!raw) return [];
@@ -22,7 +22,7 @@ export function readNotes(pageKey: string): InspectorNote[] {
 }
 
 export function writeNotes(pageKey: string, notes: InspectorNote[]): void {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     localStorage.setItem(notesKey(pageKey), JSON.stringify(notes));
   } catch {
@@ -31,7 +31,7 @@ export function writeNotes(pageKey: string, notes: InspectorNote[]): void {
 }
 
 export function readSettings(pageKey: string): InspectorSettings {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     const raw = localStorage.getItem(settingsKey(pageKey));
     if (!raw) return { ...DEFAULT_SETTINGS };
@@ -42,7 +42,7 @@ export function readSettings(pageKey: string): InspectorSettings {
 }
 
 export function writeSettings(pageKey: string, settings: InspectorSettings): void {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     localStorage.setItem(settingsKey(pageKey), JSON.stringify(settings));
   } catch {
@@ -51,7 +51,7 @@ export function writeSettings(pageKey: string, settings: InspectorSettings): voi
 }
 
 export function clearPageStorage(pageKey: string): void {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     localStorage.removeItem(notesKey(pageKey));
     localStorage.removeItem(settingsKey(pageKey));

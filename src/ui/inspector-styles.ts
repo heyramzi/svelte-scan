@@ -1,4 +1,4 @@
-/* oxlint-disable stop-slop/no-em-dash -- CSS template string, not prose */
+
 export const INSPECTOR_STYLES = `
 /* =============================================
    svibe inspector overlay

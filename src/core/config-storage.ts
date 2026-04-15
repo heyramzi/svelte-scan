@@ -4,7 +4,7 @@ import { DEFAULT_CONFIG } from "./types";
 const STORAGE_KEY = "svibe:config";
 
 export function readConfig(): SvibeConfig {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_CONFIG, observers: { ...DEFAULT_CONFIG.observers } };
@@ -20,7 +20,7 @@ export function readConfig(): SvibeConfig {
 }
 
 export function writeConfig(config: SvibeConfig): void {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch -- localStorage may be unavailable
+  navailable
   try {
     localStorage.setItem(
       STORAGE_KEY,

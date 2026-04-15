@@ -7,7 +7,7 @@ export function generatePlanId(): string {
   return `plan-${timestamp}-${random}`;
 }
 
-/* oxlint-disable stop-slop/no-ai-words, stop-slop/no-em-dash -- AI prompt template uses action names and JSON schema descriptions */
+
 export function buildPlanPrompt(files: ChangedFile[], baseUrl: string, message?: string): string {
   const fileDescriptions = files
     .map((file) => {
@@ -51,7 +51,7 @@ ${fileDescriptions}
 
 Respond with ONLY the JSON object, no other text.${message ? `\n\n## Additional Instructions\n\n${message}` : ""}`;
 }
-/* oxlint-enable stop-slop/no-ai-words, stop-slop/no-em-dash */
+
 
 export function parsePlanResponse(response: string): TestPlan {
   const jsonString = extractJson(response);

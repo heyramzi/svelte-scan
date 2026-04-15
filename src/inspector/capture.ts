@@ -15,7 +15,7 @@ const COMPUTED_STYLE_KEYS = [
 ];
 
 function captureComputedStyles(element: Element): Record<string, string> | null {
-  // oxlint-ignore-next-line stop-slop/no-raw-try-catch
+  
   try {
     const computed = window.getComputedStyle(element);
     const result: Record<string, string> = {};

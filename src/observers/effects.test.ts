@@ -1,4 +1,4 @@
-/* oxlint-disable upsys/no-snake-case-props -- Svelte internal API uses snake_case (user_effect) */
+
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { createEffectTracker } from "./effects";
 import { createCollector } from "../core/collector";

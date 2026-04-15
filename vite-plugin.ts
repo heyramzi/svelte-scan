@@ -103,6 +103,11 @@ function svibeStub(): Plugin {
   };
 }
 
+export function svelteScanServerLogs(): Plugin[] {
+  return svibeServerLogs();
+}
+
+/** @deprecated Use svelteScanServerLogs instead */
 export function svibeServerLogs(): Plugin[] {
   let originalInfo: typeof console.info | null = null;
   let originalWarn: typeof console.warn | null = null;

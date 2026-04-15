@@ -17,9 +17,9 @@ const HELP = `
 svelte-scan: SvelteKit dev tool CLI
 
 Usage:
-  svelte-scan install [target]      Install svibe into a SvelteKit project (default: .)
+  svelte-scan install [target]      Install svelte-scan into a SvelteKit project (default: .)
   svelte-scan health [options]      Get live health report from running app
-  svelte-scan init [--ci]           Set up svibe expect (--ci generates GitHub Actions workflow)
+  svelte-scan init [--ci]           Set up svelte-scan expect (--ci generates GitHub Actions workflow)
   svelte-scan expect [options]      Generate and run tests from git diff
   svelte-scan expect --plan-only    Generate test plan without running
   svelte-scan expect --run <file>   Run an existing test plan
@@ -259,20 +259,20 @@ async function runInstall(args: CliArgs): Promise<void> {
     process.exit(1);
   }
 
-  console.log(`Installing svibe into ${target}`);
+  console.log(`Installing svelte-scan into ${target}`);
   console.log(`Workspace root: ${workspaceRoot}\n`);
 
   // 1. Add submodule
-  const svibePath = resolve(target, "src/lib/svibe");
-  const relativeSvibePath = svibePath.replace(workspaceRoot + "/", "");
-  if (!existsSync(svibePath)) {
-    console.log("Adding svibe submodule...");
-    execSync(`git submodule add https://github.com/heyramzi/svelte-scan.git ${relativeSvibePath}`, {
+  const svelteScanPath = resolve(target, "src/lib/svelte-scan");
+  const relativeSvelteScanPath = svelteScanPath.replace(workspaceRoot + "/", "");
+  if (!existsSync(svelteScanPath)) {
+    console.log("Adding svelte-scan submodule...");
+    execSync(`git submodule add https://github.com/heyramzi/svelte-scan.git ${relativeSvelteScanPath}`, {
       cwd: workspaceRoot,
       stdio: "inherit",
     });
   } else {
-    console.log("svibe submodule already exists, skipping.");
+    console.log("svelte-scan submodule already exists, skipping.");
   }
 
   // 2. Install @lucide/svelte if missing
@@ -300,7 +300,7 @@ async function runInstall(args: CliArgs): Promise<void> {
     console.warn("Could not find +layout.svelte. Manual layout integration needed.");
   }
 
-  console.log("\nsvibe installed! Restart your dev server to see the toolbar.");
+  console.log("\nsvelte-scan installed! Restart your dev server to see the toolbar.");
 }
 
 function findWorkspaceRoot(startDir: string): string {
@@ -327,7 +327,7 @@ function findLayoutFile(target: string): string | null {
 function patchViteConfig(viteFile: string): void {
   let content = readFileSync(viteFile, "utf-8");
 
-  if (content.includes("svibeServerLogs")) {
+  if (content.includes("svelteScanServerLogs") || content.includes("svibeServerLogs")) {
     console.log("  vite.config.ts already patched, skipping.");
     return;
   }
@@ -342,30 +342,30 @@ function patchViteConfig(viteFile: string): void {
 
   // Add loader function before defineConfig
   const loaderCode = `
-async function loadSvibePlugins(): Promise<Plugin[]> {
+async function loadSvelteScanPlugins(): Promise<Plugin[]> {
   try {
-    const { svibeServerLogs } = await import("./src/lib/svibe/vite-plugin");
-    return svibeServerLogs();
+    const { svelteScanServerLogs } = await import("./src/lib/svelte-scan/vite-plugin");
+    return svelteScanServerLogs();
   } catch {
     return [];
   }
 }
 
 `;
-  if (!content.includes("loadSvibePlugins")) {
+  if (!content.includes("loadSvelteScanPlugins")) {
     content = content.replace("export default defineConfig", loaderCode + "export default defineConfig");
   }
 
-  // Switch to async config and add svibe plugins
+  // Switch to async config and add svelte-scan plugins
   content = content.replace(
     /export default defineConfig\(\{/,
     "export default defineConfig(async () => ({",
   );
 
-  // Add svibe plugins to plugins array
+  // Add svelte-scan plugins to plugins array
   content = content.replace(
     /plugins:\s*\[/,
-    "plugins: [...(await loadSvibePlugins()), ",
+    "plugins: [...(await loadSvelteScanPlugins()), ",
   );
 
   // Close async config
@@ -380,7 +380,7 @@ async function loadSvibePlugins(): Promise<Plugin[]> {
 function patchLayout(layoutFile: string, workspaceRoot: string): void {
   let content = readFileSync(layoutFile, "utf-8");
 
-  if (content.includes("Svibe")) {
+  if (content.includes("SvelteScan") || content.includes("svelte-scan")) {
     console.log("  +layout.svelte already patched, skipping.");
     return;
   }
@@ -415,43 +415,43 @@ function patchLayout(layoutFile: string, workspaceRoot: string): void {
     }
   }
 
-  // Add Svibe state
-  const svibeState = "\nlet Svibe: Component<{ workspaceRoot?: string }> | null = $state(null);\n";
+  // Add SvelteScan state
+  const scanState = "\nlet SvelteScan: Component<{ workspaceRoot?: string }> | null = $state(null);\n";
   const propsMatch = content.match(/let\s+\{[^}]*\}\s*[:=]\s*\$props\([^)]*\);?/);
   if (propsMatch) {
     content = content.replace(
       propsMatch[0],
-      propsMatch[0] + svibeState,
+      propsMatch[0] + scanState,
     );
   }
 
   // Add $effect for lazy loading
-  const svibeEffect = `
+  const scanEffect = `
 $effect(() => {
 \tif (browser && dev) {
-\t\timport(/* @vite-ignore */ "$lib/svibe/index").then((m) => (Svibe = m.Svibe)).catch(() => {});
+\t\timport(/* @vite-ignore */ "$lib/svelte-scan/index").then((m) => (SvelteScan = m.SvelteScan)).catch(() => {});
 \t}
 });
 `;
   // Insert before </script>
   content = content.replace(
     /<\/script>/,
-    svibeEffect + "</script>",
+    scanEffect + "</script>",
   );
 
-  // Add Svibe component in markup
-  const svibeMarkup = `
-{#if browser && dev && Svibe}
-\t<Svibe workspaceRoot="${workspaceRoot}" />
+  // Add SvelteScan component in markup
+  const scanMarkup = `
+{#if browser && dev && SvelteScan}
+\t<SvelteScan workspaceRoot="${workspaceRoot}" />
 {/if}
 `;
-  content = content.trimEnd() + "\n" + svibeMarkup;
+  content = content.trimEnd() + "\n" + scanMarkup;
 
   writeFileSync(layoutFile, content);
 }
 
 async function runInit(): Promise<void> {
-  console.log("Setting up svibe expect...\n");
+  console.log("Setting up svelte-scan expect...\n");
 
   // Check Playwright
   const hasPlaywright = await checkPlaywrightAvailable();
@@ -518,7 +518,7 @@ jobs:
       - name: Wait for server
         run: npx wait-on http://localhost:3000 --timeout 30000
 
-      - name: Run svibe expect
+      - name: Run svelte-scan expect
         run: npx @heyramzi/svelte-scan expect --ci --base-url http://localhost:3000
         env:
           ANTHROPIC_API_KEY: \${{ secrets.ANTHROPIC_API_KEY }}
@@ -527,14 +527,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: svibe-expect-results
-          path: .svibe-expect/
+          name: svelte-scan-expect-results
+          path: .svelte-scan-expect/
 `;
 
 function generateCiWorkflow(): void {
   const dir = resolve(process.cwd(), ".github/workflows");
   mkdirSync(dir, { recursive: true });
-  const filepath = join(dir, "svibe-expect.yml");
+  const filepath = join(dir, "svelte-scan-expect.yml");
   if (existsSync(filepath)) {
     console.log(`Workflow already exists: ${filepath}`);
     return;
@@ -563,7 +563,7 @@ type HealthReport = {
 
 function formatHealthMarkdown(report: HealthReport): string {
   const lines: string[] = [];
-  lines.push("## svibe health report");
+  lines.push("## svelte-scan health report");
   lines.push("");
   lines.push(`Mutations/sec: ${report.mutationsPerSec}`);
   lines.push(
@@ -645,7 +645,7 @@ async function runHealth(args: CliArgs): Promise<void> {
   try {
     const response = await fetch(url);
     if (response.status === 503) {
-      console.error("No health data available. Is the app running with <Svibe /> mounted?");
+      console.error("No health data available. Is the app running with <SvelteScan /> mounted?");
       process.exit(1);
     }
     if (!response.ok) {

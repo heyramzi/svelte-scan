@@ -1,8 +1,8 @@
 # CLAUDE.md
 
-## What is svibe?
+## What is svelte-scan?
 
-A SvelteKit dev tool (`@heyramzi/svibe`) that combines health monitoring, element inspection, and browser testing in one package. Dev-mode only, zero production impact.
+A SvelteKit dev tool (`@heyramzi/svelte-scan`) that combines health monitoring, element inspection, and browser testing in one package. Dev-mode only, zero production impact.
 
 ## Commands
 

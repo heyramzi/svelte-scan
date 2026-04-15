@@ -17,13 +17,18 @@ const HELP = `
 svibe: SvelteKit dev tool CLI
 
 Usage:
-  svibe health [options]        Get live health report from running app
-  svibe init [--ci]             Set up svibe (--ci generates GitHub Actions workflow)
-  svibe expect [options]        Generate and run tests from git diff
-  svibe expect --plan-only      Generate test plan without running
-  svibe expect --run <file>     Run an existing test plan
-  svibe expect --list           List saved test plans
-  svibe help                    Show this help
+  svibe install [target]      Install svibe into a SvelteKit project (default: .)
+  svibe health [options]      Get live health report from running app
+  svibe init [--ci]           Set up svibe expect (--ci generates GitHub Actions workflow)
+  svibe expect [options]      Generate and run tests from git diff
+  svibe expect --plan-only    Generate test plan without running
+  svibe expect --run <file>   Run an existing test plan
+  svibe expect --list         List saved test plans
+  svibe help                  Show this help
+
+Install options:
+  target                      Path to SvelteKit project (default: current directory)
+  --workspace-root <path>     Workspace root for file resolution (default: auto-detect)
 
 Health options:
   --url <url>           Dev server URL (default: http://localhost:3000)
@@ -47,6 +52,8 @@ Expect options:
 
 type CliArgs = {
   command: string;
+  installTarget: string;
+  workspaceRoot: string;
   planOnly: boolean;
   runFile: string | null;
   list: boolean;
@@ -70,6 +77,8 @@ function parseArgs(argv: string[]): CliArgs {
   const args = argv.slice(2);
   const result: CliArgs = {
     command: args[0] ?? "help",
+    installTarget: ".",
+    workspaceRoot: "",
     planOnly: false,
     runFile: null,
     list: false,
@@ -145,12 +154,23 @@ function parseArgs(argv: string[]): CliArgs {
       case "--json":
         result.healthJson = true;
         break;
+      case "--workspace-root":
+        result.workspaceRoot = args[++i] ?? "";
+        break;
     }
   }
 
   // --ci on init command means generate GitHub Actions workflow
   if (result.command === "init" && result.ci) {
     result.initCi = true;
+  }
+
+  // install command: second positional arg is target path
+  if (result.command === "install") {
+    const positional = args[1];
+    if (positional && !positional.startsWith("-")) {
+      result.installTarget = positional;
+    }
   }
 
   // CI mode forces headless and auto-confirm
@@ -171,31 +191,7 @@ function getGitDiff(ref: string): string {
   }
 }
 
-async function callAI(prompt: string, model: string, providerName: string): Promise<string> {
-  // If provider is anthropic, try SDK first for better DX
-  if (providerName === "anthropic") {
-    try {
-      // @ts-expect-error — optional peer dependency, dynamically imported
-      const { default: Anthropic } = await import("@anthropic-ai/sdk");
-      const client = new Anthropic();
-      // oxlint-ignore-next-line upsys/no-snake-case-props -- Anthropic SDK API parameter
-      const message = await client.messages.create({
-        model,
-        max_tokens: 4096,
-        messages: [{ role: "user", content: prompt }],
-      });
-      const block = message.content[0];
-      if (block.type === "text") return block.text;
-      throw new Error("Unexpected response type");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      if (!msg.includes("Cannot find module") && !msg.includes("MODULE_NOT_FOUND")) {
-        throw err;
-      }
-      // Fall through to curl-based provider
-    }
-  }
-
+async function callAI(prompt: string, _model: string, providerName: string): Promise<string> {
   const provider = resolveProvider(providerName);
   return provider.generate(prompt);
 }
@@ -243,6 +239,215 @@ function confirm(question: string): Promise<boolean> {
       done(input.trim().toLowerCase() === "y");
     });
   });
+}
+
+async function runInstall(args: CliArgs): Promise<void> {
+  const target = resolve(process.cwd(), args.installTarget);
+  const workspaceRoot = args.workspaceRoot || findWorkspaceRoot(target);
+
+  if (!workspaceRoot) {
+    console.error("Could not detect workspace root. Use --workspace-root <path>.");
+    process.exit(1);
+  }
+
+  // Validate target is a SvelteKit project
+  const layoutFile = findLayoutFile(target);
+  const viteFile = resolve(target, "vite.config.ts");
+
+  if (!existsSync(viteFile)) {
+    console.error(`No vite.config.ts found in ${target}. Is this a SvelteKit project?`);
+    process.exit(1);
+  }
+
+  console.log(`Installing svibe into ${target}`);
+  console.log(`Workspace root: ${workspaceRoot}\n`);
+
+  // 1. Add submodule
+  const svibePath = resolve(target, "src/lib/svibe");
+  const relativeSvibePath = svibePath.replace(workspaceRoot + "/", "");
+  if (!existsSync(svibePath)) {
+    console.log("Adding svibe submodule...");
+    execSync(`git submodule add https://github.com/heyramzi/svibe.git ${relativeSvibePath}`, {
+      cwd: workspaceRoot,
+      stdio: "inherit",
+    });
+  } else {
+    console.log("svibe submodule already exists, skipping.");
+  }
+
+  // 2. Install @lucide/svelte if missing
+  const pkgJsonPath = resolve(target, "package.json");
+  if (existsSync(pkgJsonPath)) {
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
+    const hasLucide = (pkgJson.dependencies?.["@lucide/svelte"]) || (pkgJson.devDependencies?.["@lucide/svelte"]);
+    if (!hasLucide) {
+      console.log("Installing @lucide/svelte...");
+      execSync("pnpm add -D @lucide/svelte", { cwd: target, stdio: "inherit" });
+    } else {
+      console.log("@lucide/svelte already installed, skipping.");
+    }
+  }
+
+  // 3. Patch vite.config.ts
+  console.log("Patching vite.config.ts...");
+  patchViteConfig(viteFile);
+
+  // 4. Patch +layout.svelte
+  if (layoutFile) {
+    console.log(`Patching ${layoutFile}...`);
+    patchLayout(layoutFile, workspaceRoot);
+  } else {
+    console.warn("Could not find +layout.svelte. Manual layout integration needed.");
+  }
+
+  console.log("\nsvibe installed! Restart your dev server to see the toolbar.");
+}
+
+function findWorkspaceRoot(startDir: string): string {
+  let dir = startDir;
+  while (dir !== "/") {
+    if (existsSync(resolve(dir, ".git"))) return dir;
+    dir = resolve(dir, "..");
+  }
+  return "";
+}
+
+function findLayoutFile(target: string): string | null {
+  const candidates = [
+    resolve(target, "src/routes/+layout.svelte"),
+    resolve(target, "src/routes/(app)/+layout.svelte"),
+    resolve(target, "src/routes/(frontend)/+layout.svelte"),
+  ];
+  for (const c of candidates) {
+    if (existsSync(c)) return c;
+  }
+  return null;
+}
+
+function patchViteConfig(viteFile: string): void {
+  let content = readFileSync(viteFile, "utf-8");
+
+  if (content.includes("svibeServerLogs")) {
+    console.log("  vite.config.ts already patched, skipping.");
+    return;
+  }
+
+  // Add Plugin import
+  if (!content.includes('import type { Plugin } from "vite"')) {
+    content = content.replace(
+      /import \{ defineConfig \} from "vite";/,
+      'import type { Plugin } from "vite";\nimport { defineConfig } from "vite";',
+    );
+  }
+
+  // Add loader function before defineConfig
+  const loaderCode = `
+async function loadSvibePlugins(): Promise<Plugin[]> {
+  try {
+    const { svibeServerLogs } = await import("./src/lib/svibe/vite-plugin");
+    return svibeServerLogs();
+  } catch {
+    return [];
+  }
+}
+
+`;
+  if (!content.includes("loadSvibePlugins")) {
+    content = content.replace("export default defineConfig", loaderCode + "export default defineConfig");
+  }
+
+  // Switch to async config and add svibe plugins
+  content = content.replace(
+    /export default defineConfig\(\{/,
+    "export default defineConfig(async () => ({",
+  );
+
+  // Add svibe plugins to plugins array
+  content = content.replace(
+    /plugins:\s*\[/,
+    "plugins: [...(await loadSvibePlugins()), ",
+  );
+
+  // Close async config
+  content = content.replace(
+    /\}\);(\s*)$/,
+    "}));$1",
+  );
+
+  writeFileSync(viteFile, content);
+}
+
+function patchLayout(layoutFile: string, workspaceRoot: string): void {
+  let content = readFileSync(layoutFile, "utf-8");
+
+  if (content.includes("Svibe")) {
+    console.log("  +layout.svelte already patched, skipping.");
+    return;
+  }
+
+  // Add browser/dev imports
+  if (!content.includes('import { browser, dev }')) {
+    const importLine = 'import { browser, dev } from "$app/environment";\n';
+    // Find first import after the css import and add after it
+    content = content.replace(
+      /(import\s+.*?app\.css.*?;\n)/,
+      `$1${importLine}`,
+    );
+  }
+
+  // Add Component type import
+  if (!content.includes('import type { Component }')) {
+    if (content.includes("import type { Snippet }")) {
+      content = content.replace(
+        "import type { Snippet }",
+        "import type { Snippet, Component }",
+      );
+    } else if (content.includes("import type {")) {
+      content = content.replace(
+        /(import type \{[^}]*?)\}/,
+        "$1, Component }",
+      );
+    } else {
+      content = content.replace(
+        /(import\s+.*?from\s+.*?;\n)/,
+        `$1import type { Component } from "svelte";\n`,
+      );
+    }
+  }
+
+  // Add Svibe state
+  const svibeState = "\nlet Svibe: Component<{ workspaceRoot?: string }> | null = $state(null);\n";
+  const propsMatch = content.match(/let\s+\{[^}]*\}\s*[:=]\s*\$props\([^)]*\);?/);
+  if (propsMatch) {
+    content = content.replace(
+      propsMatch[0],
+      propsMatch[0] + svibeState,
+    );
+  }
+
+  // Add $effect for lazy loading
+  const svibeEffect = `
+$effect(() => {
+\tif (browser && dev) {
+\t\timport(/* @vite-ignore */ "$lib/svibe/index").then((m) => (Svibe = m.Svibe)).catch(() => {});
+\t}
+});
+`;
+  // Insert before </script>
+  content = content.replace(
+    /<\/script>/,
+    svibeEffect + "</script>",
+  );
+
+  // Add Svibe component in markup
+  const svibeMarkup = `
+{#if browser && dev && Svibe}
+\t<Svibe workspaceRoot="${workspaceRoot}" />
+{/if}
+`;
+  content = content.trimEnd() + "\n" + svibeMarkup;
+
+  writeFileSync(layoutFile, content);
 }
 
 async function runInit(): Promise<void> {
@@ -622,6 +827,9 @@ async function main(): Promise<void> {
   const args = parseArgs(process.argv);
 
   switch (args.command) {
+    case "install":
+      await runInstall(args);
+      break;
     case "health":
       await runHealth(args);
       break;

@@ -11,13 +11,13 @@ describe("compat", () => {
   });
 
   it("rejects Svelte 4.x", async () => {
-    vi.doMock("svelte/compiler", () => ({ VERSION: "4.2.0" }));
+    vi.doMock("svelte/package.json", () => ({ default: { version: "4.2.0" } }));
     const { isSupportedSvelteVersion } = await import("./compat");
     expect(isSupportedSvelteVersion()).toBe(false);
   });
 
   it("rejects Svelte 5 above ceiling", async () => {
-    vi.doMock("svelte/compiler", () => ({ VERSION: "5.100.0" }));
+    vi.doMock("svelte/package.json", () => ({ default: { version: "5.100.0" } }));
     const { isSupportedSvelteVersion } = await import("./compat");
     expect(isSupportedSvelteVersion()).toBe(false);
   });

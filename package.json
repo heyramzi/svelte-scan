@@ -1,6 +1,6 @@
 {
   "name": "@heyramzi/svelte-scan",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
   "license": "MIT",
   "repository": {
@@ -22,6 +22,7 @@
   "exports": {
     ".": {
       "types": "./src/index.ts",
+      "svelte": "./src/index.ts",
       "development": "./src/index.ts",
       "import": "./src/index.ts",
       "default": "./stub.ts"
@@ -35,6 +36,7 @@
     "./stub": "./stub.ts",
     "./expect": {
       "types": "./src/expect/index.ts",
+      "svelte": "./src/expect/index.ts",
       "development": "./src/expect/index.ts",
       "import": "./src/expect/index.ts",
       "default": "./stub.ts"

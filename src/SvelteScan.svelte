@@ -37,7 +37,7 @@ type Props = {
 let {
   observers: observerConfig,
   toolbar = true,
-  overlay = false,
+  overlay = true,
   position = 'bottom-left',
   workspaceRoot,
 }: Props = $props()

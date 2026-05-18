@@ -37,7 +37,7 @@ type Props = {
 let {
   observers: observerConfig,
   toolbar = true,
-  overlay = false,
+  overlay = true,
   position = 'bottom-left',
   workspaceRoot,
 }: Props = $props()
@@ -63,13 +63,10 @@ if (!skip) {
 }
 const collector = !isIframe ? svibe.getCollector()! : null
 const hmrObserver = !isIframe ? createHmrObserver() : null
-const activeObservers: { destroy(): void }[] = []
+const activeObservers = new Map<keyof SvelteScanConfig['observers'], { destroy(): void }>()
 
 let canvasOverlay: ReturnType<typeof createCanvasOverlay> | null = null
-if (!skip && collector && config.overlay) {
-  canvasOverlay = createCanvasOverlay(collector)
-  canvasOverlay.mount(document.body)
-}
+let internals = $state.raw<Record<string, unknown> | null>(null)
 
 let toolbarHostEl: HTMLDivElement | null = null
 let toolbarInstance: Record<string, unknown> | null = null
@@ -77,6 +74,37 @@ let toolbarInstance: Record<string, unknown> | null = null
 // =========================
 // EFFECTS
 // =========================
+$effect(() => {
+  if (skip || !collector) return
+  if (config.overlay && !canvasOverlay) {
+    canvasOverlay = createCanvasOverlay(collector)
+    canvasOverlay.mount(document.body)
+  } else if (!config.overlay && canvasOverlay) {
+    canvasOverlay.destroy()
+    canvasOverlay = null
+  }
+})
+
+$effect(() => {
+  if (skip || !collector) return
+  const want = config.observers
+  ensureObserver('console', want.console, () => createConsoleObserver(collector))
+  ensureObserver('server', want.server, () => createServerObserver(collector))
+  ensureObserver('dom', want.dom, () => createDomObserver(collector))
+  ensureObserver(
+    'effects',
+    want.effects && !!internals?.user_effect,
+    () => createEffectTracker(collector, internals as Parameters<typeof createEffectTracker>[1]),
+  )
+  ensureObserver(
+    'reactivity',
+    want.reactivity && !!internals?.state,
+    () => createReactivityObserver(collector, internals as Parameters<typeof createReactivityObserver>[1]),
+  )
+  ensureObserver('leaks', want.leaks, () => createLeakDetector(collector))
+  ensureObserver('interactions', want.interactions, () => createInteractionObserver(collector))
+})
+
 $effect(() => {
   if (skip || !config.toolbar || !collector || !hmrObserver) return
 
@@ -111,59 +139,46 @@ $effect(() => {
 // =========================
 // FUNCTIONS
 // =========================
-// Console and DOM observers start synchronously so they catch errors
-// that fire during hydration, before any async microtask resolves.
+function ensureObserver<K extends keyof SvelteScanConfig['observers']>(
+  key: K,
+  enabled: boolean,
+  factory: () => { start(): void; destroy(): void },
+) {
+  const has = activeObservers.has(key)
+  if (enabled && !has) {
+    const obs = factory()
+    obs.start()
+    activeObservers.set(key, obs)
+  } else if (!enabled && has) {
+    activeObservers.get(key)!.destroy()
+    activeObservers.delete(key)
+  }
+}
+
+// WHY: console/server/dom observers must start synchronously to catch errors
+// that fire during hydration, before $effect runs in the microtask queue.
 if (!skip && collector) {
   if (config.observers.console) {
-    const consoleObs = createConsoleObserver(collector)
-    consoleObs.start()
-    activeObservers.push(consoleObs)
+    const obs = createConsoleObserver(collector)
+    obs.start()
+    activeObservers.set('console', obs)
   }
-
   if (config.observers.server) {
-    const serverObs = createServerObserver(collector)
-    serverObs.start()
-    activeObservers.push(serverObs)
+    const obs = createServerObserver(collector)
+    obs.start()
+    activeObservers.set('server', obs)
   }
-
   if (config.observers.dom) {
-    const domObs = createDomObserver(collector)
-    domObs.start()
-    activeObservers.push(domObs)
+    const obs = createDomObserver(collector)
+    obs.start()
+    activeObservers.set('dom', obs)
   }
 }
 
-async function initObservers() {
+;(async () => {
   if (skip || !collector) return
-  const internals = await getSvelteInternals()
-  if (internals) {
-    if (config.observers.effects && internals.user_effect) {
-      const effectObs = createEffectTracker(collector, internals as Parameters<typeof createEffectTracker>[1])
-      effectObs.start()
-      activeObservers.push(effectObs)
-    }
-
-    if (config.observers.reactivity && internals.state) {
-      const reactObs = createReactivityObserver(collector, internals as Parameters<typeof createReactivityObserver>[1])
-      reactObs.start()
-      activeObservers.push(reactObs)
-    }
-  }
-
-  if (config.observers.leaks) {
-    const leakObs = createLeakDetector(collector)
-    leakObs.start()
-    activeObservers.push(leakObs)
-  }
-
-  if (config.observers.interactions) {
-    const interactionObs = createInteractionObserver(collector)
-    interactionObs.start()
-    activeObservers.push(interactionObs)
-  }
-}
-
-initObservers()
+  internals = await getSvelteInternals()
+})()
 
 // Push stats to Vite dev server so CLI can query them
 const PUSH_INTERVAL = 2000
@@ -184,10 +199,10 @@ const pushInterval = !skip && collector && import.meta.hot ? setInterval(() => {
 
 onDestroy(() => {
   if (pushInterval) clearInterval(pushInterval)
-  for (const obs of activeObservers) {
-    obs.destroy()
-  }
+  for (const obs of activeObservers.values()) obs.destroy()
+  activeObservers.clear()
   canvasOverlay?.destroy()
+  canvasOverlay = null
   if (!skip) svibe.stop()
   hmrObserver?.destroy()
 })

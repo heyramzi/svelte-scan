@@ -4,7 +4,6 @@ import { DEFAULT_CONFIG } from "./types";
 const STORAGE_KEY = "svelte-scan:config";
 
 export function readConfig(): SvelteScanConfig {
-  navailable
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_CONFIG, observers: { ...DEFAULT_CONFIG.observers } };
@@ -20,7 +19,6 @@ export function readConfig(): SvelteScanConfig {
 }
 
 export function writeConfig(config: SvelteScanConfig): void {
-  navailable
   try {
     localStorage.setItem(
       STORAGE_KEY,

@@ -484,7 +484,6 @@ async function runInit(): Promise<void> {
   console.log("\nReady. Run `svelte-scan expect` to generate tests from your git diff.");
 }
 
-not prose
 const GITHUB_ACTIONS_WORKFLOW = `name: svelte-scan expect
 
 on:
@@ -767,7 +766,6 @@ async function runExpect(args: CliArgs): Promise<void> {
   const runTests = async () => {
     return executePlan(page, plan, config, (result) => {
       if (!args.ci) {
-        not UI component
         const icon =
           result.status === "passed" ? "\u2713" : result.status === "failed" ? "\u2717" : "-";
         const duration =

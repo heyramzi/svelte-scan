@@ -323,17 +323,55 @@ export class InspectorController {
       return;
     }
 
-    // Shift+click: add to group selection
+    // Shift+click: instantly copy this element (no composer)
     if (this.shiftHeld) {
-      if (!this.selectedElements.includes(target)) {
-        this.selectedElements.push(target);
-      }
-      this.selectionPreview = this.buildSelectionPreview();
+      this.copyElement(target);
       return;
     }
 
     // Normal click: open element composer
     this.openElementComposer(target, e.clientX, e.clientY);
+  };
+
+  copyElement = async (target: Element) => {
+    const domPath = buildDomPath(target);
+    if (!domPath) return;
+
+    const rect = target.getBoundingClientRect();
+    const anchor: ElementAnchor = {
+      domPath,
+      relativeX: 0.5,
+      relativeY: 0.5,
+      viewportX: rect.left + rect.width / 2,
+      viewportY: rect.top + rect.height / 2,
+    };
+    const source = buildSourceFromElement(target, resolveSource);
+    const note = buildElementNote({
+      anchor,
+      source,
+      targetLabel: buildTargetLabel(target),
+      targetSummary: buildTargetSummary(target),
+    });
+    const snapshot = buildAnnotationSnapshot(note, target, this.settings);
+
+    const payload: ExportPayload = {
+      title: document.title || window.location.pathname,
+      outputMode: this.settings.outputMode,
+      url: window.location.href,
+      viewport: { width: window.innerWidth, height: window.innerHeight },
+      userAgent: navigator.userAgent,
+      devicePixelRatio: window.devicePixelRatio || 1,
+      timestamp: new Date().toISOString(),
+      annotations: [snapshot],
+    };
+
+    const markdown = formatPayload(payload);
+    await navigator.clipboard.writeText(markdown);
+
+    this.copyFeedback = true;
+    setTimeout(() => {
+      this.copyFeedback = false;
+    }, 1200);
   };
 
   handleKeyDown = (e: KeyboardEvent) => {

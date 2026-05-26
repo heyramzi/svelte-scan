@@ -1,6 +1,7 @@
 {
   "name": "@heyramzi/svelte-scan",
-  "version": "0.6.1",
+  "version": "0.6.2",
+  "packageManager": "pnpm@11.0.6",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
   "license": "MIT",
   "repository": {

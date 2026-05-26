@@ -14,7 +14,7 @@ let { controller }: { controller: InspectorController } = $props()
 // =========================
 // STATE
 // =========================
-let textareaEl = $state<HTMLTextAreaElement | null>(null)
+let textareaEl = null;
 
 // =========================
 // EFFECTS

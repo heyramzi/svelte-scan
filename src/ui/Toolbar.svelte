@@ -62,8 +62,8 @@ let animating = $state(false)
 let copied = $state<'frontend' | 'server' | 'shared' | null>(null)
 let fps = $state(60)
 let hmrPaused = $state(false)
-let pillEl = $state<HTMLElement | null>(null)
-let visible = $state(true)
+let pillEl = null;
+let visible = true;
 let showSettings = $state(false)
 const SETTINGS_TAB_KEY = 'svibe:settings-tab'
 const storedTab = typeof localStorage !== 'undefined' ? localStorage.getItem(SETTINGS_TAB_KEY) as 'general' | 'inspector' | 'observers' | null : null

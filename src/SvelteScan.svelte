@@ -6,6 +6,7 @@ import { onDestroy, mount, unmount } from 'svelte'
 import { dev, browser } from '$app/environment'
 import { getSvelteInternals } from './core/internals'
 import { DEFAULT_CONFIG, type SvelteScanConfig } from './core/types'
+import { readConfig } from './core/config-storage'
 import { svibe } from './api'
 import { createDomObserver } from './observers/dom'
 import { createEffectTracker } from './observers/effects'
@@ -49,12 +50,17 @@ let {
 const isIframe = browser && window.self !== window.top
 const skip = !dev || !browser || isIframe
 
+// Restore persisted settings before any observer starts, so an observer the
+// user disabled (e.g. DOM mutations) stays off from the first frame instead of
+// running until the toolbar mounts and applies the saved state.
+const saved = !skip ? readConfig() : null
+
 // svelte-ignore state_referenced_locally
 let config = $state<SvelteScanConfig>({
-  observers: { ...DEFAULT_CONFIG.observers, ...observerConfig },
+  observers: { ...DEFAULT_CONFIG.observers, ...observerConfig, ...saved?.observers },
   toolbar,
-  overlay,
-  position,
+  overlay: saved?.overlay ?? overlay,
+  position: saved?.position ?? position,
   workspaceRoot,
 })
 

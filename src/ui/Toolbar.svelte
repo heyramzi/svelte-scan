@@ -9,7 +9,7 @@ import { createFpsMeter } from '../core/fps'
 import type { HmrObserver } from '../observers/hmr'
 import { Copy, Check, X, Pause, Play, Settings, StickyNote, Trash2, Type, MousePointer, SquareDashedMousePointer, Group, Monitor, Server } from '@lucide/svelte'
 import { OUTPUT_MODE_OPTIONS, POSITION_LABELS } from '../inspector/constants'
-import { readConfig, writeConfig } from '../core/config-storage'
+import { writeConfig } from '../core/config-storage'
 import type { InspectorPosition } from '../inspector/types'
 import { InspectorController } from '../inspector/controller.svelte'
 import { countFrontendIssues, countServerIssues, formatFrontendForLLM, formatOverviewForLLM, formatServerLogsForLLM, getToolbarSeverity } from './toolbar-utils'
@@ -32,12 +32,6 @@ type Tab = 'overview' | 'issues' | 'console' | 'server' | 'inp' | 'notes'
 // PROPS
 // =========================
 let { collector, config = $bindable(), hmrObserver }: Props = $props()
-
-// Restore persisted config (position, overlay, observers)
-const savedConfig = readConfig()
-config.position = savedConfig.position
-config.overlay = savedConfig.overlay
-config.observers = { ...config.observers, ...savedConfig.observers }
 
 // =========================
 // STATE

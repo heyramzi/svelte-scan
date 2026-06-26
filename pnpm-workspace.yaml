@@ -1,3 +1,10 @@
 allowBuilds:
   agent-browser: true
   esbuild: true
+overrides:
+  vite@>=8.0.0 <8.0.16: '>=8.0.16 <9'
+  devalue@>=5.6.3 <5.8.1: '>=5.8.1 <6'
+  undici@>=7.0.0 <7.28.0: '>=7.28.0 <8'
+  svelte@<5.55.7: '>=5.55.7 <6'
+  js-yaml@<4.1.2: '>=4.1.2 <5'
+  esbuild@>=0.27.3 <0.28.1: '>=0.28.1'

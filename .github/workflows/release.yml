@@ -39,6 +39,18 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # WHY: pnpm leaves setup-node's `${NODE_AUTH_TOKEN}` placeholder
+      # unexpanded and falls through to a 401 (it tries OIDC first, then gives
+      # up without reading the env token). Writing the resolved token into
+      # ~/.npmrc explicitly is what actually authenticates the publish. Same
+      # workaround as vibe-kit's release-please workflow.
+      - name: Configure npm auth
+        run: |
+          echo "@heyramzi:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create release PR or publish
         uses: changesets/action@v1
         with:

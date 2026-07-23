@@ -4,3 +4,6 @@ dist/
 .env
 .env.*
 .svelte-doctor/*
+
+# WHY: release CI runs npm install; this repo uses pnpm. Keep one lockfile.
+package-lock.json

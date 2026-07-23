@@ -6,6 +6,14 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+# WHY: changesets/action pushes the changeset-release/main branch and opens the
+# version PR, and publishes to the GitHub registry. The default token is
+# read-only, which 403s on that push.
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
 jobs:
   release:
     name: Release

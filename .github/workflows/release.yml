@@ -23,18 +23,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      # WHY: this repo is pnpm ("packageManager": "pnpm@11"), and changeset
+      # publish shells out to `pnpm publish`. Installing with npm left pnpm off
+      # PATH, so publish died with `spawn pnpm ENOENT`.
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
           registry-url: https://npm.pkg.github.com
           scope: "@heyramzi"
 
-      - run: npm install
+      - run: pnpm install --frozen-lockfile
 
       - name: Create release PR or publish
         uses: changesets/action@v1
         with:
-          publish: npm run release
+          publish: pnpm run release
           title: "chore: version packages"
           commit: "chore: version packages"
         env:

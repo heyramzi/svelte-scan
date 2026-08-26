@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  "ignorePatterns": [".fallow/**", ".svelte-doctor/**", ".changeset/**"],
+  "entry": [
+    "index.ts",
+    "stub.ts",
+    "vite-plugin.ts",
+    "src/expect/index.ts",
+    "bin/svelte-scan.mjs",
+    "bin/svelte-scan.ts"
+  ],
+  "ignoreDependencies": ["agent-browser", "playwright", "vite"],
+  "ignoreUnresolvedImports": ["$app/environment"],
+  "rules": {
+    "unused-files": "warn",
+    "unused-exports": "warn",
+    "unused-types": "warn",
+    "unused-dependencies": "warn",
+    "unused-dev-dependencies": "warn",
+    "unresolved-imports": "error",
+    "unlisted-dependencies": "error",
+    "duplicate-exports": "error",
+    "circular-dependencies": "warn",
+    "dev-dependency-in-production": "off"
+  }
+}

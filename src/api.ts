@@ -36,9 +36,6 @@ export type SvelteScanAPI = {
   destroy(): void;
 };
 
-/** @deprecated Use SvelteScanAPI instead */
-export type SvibeAPI = SvelteScanAPI;
-
 function createSvelteScanAPI(): SvelteScanAPI {
   let collector: Collector | null = null;
   let running = false;
@@ -97,9 +94,6 @@ function createSvelteScanAPI(): SvelteScanAPI {
 
   return { on, getReport, getCollector, start, stop, isRunning, destroy };
 }
-
-/** @deprecated Use createSvelteScanAPI instead */
-export { createSvelteScanAPI as createSvibeAPI };
 
 export { createSvelteScanAPI };
 

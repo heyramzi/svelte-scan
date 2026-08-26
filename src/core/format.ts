@@ -2,7 +2,7 @@
  * Shared argument stringification for console patching.
  * Used by both the browser-side console observer and the server-side Vite plugin.
  */
-export function stringifyArg(arg: unknown): string {
+function stringifyArg(arg: unknown): string {
   try {
     return JSON.stringify(arg);
   } catch {

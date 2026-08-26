@@ -25,15 +25,6 @@ export type HoverInfo = {
   dimensions: { width: number; height: number };
 };
 
-export type InspectorState = {
-  active: boolean;
-  frozen: boolean;
-  hovering: HoverInfo | null;
-  selected: SelectedElement[];
-  dragging: boolean;
-  dragRect: { x: number; y: number; width: number; height: number } | null;
-};
-
 // --- Annotation types ---
 
 export type OutputMode = "compact" | "standard" | "detailed" | "forensic";
@@ -142,24 +133,6 @@ export type InspectorSettings = {
   clearOnCopy: boolean;
   includeComponentContext: boolean;
   includeComputedStyles: boolean;
-};
-
-// --- Rendered note (with resolved position) ---
-
-export type NoteResolution = "resolved" | "partial" | "unresolved";
-
-export type ResolvedPosition = {
-  markerLeft: number;
-  markerTop: number;
-  bounds: RectBox | null;
-  outlineRects: RectBox[];
-  highlightRects: RectBox[];
-  visibleInViewport: boolean;
-};
-
-export type RenderedNote = InspectorNote & {
-  resolution: NoteResolution;
-  position: ResolvedPosition | null;
 };
 
 // --- Export payload ---

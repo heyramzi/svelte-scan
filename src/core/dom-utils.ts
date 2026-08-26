@@ -7,7 +7,7 @@ const TOOLBAR_ATTR = "data-svelte-scan-toolbar";
  * Walk up the DOM checking for an attribute on any ancestor.
  * Handles both Element and non-Element nodes (TextNode etc.).
  */
-export function hasAncestorWithAttribute(node: Node, attr: string): boolean {
+function hasAncestorWithAttribute(node: Node, attr: string): boolean {
   let el: Element | null =
     node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
   while (el) {

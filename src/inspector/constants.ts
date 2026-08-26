@@ -13,12 +13,7 @@ export const DEFAULT_SETTINGS: InspectorSettings = {
   includeComputedStyles: false,
 };
 
-export const DEFAULT_INSPECTOR_POSITION: InspectorPosition = "bottom-left";
 export const STORAGE_PREFIX = "svibe-inspector";
-export const COLLAPSED_TOOLBAR_SIZE = 48;
-export const EXPANDED_TOOLBAR_WIDTH = 300;
-export const COMPOSER_WIDTH = 280;
-export const COMPOSER_HEIGHT = 200;
 export const DELETE_ALL_DELAY_MS = 3000;
 
 export const OUTPUT_MODE_OPTIONS: { value: InspectorSettings["outputMode"]; label: string }[] = [
@@ -26,12 +21,6 @@ export const OUTPUT_MODE_OPTIONS: { value: InspectorSettings["outputMode"]; labe
   { value: "standard", label: "Standard" },
   { value: "detailed", label: "Detailed" },
   { value: "forensic", label: "Forensic" },
-];
-
-export const POSITION_GRID: (InspectorPosition | null)[][] = [
-  ["top-left", "top-center", "top-right"],
-  ["mid-left", null, "mid-right"],
-  ["bottom-left", "bottom-center", "bottom-right"],
 ];
 
 export const POSITION_LABELS: Record<InspectorPosition, string> = {

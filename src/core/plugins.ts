@@ -12,9 +12,6 @@ export type SvelteScanPlugin = {
   actions?: PluginAction[];
 };
 
-/** @deprecated Use SvelteScanPlugin instead */
-export type SvibePlugin = SvelteScanPlugin;
-
 type RegisteredPlugin = {
   name: string;
   cleanup: (() => void) | undefined;

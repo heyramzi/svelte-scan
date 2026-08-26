@@ -260,21 +260,6 @@ export class InspectorController {
     }
   };
 
-  // --- Toolbar ---
-
-  toggleToolbar = () => {
-    this.toolbar = { ...this.toolbar, expanded: !this.toolbar.expanded };
-  };
-  closeToolbar = () => {
-    this.toolbar = { ...this.toolbar, expanded: false, settingsOpen: false };
-  };
-  toggleSettings = () => {
-    this.toolbar = { ...this.toolbar, settingsOpen: !this.toolbar.settingsOpen };
-  };
-  toggleNotesVisibility = () => {
-    this.toolbar = { ...this.toolbar, notesVisible: !this.toolbar.notesVisible };
-  };
-
   // --- Event handlers (called from Svelte component) ---
 
   handlePointerMove = (e: PointerEvent) => {

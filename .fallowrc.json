@@ -9,7 +9,7 @@
     "bin/svelte-scan.mjs",
     "bin/svelte-scan.ts"
   ],
-  "ignoreDependencies": ["agent-browser", "playwright", "vite"],
+  "ignoreDependencies": ["playwright", "vite"],
   "ignoreUnresolvedImports": ["$app/environment"],
   "rules": {
     "unused-files": "warn",

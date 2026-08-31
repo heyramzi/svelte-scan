@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { formatElementsForAI, formatOptimizationPrompt } from "./formatter";
 import type { SelectedElement } from "./types";
 import type { AggregatedStats } from "../core/types";

@@ -1,8 +1,16 @@
 allowBuilds:
-  agent-browser: true
   esbuild: true
 
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@^0.1.24
+  vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
+  vite-plus: ^0.1.24
+
 overrides:
+  # vite and vitest come from the vite-plus catalog above, so their versions are
+  # pinned there rather than by a floor.
+  vite: 'catalog:'
+  vitest: 'catalog:'
   js-yaml@>=3.0.0 <3.15.1: ">=3.15.1 <4"
   js-yaml@>=4.0.0 <4.3.1: ">=4.3.1 <5"
   nanoid@>=3.0.0 <3.3.18: ">=3.3.18 <4"
@@ -14,4 +22,11 @@ overrides:
   devalue@>=5.6.3 <5.8.1: ">=5.8.1 <6"
   esbuild@>=0.27.3 <0.28.1: ">=0.28.1 <0.29"
   svelte@<5.55.7: ">=5.55.7 <6"
-  vite@>=8.0.0 <8.0.16: ">=8.0.16 <9"
+
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

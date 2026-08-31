@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /* oxlint-disable unbound-method -- test captures prototype refs to verify freeze/unfreeze behavior */
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach } from "vite-plus/test";
 import { createPageFreezer } from "./freeze";
 
 describe("createPageFreezer", () => {

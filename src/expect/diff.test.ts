@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildDiffSummary, parseDiff } from "./diff";
 import { MAX_DIFF_SIZE_BYTES } from "./constants";
 

@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { MARKER_COLOR, DEFAULT_SETTINGS, STORAGE_PREFIX } from "./constants";
 
 describe("constants", () => {

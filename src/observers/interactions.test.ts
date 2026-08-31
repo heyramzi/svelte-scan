@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /* oxlint-disable unbound-method -- test verifies event listener registration/cleanup */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
 import { createInteractionObserver } from "./interactions";
 import { createCollector } from "../core/collector";
 import { IGNORE_ATTR } from "../core/types";

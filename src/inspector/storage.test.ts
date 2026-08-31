@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vite-plus/test";
 import { readNotes, writeNotes, readSettings, writeSettings, clearPageStorage } from "./storage";
 import { DEFAULT_SETTINGS } from "./constants";
 import type { InspectorNote, InspectorSettings } from "./types";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import type { StepResult, TestPlan } from "./types";
 import { createReport, formatReportForToolbar, formatReportMarkdown } from "./reporter";
 

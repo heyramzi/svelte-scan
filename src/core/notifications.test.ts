@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
 import { createCollector } from "./collector";
 import { createNotificationManager } from "./notifications";
 import type { Collector } from "./types";

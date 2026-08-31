@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { captureTextSelection, buildGroupBounds, buildAreaRect } from "./selection";
 
 describe("selection", () => {

@@ -1,5 +1,5 @@
 
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vite-plus/test";
 import { createReactivityObserver } from "./reactivity";
 import { createCollector } from "../core/collector";
 

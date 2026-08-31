@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { createCollector } from "./core/collector";
 import { createDomObserver } from "./observers/dom";
 import { createCanvasOverlay } from "./ui/canvas-overlay";

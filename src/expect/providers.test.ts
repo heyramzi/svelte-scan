@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import { getProvider, resolveProvider } from "./providers";
 
 describe("getProvider", () => {

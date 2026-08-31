@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, vi } from "vitest";
+import { describe, test, expect, beforeEach, vi } from "vite-plus/test";
 import { readConfig, writeConfig } from "./config-storage";
 import type { SvelteScanConfig } from "./types";
 import { DEFAULT_CONFIG } from "./types";

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vite-plus/test";
 import { buildDomPath, resolveDomPath } from "./dom-path";
 
 describe("dom-path", () => {

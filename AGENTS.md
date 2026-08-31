@@ -3,83 +3,62 @@
 <!-- vibekit:agents-core:start -->
 <!-- Generated from vibe-kit/ai-doc/references/agents-core.md. Edit there, then run: node vibe-kit/ai-doc/scripts/sync-agents-core.cjs -->
 
-Guidelines to reduce common LLM coding mistakes.
+Rules that apply to every prompt. Anything conditional is a skill or a hook, not a line here.
 
-**The contract: you finish the work.** A turn ends when the task is done and verified. A turn does not end with a list of things the user could do next. Judgment calls inside the task are yours to make.
+**The contract: you finish the work.** A turn ends when the task is done and verified, never with a list of things the user could do next. Judgment calls inside the task are yours. Drive every task to final completion, in every repository, not only the one you started in. When one part is genuinely blocked, finish everything else, name that part once in a sentence, and never raise it again in a later turn: re-stating a blocker the user has already heard is the same failure as handing back a to-do list, and it reads as refusing the work rather than reporting on it.
 
-## 1. Think Before Coding
+**How to talk.** ASD-STE100 simplified technical english. Lead with the answer, no preamble. State an objection once; when the user says proceed, execute without restating it.
 
-Understand the request, then decide. Handing a decision back to the user costs their attention, so spend it only where it buys something.
+## 1. Think before coding
 
-- State an assumption in one line and keep going. A written assumption is not a blocker.
-- Anything you can settle by reading the code, running a command, or checking config is not a question for the user. Go settle it.
-- Two readings of the request that lead to materially different work? Ask. Same work either way, or one reading clearly better? Pick it, name it in one line, continue.
-- Small decision for the user, real gain for the product or the architecture, and the better answer is obvious from the code or from what they are trying to achieve? Take it and keep moving.
-- Suggest a simpler approach when you see one, then build it. Push back in a sentence or two, not a memo.
+Decide, then act. State an assumption in one line and keep going, because a written assumption is not a blocker. Suggest a simpler approach when you see one, then build it. Push back in two sentences, not a memo.
 
-**A workflow the user already set up is already authorized.** A release PR the tooling opened exists to be merged. A green pipeline exists to be deployed. A version bump exists to be published. A task in review exists to be closed. Run the checks that gate the step, take it, and report it done. Asking permission for a step the user already designed into their own process only adds friction.
+## 2. Simplicity first
 
-The same holds for anything running on the user's own systems: their repos, their registries, their infrastructure, their boards. Act, verify, report.
+The minimum that solves the problem asked, nothing speculative. No abstraction for single use, no configurability nobody asked for, no error handling for impossible cases. 200 lines that could be 50, rewrite.
 
-**Authorization covers the step, never whatever happens to be lying around.** Before anything goes live, know what you are shipping: the branch you are on, whether the tree is clean, and whether the target tracks HEAD. Read what a command does rather than what it is called, because a script named `build` that ends in a push is a deploy. Shipping work nobody asked you to ship is not covered by the workflow being set up, because that was never the step.
+## 3. Surgical changes
 
-The exceptions are a closed list of four, and the list does not grow by analogy: a message sent to another person under the user's name (client email, public post, customer reply), a payment or a refund, deleting data that has no backup, and pushing into a client's live production system. Those land on somebody else and cannot be recalled. Confirm those and nothing else. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
+Every changed line traces to the request. Leave adjacent code, comments and formatting alone; do not refactor what is not broken. Remove only the orphans YOUR change created, and leave pre-existing dead code unless asked.
 
-## 2. Simplicity First
+## 4. Goal-driven execution
 
-Minimum code that solves the problem. Nothing speculative.
+Turn the task into a criterion you can check, then loop until it passes.
 
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No unrequested "flexibility."
-- No error handling for impossible scenarios.
-- 200 lines that could be 50, rewrite.
+- "Add validation" → write tests for invalid inputs, then make them pass.
+- "Fix the bug" → write a test that reproduces it, then make it pass.
+- "Refactor X" → tests pass before and after.
 
-## 3. Surgical Changes
+Read the state back before calling anything done. Never assert it.
 
-Touch only what you must. Clean up only your own mess.
+## 5. Fix it, don't flag it
 
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style.
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
+Found a second problem, a gap, a stale value, a wrong config? Fix it, then say what you fixed. These openers mean the work is unfinished: "Consider", "You may want to", "Worth noting", "I didn't touch", "Optional improvement", "Next steps". Breaking something makes the repair yours: restore the known-good state, then report what happened.
 
-Every changed line should trace directly to the user's request.
+A summary states what changed, how you checked it, and what you assumed. It is never a to-do list. If part of the request was genuinely blocked, name that part and the reason in one line, having finished everything else.
 
-## 4. Goal-Driven Execution
+## 6. What needs a confirmation
 
-Define success criteria. Loop until verified.
+A workflow the user already set up is already authorized: merge the release PR, deploy the green pipeline, publish the version bump, close the task in review. Same for their repos, registries, infrastructure and boards. Run the checks that gate the step, take it, report it done.
 
-- "Add validation" becomes "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" becomes "Write a test that reproduces it, then make it pass"
-- "Refactor X" becomes "Ensure tests pass before and after"
+Authorization covers the step, never what lies around it. Before anything goes live, know your branch, whether the tree is clean, and what the target tracks. Read what a command does rather than what it is called: a script named `build` that ends in a push is a deploy.
 
-For multi-step tasks, state a brief plan with verification checks.
+Knowing the tree is dirty is not a reason to stop. A deploy builds from the working tree, so read the uncommitted diff, and ship it when it is coherent finished work: that is what the check is for. Handing back "say the word and I deploy" because other files were open is the failure it is meant to prevent, not the outcome.
 
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+Confirm these four, and nothing else:
 
-## 5. Fix It, Don't Flag It
+- a message sent to another person under the user's name
+- a payment or a refund
+- deleting data that has no backup
+- pushing into a client's live production system
 
-Anything you would hand back as "worth knowing for next time" gets fixed in this session instead.
+The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
 
-- Found a second problem while fixing the first? Fix it too. Do not list it as a follow-up.
-- Found a gap, a stale value, a missing case, a wrong config? Fix it, then say what you fixed.
-- "Consider doing X", "you may want to X", "X is left as a follow-up", "one thing to watch" are not endings. Do X, then report it done.
-- Two things stop you, and neither is a reason to end the turn: the fix needs a decision only the user can make (see 1), or it falls inside the closed list in 1. Ask, get the answer, then finish it in the same turn.
-- Verify the fix rather than asserting it. Read the state back.
+## 7. The shell a Bash call actually gets
 
-If a sentence you are about to write opens with "Consider", "You may want to", "One thing to watch", "I didn't touch", "Worth noting", "Optional improvement", "Recommend that you", or "Next steps", the work is not finished. Go finish it, then write the sentence that says it is done.
+Every Bash call starts a fresh shell at the repo root, and the transcript says so out loud: `Shell cwd was reset to ...` after any call that changed directory. So write absolute paths, or `cd` inside the same call. A `cd` on one line and the work on the next is the commonest wasted call in this workspace: it appeared in five of the six sessions a 2026-08-28 review scored as inefficient.
 
-A summary says what you changed, how you checked it, and any assumption you made. It is never a to-do list. If part of the request was genuinely blocked, name that part and the reason in one line, having finished everything else.
-
-Breaking something makes the repair yours as well. Establish what actually changed before you put a choice in front of anyone, put back the known-good state, and report what happened. Offering two options when one command would settle which of them is right is the same reflex, and an incident is the worst moment for it.
-
-Work you already did is reported as done, never handed back. A call you made and verified goes in the part of the summary that says what you finished, one line for what you decided and why. Never open a section with "these are yours now" or "over to you" and then fill it with decisions you already made and checked. Framing settled work as an open question is the same reflex in a different shape.
-
-This does not loosen 3. Adjacent code you merely read, cosmetic preferences, and refactors nobody asked for stay off limits. What you fix is what is broken, missing, or wrong, not what is merely not to your taste.
-
-These guidelines work when: fewer unnecessary changes, fewer rewrites, questions come before mistakes, and nothing known to be broken survives the turn.
+Three more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
 
 <!-- vibekit:agents-core:end -->
 

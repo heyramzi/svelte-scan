@@ -1,4 +1,4 @@
-# CLAUDE.md
+# svelte-scan
 
 <!-- vibekit:agents-core:start -->
 <!-- Generated from vibe-kit/ai-doc/references/agents-core.md. Edit there, then run: node vibe-kit/ai-doc/scripts/sync-agents-core.cjs -->

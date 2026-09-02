@@ -49,78 +49,36 @@ Confirm these four, and nothing else:
 
 - a message sent to another person under the user's name
 - a payment or a refund
-- deleting data that has no backup
+- deleting somebody else's data that has no backup
 - pushing into a client's live production system
 
-The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
+Ramzi's own files, repos and machines are never on that list. 29 Aug 2026: "Don't ever worry about deleting files." Delete it, say what went, carry on. The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
 
 ## 7. The shell a Bash call actually gets
 
 Every Bash call starts a fresh shell at the repo root, and the transcript says so out loud: `Shell cwd was reset to ...` after any call that changed directory. So write absolute paths, or `cd` inside the same call. A `cd` on one line and the work on the next is the commonest wasted call in this workspace: it appeared in five of the six sessions a 2026-08-28 review scored as inefficient.
 
-Three more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
+Four more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; brace every variable that is followed by a colon, because zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`, which fails as a missing option and never as a bad path; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
 
 <!-- vibekit:agents-core:end -->
 
-## What is svelte-scan?
-
-A SvelteKit dev tool (`@heyramzi/svelte-scan`) that combines health monitoring, element inspection, and browser testing in one package. Dev-mode only, zero production impact.
-
-## Commands
+svelte-scan (`@heyramzi/svelte-scan`): a SvelteKit dev tool combining health monitoring, element
+inspection and browser testing. Dev-mode only, zero production impact. Peer dep `svelte ^5`.
 
 ```bash
-npx vitest run          # Run all tests
-npx vitest run src/expect  # Run only expect tests
+npx vitest run             # all tests
+npx vitest run src/expect  # one module
 ```
 
-NEVER run `pnpm dev` or `pnpm build`.
+Never run `pnpm dev` or `pnpm build`.
 
-## Architecture
+- Everything the package emits is namespaced: CSS classes `sv-*`, CSS variables `--sv-*`, data
+  attributes `data-svelte-scan-*`, ignore attribute `data-svelte-scan-ignore`, HMR event
+  `svelte-scan:server-log`. `type` not `interface` for object types.
 
-Three modules, all dev-mode only:
+## Read before you touch
 
-### Health Monitoring (`core/` + `observers/` + `ui/`)
+Nothing here loads itself.
 
-- **Collector** (`core/collector.ts`): Central event bus with time-based stats memoization. Observers emit events, toolbar polls stats.
-- **Shared utilities** (`core/dom-utils.ts`, `core/format.ts`): DOM ancestor checks, component name resolution, arg stringification.
-- **Observers** (7 total): DOM mutations, effects, leaks, reactivity, console, server, interactions. Each implements `{ start(), stop(), destroy() }`.
-- **Toolbar** (`ui/Toolbar.svelte`): Pill + expandable panel with tabs. CSS injected via JS string (no external stylesheet).
-- **Canvas overlay** (`ui/canvas-overlay.ts`): Color-coded DOM mutation highlights using a single `<canvas>` with RAF-driven fading rects.
-- **Vite plugin** (`vite-plugin.ts`): Patches server-side console methods, forwards via HMR WebSocket (`svelte-scan:server-log`).
-
-### Element Inspector (`inspector/`)
-
-- `controller.svelte.ts`: Inspection state machine with Svelte 5 runes
-- `selector.ts`: CSS selector generation (id > data-attr > classes > nth-child)
-- `source.ts`: `__svelte_meta` resolution to file:line:column
-- `freeze.ts`: Pauses CSS animations, WAAPI, timers
-- `keyboard.ts`: Claims keyboard events during inspect mode
-- `notes.ts`: Annotation persistence per element/text/group
-- `export.ts`: Typed formatters (compact/standard/detailed/forensic)
-- `formatter.ts`: Markdown output for AI agents
-
-### Expect (`expect/`)
-
-- `types.ts` + `constants.ts`: Shared types and thresholds
-- `diff.ts`: Git diff parser for changed files
-- `planner.ts`: AI test plan generation from diffs
-- `providers.ts`: AI provider abstraction (Anthropic, OpenAI, Gemini)
-- `runner.ts`: Playwright step execution (dynamic import, no hard dep)
-- `recorder.ts`: rrweb session recording
-- `reporter.ts`: Test result formatting
-
-## Conventions
-
-- `type` not `interface` for TypeScript object types
-- CSS classes: `sv-*` prefix
-- CSS variables: `--sv-*` prefix
-- Data attributes: `data-svelte-scan-*`
-- Ignore attribute: `data-svelte-scan-ignore`
-- HMR event: `svelte-scan:server-log`
-- Peer dep: `svelte ^5.0.0`
-- Svelte 5 runes: `$state`, `$derived`, `$effect`, `$props`
-- Section comments in .svelte files (IMPORTS, TYPES, PROPS, STATE, DERIVED, EFFECTS, FUNCTIONS, MARKUP)
-
-## Testing
-
-Tests are colocated (`file.test.ts` next to `file.ts`). Environment: jsdom. All observers and inspector modules have unit tests. Expect module has tests for each submodule.
+- [`architecture.md`](.claude/references/architecture.md): the three modules and every file in
+  them.

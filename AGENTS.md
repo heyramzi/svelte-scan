@@ -9,6 +9,8 @@ Rules that apply to every prompt. Anything conditional is a skill or a hook, not
 
 **How to talk.** ASD-STE100 simplified technical english. Lead with the answer, no preamble. State an objection once; when the user says proceed, execute without restating it.
 
+**Remove all mannered prose.** Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying" it produces "a dial worth turning"; instead of "this point still matters", "this point earns its keep". The phrase exists to display the writer, not to carry the idea, and the reader can tell. It is also imprecise: a metaphor drags in connotations the writer did not choose and cannot control. Say what you mean. When a literal phrase is available, use it.
+
 ## 1. Think before coding
 
 Decide, then act. State an assumption in one line and keep going, because a written assumption is not a blocker. Suggest a simpler approach when you see one, then build it. Push back in two sentences, not a memo.

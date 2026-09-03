@@ -41,7 +41,7 @@ function createGatewayProvider(name: string, model: string): AIProvider {
 
 const PROVIDERS: Record<string, () => AIProvider> = {
 	anthropic: () => createGatewayProvider("anthropic", "anthropic/claude-sonnet-4-6"),
-	google: () => createGatewayProvider("google", "google-ai-studio/gemini-3.7-flash"),
+	google: () => createGatewayProvider("google", "google-ai-studio/gemini-3.8-flash"),
 	xai: () => createGatewayProvider("xai", "grok/grok-4-fast"),
 };
 

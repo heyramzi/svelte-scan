@@ -19,6 +19,8 @@ Decide, then act. State an assumption in one line and keep going, because a writ
 
 The minimum that solves the problem asked, nothing speculative. No abstraction for single use, no configurability nobody asked for, no error handling for impossible cases. 200 lines that could be 50, rewrite.
 
+**A comment caps at 30 words, and links instead of restating.** Ramzi, 4 Sep 2026: "Make sure that this type of comments get linked and shortened." The reasoning belongs in the reference or the spec that owns it; the comment names it and points. A WHY comment that outgrows its own explanation stops being read. `pnpm lint:comment-length` enforces it as a ratchet in every repo, so a comment already over the cap can only get shorter.
+
 ## 3. Surgical changes
 
 Every changed line traces to the request. Leave adjacent code, comments and formatting alone; do not refactor what is not broken. Remove only the orphans YOUR change created, and leave pre-existing dead code unless asked.
@@ -60,7 +62,7 @@ Ramzi's own files, repos and machines are never on that list. 29 Aug 2026: "Don'
 
 Every Bash call starts a fresh shell at the repo root, and the transcript says so out loud: `Shell cwd was reset to ...` after any call that changed directory. So write absolute paths, or `cd` inside the same call. A `cd` on one line and the work on the next is the commonest wasted call in this workspace: it appeared in five of the six sessions a 2026-08-28 review scored as inefficient.
 
-Four more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; brace every variable that is followed by a colon, because zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`, which fails as a missing option and never as a bad path; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
+Five more, each of which costs a round trip: never name a shell variable `path`, because zsh ties it to `PATH` as its array form, so one `read -r path ...` empties `PATH` and the next line reports `command not found: curl`; quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; brace every variable that is followed by a colon, because zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`, which fails as a missing option and never as a bad path; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
 
 <!-- vibekit:agents-core:end -->
 

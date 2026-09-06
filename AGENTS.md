@@ -19,7 +19,7 @@ Decide, then act. State an assumption in one line and keep going, because a writ
 
 The minimum that solves the problem asked, nothing speculative. No abstraction for single use, no configurability nobody asked for, no error handling for impossible cases. 200 lines that could be 50, rewrite.
 
-**A comment caps at 30 words, and links instead of restating.** Ramzi, 4 Sep 2026: "Make sure that this type of comments get linked and shortened." The reasoning belongs in the reference or the spec that owns it; the comment names it and points. A WHY comment that outgrows its own explanation stops being read. `pnpm lint:comment-length` enforces it as a ratchet in every repo, so a comment already over the cap can only get shorter.
+**A comment caps at 30 words, and links instead of restating.** Ramzi, 4 Sep 2026: "Make sure that this type of comments get linked and shortened." The reasoning belongs in the reference or the spec that owns it; the comment names it and points. A WHY comment that outgrows its own explanation stops being read.
 
 ## 3. Surgical changes
 

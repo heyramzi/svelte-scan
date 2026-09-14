@@ -7,7 +7,6 @@ export function generatePlanId(): string {
   return `plan-${timestamp}-${random}`;
 }
 
-
 export function buildPlanPrompt(files: ChangedFile[], baseUrl: string, message?: string): string {
   const fileDescriptions = files
     .map((file) => {
@@ -51,7 +50,6 @@ ${fileDescriptions}
 
 Respond with ONLY the JSON object, no other text.${message ? `\n\n## Additional Instructions\n\n${message}` : ""}`;
 }
-
 
 export function parsePlanResponse(response: string): TestPlan {
   const jsonString = extractJson(response);

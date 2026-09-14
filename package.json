@@ -1,12 +1,14 @@
 {
   "name": "@heyramzi/svelte-scan",
   "version": "0.6.4",
-  "packageManager": "pnpm@11.0.6",
   "description": "SvelteKit dev tool: health monitoring, element inspector, AI browser testing",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heyramzi/svelte-scan.git"
+  },
+  "bin": {
+    "svelte-scan": "./bin/svelte-scan.mjs"
   },
   "files": [
     "src",
@@ -43,8 +45,9 @@
       "default": "./stub.ts"
     }
   },
-  "bin": {
-    "svelte-scan": "./bin/svelte-scan.mjs"
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "test": "vp test run",
@@ -55,11 +58,11 @@
     "fallow:health": "fallow health",
     "fallow:dupes": "fallow dupes",
     "lint:comment-length": "heyramzi-comment-length",
-    "lint:comment-length:update": "heyramzi-comment-length --update"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "lint:comment-length:update": "heyramzi-comment-length --update",
+    "lint": "vp fmt --check . && vp lint -c .oxlintrc.json . && pnpm lint:comment-length",
+    "lint:fix": "vp fmt . && vp lint -c .oxlintrc.json --fix .",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check"
   },
   "dependencies": {
     "@lucide/svelte": "^1.17.0"
@@ -76,5 +79,6 @@
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
-  }
+  },
+  "packageManager": "pnpm@11.0.6"
 }

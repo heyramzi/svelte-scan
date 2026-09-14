@@ -37,7 +37,6 @@ export function buildDomPath(element: Element): string | null {
 export function resolveDomPath(path: string): Element | null {
   if (!path) return null;
 
-  
   try {
     const parts = path.split(" > ");
     let current: Element | null = null;

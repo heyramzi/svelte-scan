@@ -1,6 +1,5 @@
 #!/usr/bin/env tsx
 
-
 import { execSync } from "node:child_process";
 import { createInterface } from "node:readline";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -267,10 +266,13 @@ async function runInstall(args: CliArgs): Promise<void> {
   const relativeSvelteScanPath = svelteScanPath.replace(workspaceRoot + "/", "");
   if (!existsSync(svelteScanPath)) {
     console.log("Adding svelte-scan submodule...");
-    execSync(`git submodule add https://github.com/heyramzi/svelte-scan.git ${relativeSvelteScanPath}`, {
-      cwd: workspaceRoot,
-      stdio: "inherit",
-    });
+    execSync(
+      `git submodule add https://github.com/heyramzi/svelte-scan.git ${relativeSvelteScanPath}`,
+      {
+        cwd: workspaceRoot,
+        stdio: "inherit",
+      },
+    );
   } else {
     console.log("svelte-scan submodule already exists, skipping.");
   }
@@ -279,7 +281,8 @@ async function runInstall(args: CliArgs): Promise<void> {
   const pkgJsonPath = resolve(target, "package.json");
   if (existsSync(pkgJsonPath)) {
     const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
-    const hasLucide = (pkgJson.dependencies?.["@lucide/svelte"]) || (pkgJson.devDependencies?.["@lucide/svelte"]);
+    const hasLucide =
+      pkgJson.dependencies?.["@lucide/svelte"] || pkgJson.devDependencies?.["@lucide/svelte"];
     if (!hasLucide) {
       console.log("Installing @lucide/svelte...");
       execSync("pnpm add -D @lucide/svelte", { cwd: target, stdio: "inherit" });
@@ -353,7 +356,10 @@ async function loadSvelteScanPlugins(): Promise<Plugin[]> {
 
 `;
   if (!content.includes("loadSvelteScanPlugins")) {
-    content = content.replace("export default defineConfig", loaderCode + "export default defineConfig");
+    content = content.replace(
+      "export default defineConfig",
+      loaderCode + "export default defineConfig",
+    );
   }
 
   // Switch to async config and add svelte-scan plugins
@@ -363,16 +369,10 @@ async function loadSvelteScanPlugins(): Promise<Plugin[]> {
   );
 
   // Add svelte-scan plugins to plugins array
-  content = content.replace(
-    /plugins:\s*\[/,
-    "plugins: [...(await loadSvelteScanPlugins()), ",
-  );
+  content = content.replace(/plugins:\s*\[/, "plugins: [...(await loadSvelteScanPlugins()), ");
 
   // Close async config
-  content = content.replace(
-    /\}\);(\s*)$/,
-    "}));$1",
-  );
+  content = content.replace(/\}\);(\s*)$/, "}));$1");
 
   writeFileSync(viteFile, content);
 }
@@ -386,27 +386,18 @@ function patchLayout(layoutFile: string, workspaceRoot: string): void {
   }
 
   // Add browser/dev imports
-  if (!content.includes('import { browser, dev }')) {
+  if (!content.includes("import { browser, dev }")) {
     const importLine = 'import { browser, dev } from "$app/environment";\n';
     // Find first import after the css import and add after it
-    content = content.replace(
-      /(import\s+.*?app\.css.*?;\n)/,
-      `$1${importLine}`,
-    );
+    content = content.replace(/(import\s+.*?app\.css.*?;\n)/, `$1${importLine}`);
   }
 
   // Add Component type import
-  if (!content.includes('import type { Component }')) {
+  if (!content.includes("import type { Component }")) {
     if (content.includes("import type { Snippet }")) {
-      content = content.replace(
-        "import type { Snippet }",
-        "import type { Snippet, Component }",
-      );
+      content = content.replace("import type { Snippet }", "import type { Snippet, Component }");
     } else if (content.includes("import type {")) {
-      content = content.replace(
-        /(import type \{[^}]*?)\}/,
-        "$1, Component }",
-      );
+      content = content.replace(/(import type \{[^}]*?)\}/, "$1, Component }");
     } else {
       content = content.replace(
         /(import\s+.*?from\s+.*?;\n)/,
@@ -416,13 +407,11 @@ function patchLayout(layoutFile: string, workspaceRoot: string): void {
   }
 
   // Add SvelteScan state
-  const scanState = "\nlet SvelteScan: Component<{ workspaceRoot?: string }> | null = $state(null);\n";
+  const scanState =
+    "\nlet SvelteScan: Component<{ workspaceRoot?: string }> | null = $state(null);\n";
   const propsMatch = content.match(/let\s+\{[^}]*\}\s*[:=]\s*\$props\([^)]*\);?/);
   if (propsMatch) {
-    content = content.replace(
-      propsMatch[0],
-      propsMatch[0] + scanState,
-    );
+    content = content.replace(propsMatch[0], propsMatch[0] + scanState);
   }
 
   // Add $effect for lazy loading
@@ -434,10 +423,7 @@ $effect(() => {
 });
 `;
   // Insert before </script>
-  content = content.replace(
-    /<\/script>/,
-    scanEffect + "</script>",
-  );
+  content = content.replace(/<\/script>/, scanEffect + "</script>");
 
   // Add SvelteScan component in markup
   const scanMarkup = `

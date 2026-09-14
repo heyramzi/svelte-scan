@@ -1,4 +1,3 @@
-
 export const INSPECTOR_STYLES = `
 /* =============================================
    svibe inspector overlay

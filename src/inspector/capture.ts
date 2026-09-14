@@ -15,7 +15,6 @@ const COMPUTED_STYLE_KEYS = [
 ];
 
 function captureComputedStyles(element: Element): Record<string, string> | null {
-  
   try {
     const computed = window.getComputedStyle(element);
     const result: Record<string, string> = {};

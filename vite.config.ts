@@ -1,6 +1,9 @@
-import { defineConfig } from 'vite-plus';
+import { defineConfig } from "vite-plus";
 
+// Oxlint's own rules and ignores live in .oxlintrc.json: a `lint` key here makes vp
+// pass its own `-c`, which collides with the script's `-c .oxlintrc.json`.
 export default defineConfig({
-  fmt: {},
-  lint: {"jsPlugins":[{"name":"vite-plus","specifier":"vite-plus/oxlint-plugin"}],"rules":{"vite-plus/prefer-vite-plus-imports":"error"},"options":{"typeAware":true,"typeCheck":true}},
+  // Prose and workflows are written for a reader, not a compiler.
+  fmt: { ignorePatterns: ["**/*.md", "**/*.yml", "**/*.yaml", ".claude/**", "dist/**"] },
+  staged: { "*.{js,ts,svelte,mjs,css}": "vp fmt" },
 });

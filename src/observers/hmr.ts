@@ -1,10 +1,7 @@
 /**
- * HMR observer that connects to the global WebSocket patch injected by
- * the Vite plugin. The patch runs as an inline script before /@vite/client,
- * so Vite's own WebSocket listener is already wrapped by the time this
- * module loads.
- *
- * Falls back to runtime patching if the global isn't available (e.g. tests).
+ * Delegates to the Vite plugin global patch, which wraps Vite listeners
+ * before /@vite/client loads. Falls back to runtime patching without
+ * the global (e.g. tests).
  */
 /* oxlint-disable unbound-method, no-unsafe-type-assertion -- intentional prototype patching and MessageEvent.data typing */
 import { tryCatch } from "../result";

@@ -38,8 +38,8 @@ importers:
         specifier: ^2.31.0
         version: 2.31.0
       '@heyramzi/lint':
-        specifier: ^3.0.0
-        version: 3.0.0(@eslint/js@10.0.1(eslint@10.10.0))(eslint-plugin-svelte@3.23.0(eslint@10.10.0)(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(eslint@10.10.0)(globals@17.12.0)(svelte-eslint-parser@1.8.1(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(typescript-eslint@8.69.0(eslint@10.10.0)(typescript@7.0.2))
+        specifier: ^3.2.1
+        version: 3.2.1(@eslint/js@10.0.1(eslint@10.10.0))(eslint-plugin-svelte@3.23.0(eslint@10.10.0)(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(eslint@10.10.0)(globals@17.12.0)(svelte-eslint-parser@1.8.1(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(typescript-eslint@8.69.0(eslint@10.10.0)(typescript@7.0.2))
       fallow:
         specifier: ^3.18.0
         version: 3.18.0
@@ -425,8 +425,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@heyramzi/lint@3.0.0':
-    resolution: {integrity: sha512-tWX2kAYpD3gGdMn0Snt78IU5AJZGaH3eeBalhnX0ekaeAWCV9hyydX3cDfDiKhB4SaT7Mk28xou7H9OLqZjKYA==}
+  '@heyramzi/lint@3.2.1':
+    resolution: {integrity: sha512-PWEWD+mV4W/7FQEqlSowgD9ZumSrcHImBD2Tyv6kdMBhw+iqOEeKB2ciYmVGtyyDitwUaliqKW7PM/+OI73NYA==}
     hasBin: true
     peerDependencies:
       '@eslint/js': '>=10.0.0'
@@ -2439,7 +2439,7 @@ snapshots:
   '@fallow-cli/win32-x64-msvc@3.18.0':
     optional: true
 
-  '@heyramzi/lint@3.0.0(@eslint/js@10.0.1(eslint@10.10.0))(eslint-plugin-svelte@3.23.0(eslint@10.10.0)(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(eslint@10.10.0)(globals@17.12.0)(svelte-eslint-parser@1.8.1(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(typescript-eslint@8.69.0(eslint@10.10.0)(typescript@7.0.2))':
+  '@heyramzi/lint@3.2.1(@eslint/js@10.0.1(eslint@10.10.0))(eslint-plugin-svelte@3.23.0(eslint@10.10.0)(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(eslint@10.10.0)(globals@17.12.0)(svelte-eslint-parser@1.8.1(svelte@5.57.0(@typescript-eslint/types@8.69.0)))(typescript-eslint@8.69.0(eslint@10.10.0)(typescript@7.0.2))':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.10.0)
       eslint: 10.10.0

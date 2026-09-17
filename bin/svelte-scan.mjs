@@ -4,4 +4,4 @@
 // For development, use `tsx bi./svelte-scan.ts` directly.
 // For publishing, run `pnpm build:cli` to bundle the CLI.
 
-await import("./svelte-scan.ts");
+await import("#bin/svelte-scan.ts");

@@ -4,13 +4,13 @@ import { execSync } from "node:child_process";
 import { createInterface } from "node:readline";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve, join } from "node:path";
-import { parseDiff, buildDiffSummary } from "../src/expect/diff";
-import { buildPlanPrompt, parsePlanResponse } from "../src/expect/planner";
-import { executePlan, checkPlaywrightAvailable, extractCookies } from "../src/expect/runner";
-import { createReport, formatReportMarkdown } from "../src/expect/reporter";
-import { resolveProvider } from "../src/expect/providers";
-import { DEFAULT_EXPECT_CONFIG, EXPECT_STATE_DIR } from "../src/expect/constants";
-import type { ExpectConfig, TestPlan } from "../src/expect/types";
+import { parseDiff, buildDiffSummary } from "#src/expect/diff";
+import { buildPlanPrompt, parsePlanResponse } from "#src/expect/planner";
+import { executePlan, checkPlaywrightAvailable, extractCookies } from "#src/expect/runner";
+import { createReport, formatReportMarkdown } from "#src/expect/reporter";
+import { resolveProvider } from "#src/expect/providers";
+import { DEFAULT_EXPECT_CONFIG, EXPECT_STATE_DIR } from "#src/expect/constants";
+import type { ExpectConfig, TestPlan } from "#src/expect/types";
 
 const HELP = `
 svelte-scan: SvelteKit dev tool CLI

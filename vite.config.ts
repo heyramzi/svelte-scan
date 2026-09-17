@@ -4,6 +4,18 @@ import { defineConfig } from "vite-plus";
 // pass its own `-c`, which collides with the script's `-c .oxlintrc.json`.
 export default defineConfig({
   // Prose and workflows are written for a reader, not a compiler.
-  fmt: { ignorePatterns: ["**/*.md", "**/*.yml", "**/*.yaml", ".claude/**", "dist/**"] },
+  fmt: {
+    ignorePatterns: [
+      "**/*.md",
+      "**/*.yml",
+      "**/*.yaml",
+      ".claude/**",
+      ".agents/**",
+      ".codex/**",
+      ".gemini/**",
+      ".opencode/**",
+      "dist/**",
+    ],
+  },
   staged: { "*.{js,ts,svelte,mjs,css}": "vp fmt" },
 });

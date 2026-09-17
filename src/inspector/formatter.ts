@@ -1,4 +1,9 @@
-import type { SelectedElement, OutputMode, AnnotationSnapshot, ExportPayload } from "#src/inspector/types";
+import type {
+  SelectedElement,
+  OutputMode,
+  AnnotationSnapshot,
+  ExportPayload,
+} from "#src/inspector/types";
 import type { AggregatedStats } from "#src/core/types";
 import { formatPayload } from "#src/inspector/export";
 

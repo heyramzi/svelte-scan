@@ -1,6 +1,11 @@
 export { parseDiff, buildDiffSummary } from "#src/expect/diff";
 export { buildPlanPrompt, parsePlanResponse, generatePlanId } from "#src/expect/planner";
-export { executeStep, executePlan, checkPlaywrightAvailable, extractCookies } from "#src/expect/runner";
+export {
+  executeStep,
+  executePlan,
+  checkPlaywrightAvailable,
+  extractCookies,
+} from "#src/expect/runner";
 export { injectRecorder, collectEvents, formatRecording } from "#src/expect/recorder";
 export { createReport, formatReportMarkdown, formatReportForToolbar } from "#src/expect/reporter";
 export { getProvider, resolveProvider } from "#src/expect/providers";

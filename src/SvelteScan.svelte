@@ -50,9 +50,8 @@ let {
 const isIframe = browser && window.self !== window.top
 const skip = !dev || !browser || isIframe
 
-// Restore persisted settings before any observer starts, so an observer the
-// user disabled (e.g. DOM mutations) stays off from the first frame instead of
-// running until the toolbar mounts and applies the saved state.
+// Read saved config before observers start, so a disabled observer stays
+// off from the first frame.
 const saved = !skip ? readConfig() : null
 
 // svelte-ignore state_referenced_locally

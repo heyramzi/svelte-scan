@@ -8,19 +8,21 @@ SvelteKit dev tool. Monitors runtime health, inspects elements, and runs AI-driv
 
 ## Features
 
+The toolbar bundles health checks, element inspection, and browser tests.
+
 ### Health Monitoring
 
 Observes your running app and surfaces problems in a dev toolbar:
 
-- **DOM mutations** with color-coded flash overlay (purple/yellow/red by frequency)
-- **Runaway effects** detection (warns at 10+/sec, critical at 50+/sec)
-- **Memory leaks** from orphaned listeners, intervals, timeouts
-- **Reactivity stats** tracking signal, derived, and effect counts
-- **Console errors/warnings** capture (including failed fetch requests)
-- **Server-side logs** forwarded via HMR WebSocket
-- **Interaction latency** with INP-style classification (good/needs-improvement/poor)
-- **FPS meter** and HMR pause/resume
-- **Copy for AI** formats all diagnostics as markdown for Claude Code / Cursor
+- DOM mutations with color-coded flash overlay (purple/yellow/red by frequency)
+- Runaway effects detection (warns at 10+/sec, critical at 50+/sec)
+- Memory leaks from orphaned listeners, intervals, timeouts
+- Reactivity stats tracking signal, derived, and effect counts
+- Console errors/warnings capture (including failed fetch requests)
+- Server-side logs forwarded via HMR WebSocket
+- Interaction latency with INP-style classification (good/needs-improvement/poor)
+- FPS meter and HMR pause/resume
+- Copy for AI formats all diagnostics as markdown for Claude Code / Cursor
 
 ### Element Inspector
 
@@ -147,27 +149,27 @@ registerPlugin(
 ## CLI
 
 ```bash
-# Live health report from running app
+  # Live health report from running app
 npx @heyramzi/svelte-scan health
 npx @heyramzi/svelte-scan health --url http://localhost:5173 --json
 
-# Set up Playwright + state directory (--ci generates GitHub Actions workflow)
+  # Set up Playwright plus state directory (--ci generates GitHub Actions workflow)
 npx @heyramzi/svelte-scan init
 npx @heyramzi/svelte-scan init --ci
 
-# Generate + run tests from your uncommitted changes
+  # Generate plus run tests from your uncommitted changes
 npx @heyramzi/svelte-scan expect
 
-# Generate plan without running
+  # Generate plan without running
 npx @heyramzi/svelte-scan expect --plan-only
 
-# Run a saved plan
+  # Run a saved plan
 npx @heyramzi/svelte-scan expect --run .svelte-scan-expect/plan-xxx.json
 
-# List saved plans
+  # List saved plans
 npx @heyramzi/svelte-scan expect --list
 
-# Options
+  # Options
 npx @heyramzi/svelte-scan expect --base-url http://localhost:5173 --headed --timeout 15000
 npx @heyramzi/svelte-scan expect --provider openai   # anthropic (default), openai, gemini
 npx @heyramzi/svelte-scan expect --cookies            # Forward cookies from base URL
@@ -179,8 +181,8 @@ Requires an API key for your chosen provider (`ANTHROPIC_API_KEY`, `OPENAI_API_K
 
 svelte-scan is dev-only and must never be bundled in production. The package uses [conditional exports](https://nodejs.org/api/packages.html#conditional-exports) to enforce this:
 
-- **`development`** condition: resolves to the real source code
-- **`default`** condition: resolves to `stub.ts` (all exports are `null`/no-ops)
+- `development` condition: resolves to the real source code
+- `default` condition: resolves to `stub.ts` (all exports are `null`/no-ops)
 
 Bundlers that support the `development` condition (Vite in dev mode, webpack with `resolve.conditionNames`) will load svelte-scan. Production builds automatically get the zero-cost stub.
 
@@ -214,11 +216,11 @@ export default defineConfig(({ command }) => ({
 
 svelte-scan draws ideas and patterns from these projects:
 
-- [react-scan](https://github.com/aidenybai/react-scan) by Aiden Bai — render tracking, interaction latency classification, AI optimization prompts, OffscreenCanvas overlay architecture
-- [react-grab](https://github.com/aidenybai/react-grab) by Aiden Bai — element inspector, page freeze system (CSS/WAAPI/timers), source resolution, keyboard claiming, structured AI context output
-- [agentation](https://github.com/benjitaylor/agentation) by Benji Taylor — click-to-annotate UI elements for AI agents, CSS selector generation, multi-select patterns
-- [sv-agentation](https://github.com/SikandarJODD/sv-agentation) by Sikandar — Svelte 5 port of agentation concepts
-- [expect](https://github.com/millionco/expect) by Million — AI-driven browser testing from code changes
+- [react-scan](https://github.com/aidenybai/react-scan) by Aiden Bai: render tracking, interaction latency classification, AI optimization prompts, OffscreenCanvas overlay architecture
+- [react-grab](https://github.com/aidenybai/react-grab) by Aiden Bai: element inspector, page freeze system (CSS/WAAPI/timers), source resolution, keyboard claiming, structured AI context output
+- [agentation](https://github.com/benjitaylor/agentation) by Benji Taylor: click-to-annotate UI elements for AI agents, CSS selector generation, multi-select patterns
+- [sv-agentation](https://github.com/SikandarJODD/sv-agentation) by Sikandar: Svelte 5 port of agentation concepts
+- [expect](https://github.com/millionco/expect) by Million: AI-driven browser testing from code changes
 
 ## License
 

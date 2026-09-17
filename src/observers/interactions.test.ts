@@ -6,9 +6,8 @@ import { createCollector } from "../core/collector";
 import { IGNORE_ATTR } from "../core/types";
 
 /**
- * Wait for queueMicrotask + rAF + setTimeout(0) to flush, matching the
- * phase measurement callbacks in the observer. In jsdom, rAF is polyfilled
- * with setTimeout so a short delay covers all frames.
+ * Flush queueMicrotask, rAF and setTimeout(0) to match observer phase
+ * callbacks. jsdom polyfills rAF with setTimeout.
  */
 function waitForMeasurement(): Promise<void> {
   return new Promise((r) => setTimeout(r, 150));
@@ -49,10 +48,8 @@ describe("createInteractionObserver", () => {
     const handler = vi.fn();
     collector.subscribe("interaction", handler);
 
-    // Simulate a slow interaction with phase timing:
-    // Call 1: now (debounce), Call 2: t1 (handler end)
-    // Call 3: t2 (microtask/reactive), Call 4: t3 (rAF/paint)
-    // Call 5: t4 (setTimeout/composite) = 1300 => duration 300ms
+    // Phase timing for a slow click: debounce and t1-t3 at 1000,
+    // t4 at 1300 (300ms total).
     let callCount = 0;
     vi.mocked(performance.now).mockImplementation(() => {
       callCount++;
@@ -228,15 +225,12 @@ describe("createInteractionObserver", () => {
     const handler = vi.fn();
     collector.subscribe("interaction", handler);
 
-    // First click: now=1000, t1=1000, phases resolve, t4=1300 (needs-improvement)
-    // Second click: now=1050, debounced because 1050-1000 < 500
+    // First click uses calls 1-2 and 4-6; call 3 is the debounced second click.
     let callCount = 0;
     vi.mocked(performance.now).mockImplementation(() => {
       callCount++;
-      // Calls 1-2: first click (now + t1)
-      // Call 3: second click handleEvent (debounce check => skipped, 1050-1000<500)
-      // Calls 4-5: first click phase callbacks (t2, t3)
-      // Call 6: first click t4 measurement
+      // Calls 1-2 open the first click, call 3 is the debounced
+      // second click, calls 4-6 close the first click.
       if (callCount <= 2) return 1000;
       if (callCount === 3) return 1050; // 50ms after first = within debounce window
       if (callCount <= 5) return 1000;

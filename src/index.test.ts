@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from "vite-plus/test";
-import { createCollector } from "./core/collector";
-import { createDomObserver } from "./observers/dom";
-import { createCanvasOverlay } from "./ui/canvas-overlay";
+import { createCollector } from "#src/core/collector";
+import { createDomObserver } from "#src/observers/dom";
+import { createCanvasOverlay } from "#src/ui/canvas-overlay";
 
 describe("svibe integration", () => {
   it("full pipeline: DOM mutation triggers collector and canvas overlay", async () => {

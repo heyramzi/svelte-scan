@@ -1,4 +1,4 @@
-import type { StepResult, TestPlan, TestReport } from "./types";
+import type { StepResult, TestPlan, TestReport } from "#src/expect/types";
 
 export function createReport(plan: TestPlan, results: StepResult[]): TestReport {
   if (results.length === 0) {

@@ -1,5 +1,5 @@
-import { STATS_POLL_INTERVAL_MS, type Collector, type Observer } from "../core/types";
-import { isSupportedSvelteVersion } from "../core/compat";
+import { STATS_POLL_INTERVAL_MS, type Collector, type Observer } from "#src/core/types";
+import { isSupportedSvelteVersion } from "#src/core/compat";
 
 type SvelteInternals = {
   state: (v: unknown, stack?: unknown) => unknown;

@@ -1,5 +1,5 @@
 /* oxlint-ignore no-unsafe-type-assertion -- Svelte meta access requires unsafe narrowing */
-import { IGNORE_ATTR } from "./types";
+import { IGNORE_ATTR } from "#src/core/types";
 
 const TOOLBAR_ATTR = "data-svelte-scan-toolbar";
 

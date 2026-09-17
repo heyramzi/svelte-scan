@@ -1,5 +1,5 @@
-import { MAX_CANVAS_RECTS, FLASH_DURATION_MS } from "../core/types";
-import type { Collector } from "../core/types";
+import { MAX_CANVAS_RECTS, FLASH_DURATION_MS } from "#src/core/types";
+import type { Collector } from "#src/core/types";
 
 type CanvasRect = {
   rect: DOMRect;

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vite-plus/test";
-import { collectEvents, formatRecording, injectRecorder } from "./recorder";
+import { collectEvents, formatRecording, injectRecorder } from "#src/expect/recorder";
 
 function createMockPage() {
   return {

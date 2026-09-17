@@ -1,6 +1,6 @@
-import type { SelectedElement, OutputMode, AnnotationSnapshot, ExportPayload } from "./types";
-import type { AggregatedStats } from "../core/types";
-import { formatPayload } from "./export";
+import type { SelectedElement, OutputMode, AnnotationSnapshot, ExportPayload } from "#src/inspector/types";
+import type { AggregatedStats } from "#src/core/types";
+import { formatPayload } from "#src/inspector/export";
 
 // Format selected elements as markdown for AI agents
 export function formatElementsForAI(

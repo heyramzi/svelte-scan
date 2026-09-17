@@ -1,4 +1,4 @@
-import type { SourceInfo } from "./types";
+import type { SourceInfo } from "#src/inspector/types";
 
 type SvelteMeta = {
   loc: { file: string; line: number; column: number };

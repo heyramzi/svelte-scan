@@ -5,9 +5,9 @@ import {
   getPlugins,
   getPluginActions,
   destroyAllPlugins,
-} from "./plugins";
-import type { SvelteScanAPI } from "../api";
-import type { SvelteScanPlugin } from "./plugins";
+} from "#src/core/plugins";
+import type { SvelteScanAPI } from "#src/api";
+import type { SvelteScanPlugin } from "#src/core/plugins";
 
 function createMockAPI(): SvelteScanAPI {
   return {

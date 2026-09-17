@@ -1,4 +1,4 @@
-import type { InspectorSettings, InspectorPosition } from "./types";
+import type { InspectorSettings, InspectorPosition } from "#src/inspector/types";
 
 // Brand colors from UpSys design system (deterministic, not user-customizable)
 export const MARKER_COLOR = "#878af8"; // --brand-indigo-light (indigo-400)

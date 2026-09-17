@@ -2,8 +2,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 // WHY: published entry; consumers resolve the Plugin type from vite, not vite-plus
 import type { Plugin } from "vite-plus";
-import type { ServerLogPayload, SerializableHealthReport } from "./src/core/types";
-import { argsToString } from "./src/core/format";
+import type { ServerLogPayload, SerializableHealthReport } from "#src/core/types";
+import { argsToString } from "#src/core/format";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

@@ -11,7 +11,7 @@ import {
   type ConsoleEvent,
   type ServerLogEvent,
   type DomEvent,
-} from "./types";
+} from "#src/core/types";
 
 export type Severity = "info" | "warning" | "critical";
 

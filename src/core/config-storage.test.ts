@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeEach, vi } from "vite-plus/test";
-import { readConfig, writeConfig } from "./config-storage";
-import type { SvelteScanConfig } from "./types";
-import { DEFAULT_CONFIG } from "./types";
+import { readConfig, writeConfig } from "#src/core/config-storage";
+import type { SvelteScanConfig } from "#src/core/types";
+import { DEFAULT_CONFIG } from "#src/core/types";
 
 const store: Record<string, string> = {};
 const mockLocalStorage = {

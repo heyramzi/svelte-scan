@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
-import { createDomObserver } from "./dom";
-import { createCollector } from "../core/collector";
-import { IGNORE_ATTR } from "../core/types";
+import { createDomObserver } from "#src/observers/dom";
+import { createCollector } from "#src/core/collector";
+import { IGNORE_ATTR } from "#src/core/types";
 
 describe("createDomObserver", () => {
   let container: HTMLDivElement;

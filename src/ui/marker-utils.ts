@@ -1,4 +1,4 @@
-import type { InspectorNote } from "../inspector/types";
+import type { InspectorNote } from "#src/inspector/types";
 
 export type RenderedMarker = {
   key: string;

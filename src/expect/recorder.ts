@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- page is typed as any to avoid hard Playwright dependency */
-import { tryCatchAsync } from "../result";
+import { tryCatchAsync } from "#src/result";
 
 const RRWEB_CDN = "https://cdn.jsdelivr.net/npm/rrweb@2/dist/rrweb.min.js";
 

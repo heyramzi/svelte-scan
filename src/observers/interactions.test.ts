@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 /* oxlint-disable unbound-method -- test verifies event listener registration/cleanup */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
-import { createInteractionObserver } from "./interactions";
-import { createCollector } from "../core/collector";
-import { IGNORE_ATTR } from "../core/types";
+import { createInteractionObserver } from "#src/observers/interactions";
+import { createCollector } from "#src/core/collector";
+import { IGNORE_ATTR } from "#src/core/types";
 
 /**
  * Flush queueMicrotask, rAF and setTimeout(0) to match observer phase

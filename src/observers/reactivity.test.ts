@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from "vite-plus/test";
-import { createReactivityObserver } from "./reactivity";
-import { createCollector } from "../core/collector";
+import { createReactivityObserver } from "#src/observers/reactivity";
+import { createCollector } from "#src/core/collector";
 
 describe("createReactivityObserver", () => {
   afterEach(() => {

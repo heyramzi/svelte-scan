@@ -1,4 +1,4 @@
-import { tryCatch } from "../result";
+import { tryCatch } from "#src/result";
 
 // Generate a unique CSS selector for a DOM element
 export function generateSelector(element: Element): string {

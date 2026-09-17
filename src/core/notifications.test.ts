@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
-import { createCollector } from "./collector";
-import { createNotificationManager } from "./notifications";
-import type { Collector } from "./types";
+import { createCollector } from "#src/core/collector";
+import { createNotificationManager } from "#src/core/notifications";
+import type { Collector } from "#src/core/types";
 
 const DEFAULT_PHASES = { handler: 0, reactive: 0, paint: 0, composite: 0 };
 

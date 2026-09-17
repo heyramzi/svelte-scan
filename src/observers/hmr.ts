@@ -4,7 +4,7 @@
  * the global (e.g. tests).
  */
 /* oxlint-disable unbound-method, no-unsafe-type-assertion -- intentional prototype patching and MessageEvent.data typing */
-import { tryCatch } from "../result";
+import { tryCatch } from "#src/result";
 
 const HMR_TYPES = new Set(["update", "full-reload", "prune", "custom"]);
 

@@ -1,5 +1,5 @@
-import type { RectBox, TextAnchor, MarkerFallback } from "./types";
-import { buildDomPath } from "./dom-path";
+import type { RectBox, TextAnchor, MarkerFallback } from "#src/inspector/types";
+import { buildDomPath } from "#src/inspector/dom-path";
 
 export type CapturedTextSelection = {
   anchor: TextAnchor;

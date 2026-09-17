@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vite-plus/test";
-import { buildDomPath, resolveDomPath } from "./dom-path";
+import { buildDomPath, resolveDomPath } from "#src/inspector/dom-path";
 
 describe("dom-path", () => {
   let container: HTMLDivElement;

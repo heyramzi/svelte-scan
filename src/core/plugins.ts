@@ -1,4 +1,4 @@
-import type { SvelteScanAPI } from "../api";
+import type { SvelteScanAPI } from "#src/api";
 
 export type PluginAction = {
   label: string;

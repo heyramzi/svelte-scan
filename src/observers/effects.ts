@@ -3,8 +3,8 @@ import {
   STATS_POLL_INTERVAL_MS,
   type Collector,
   type Observer,
-} from "../core/types";
-import { isSupportedSvelteVersion } from "../core/compat";
+} from "#src/core/types";
+import { isSupportedSvelteVersion } from "#src/core/compat";
 
 type UserEffect = (fn: () => void | (() => void)) => void;
 type SvelteInternals = Record<string, unknown>;

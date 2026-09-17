@@ -1,4 +1,4 @@
-import type { ExpectConfig } from "./types";
+import type { ExpectConfig } from "#src/expect/types";
 
 export const STEP_TIMEOUT_MS = 10_000;
 export const PLAN_TIMEOUT_MS = 300_000;

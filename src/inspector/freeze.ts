@@ -1,4 +1,4 @@
-import { tryCatch } from "../result";
+import { tryCatch } from "#src/result";
 
 // Freeze/unfreeze page state while inspecting
 export function createPageFreezer() {

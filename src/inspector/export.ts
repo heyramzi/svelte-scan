@@ -1,4 +1,4 @@
-import type { ExportPayload, AnnotationSnapshot, OutputMode } from "./types";
+import type { ExportPayload, AnnotationSnapshot, OutputMode } from "#src/inspector/types";
 
 function codeValue(v: string): string {
   return `\`${v.replace(/\s+/g, " ").trim()}\``;

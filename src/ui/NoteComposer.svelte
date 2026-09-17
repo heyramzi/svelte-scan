@@ -4,7 +4,7 @@
 // =========================
 import { fade, scale } from 'svelte/transition'
 import { Plus, Trash2 } from '@lucide/svelte'
-import type { InspectorController } from '../inspector/controller.svelte'
+import type { InspectorController } from '#src/inspector/controller.svelte'
 
 // =========================
 // PROPS

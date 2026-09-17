@@ -1,7 +1,7 @@
-import type { InspectorNote, AnnotationSnapshot, InspectorSettings } from "./types";
-import { buildDomPath } from "./dom-path";
-import { generateSelector } from "./selector";
-import { resolveSource } from "./source";
+import type { InspectorNote, AnnotationSnapshot, InspectorSettings } from "#src/inspector/types";
+import { buildDomPath } from "#src/inspector/dom-path";
+import { generateSelector } from "#src/inspector/selector";
+import { resolveSource } from "#src/inspector/source";
 
 const COMPUTED_STYLE_KEYS = [
   "background-color",

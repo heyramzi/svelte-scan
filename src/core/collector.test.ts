@@ -1,13 +1,13 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi } from "vite-plus/test";
-import { createCollector } from "./collector";
+import { createCollector } from "#src/core/collector";
 import type {
   DomEvent,
   EffectEvent,
   LeakEvent,
   InteractionEvent,
   InteractionPhases,
-} from "./types";
+} from "#src/core/types";
 
 const DEFAULT_PHASES: InteractionPhases = { handler: 0, reactive: 0, paint: 0, composite: 0 };
 

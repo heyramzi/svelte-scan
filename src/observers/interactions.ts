@@ -4,8 +4,8 @@ import {
   type InteractionEvent,
   type InteractionPhases,
   type Observer,
-} from "../core/types";
-import { isIgnored, isInsideToolbar, resolveComponentName } from "../core/dom-utils";
+} from "#src/core/types";
+import { isIgnored, isInsideToolbar, resolveComponentName } from "#src/core/dom-utils";
 
 const DEBOUNCE_MS = 500;
 const GOOD_THRESHOLD = 200;

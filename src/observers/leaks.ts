@@ -1,5 +1,5 @@
 /* oxlint-disable unbound-method, no-unsafe-type-assertion -- intentional prototype patching for leak detection */
-import type { Collector, Observer } from "../core/types";
+import type { Collector, Observer } from "#src/core/types";
 
 type Handle = {
   type: "listener" | "interval" | "timeout";

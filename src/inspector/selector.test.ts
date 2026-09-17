@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vite-plus/test";
-import { generateSelector } from "./selector";
+import { generateSelector } from "#src/inspector/selector";
 
 describe("generateSelector", () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import type { InspectorNote, InspectorSettings } from "./types";
-import { DEFAULT_SETTINGS, STORAGE_PREFIX } from "./constants";
+import type { InspectorNote, InspectorSettings } from "#src/inspector/types";
+import { DEFAULT_SETTINGS, STORAGE_PREFIX } from "#src/inspector/constants";
 
 function notesKey(pageKey: string): string {
   return `${STORAGE_PREFIX}:notes:${pageKey}`;

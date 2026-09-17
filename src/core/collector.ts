@@ -15,8 +15,8 @@ import {
   type DomEvent,
   type EffectEvent,
   type ReactivityEvent,
-} from "./types";
-import { resolveComponentName } from "./dom-utils";
+} from "#src/core/types";
+import { resolveComponentName } from "#src/core/dom-utils";
 
 type Subscribers = {
   [K in ScanEvent["type"]]: Set<(event: Extract<ScanEvent, { type: K }>) => void>;

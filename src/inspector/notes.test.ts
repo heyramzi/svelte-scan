@@ -6,8 +6,8 @@ import {
   buildTextNote,
   updateNoteText,
   buildTargetLabel,
-} from "./notes";
-import type { ElementAnchor, TextAnchor, NoteSourceInfo } from "./types";
+} from "#src/inspector/notes";
+import type { ElementAnchor, TextAnchor, NoteSourceInfo } from "#src/inspector/types";
 
 const SOURCE: NoteSourceInfo = {
   componentName: "App",

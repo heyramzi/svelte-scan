@@ -1,4 +1,4 @@
-import { tryCatchAsync } from "../result";
+import { tryCatchAsync } from "#src/result";
 
 /**
  * Load svelte/internal/client at runtime.

@@ -3,18 +3,18 @@
 // IMPORTS
 // =========================
 import { onDestroy } from 'svelte'
-import { version } from '../../package.json'
-import { IGNORE_ATTR, type Collector, type AggregatedStats, type SvelteScanConfig } from '../core/types'
-import { createFpsMeter } from '../core/fps'
-import type { HmrObserver } from '../observers/hmr'
+import { version } from '#root/package.json'
+import { IGNORE_ATTR, type Collector, type AggregatedStats, type SvelteScanConfig } from '#src/core/types'
+import { createFpsMeter } from '#src/core/fps'
+import type { HmrObserver } from '#src/observers/hmr'
 import { Copy, Check, X, Pause, Play, Settings, StickyNote, Trash2, Type, MousePointer, SquareDashedMousePointer, Group, Monitor, Server } from '@lucide/svelte'
-import { OUTPUT_MODE_OPTIONS, POSITION_LABELS } from '../inspector/constants'
-import { writeConfig } from '../core/config-storage'
-import type { InspectorPosition } from '../inspector/types'
-import { InspectorController } from '../inspector/controller.svelte'
-import { countFrontendIssues, countServerIssues, formatFrontendForLLM, formatOverviewForLLM, formatServerLogsForLLM, getToolbarSeverity } from './toolbar-utils'
-import InspectorOverlay from './InspectorOverlay.svelte'
-import NoteComposer from './NoteComposer.svelte'
+import { OUTPUT_MODE_OPTIONS, POSITION_LABELS } from '#src/inspector/constants'
+import { writeConfig } from '#src/core/config-storage'
+import type { InspectorPosition } from '#src/inspector/types'
+import { InspectorController } from '#src/inspector/controller.svelte'
+import { countFrontendIssues, countServerIssues, formatFrontendForLLM, formatOverviewForLLM, formatServerLogsForLLM, getToolbarSeverity } from '#src/ui/toolbar-utils'
+import InspectorOverlay from '#src/ui/InspectorOverlay.svelte'
+import NoteComposer from '#src/ui/NoteComposer.svelte'
 
 // =========================
 // TYPES

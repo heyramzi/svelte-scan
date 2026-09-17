@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
-import type { ChangedFile } from "./types";
-import { buildPlanPrompt, generatePlanId, parsePlanResponse } from "./planner";
+import type { ChangedFile } from "#src/expect/types";
+import { buildPlanPrompt, generatePlanId, parsePlanResponse } from "#src/expect/planner";
 
 const sampleFiles: ChangedFile[] = [
   {

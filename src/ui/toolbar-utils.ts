@@ -1,4 +1,4 @@
-import type { AggregatedStats } from "../core/types";
+import type { AggregatedStats } from "#src/core/types";
 
 export function countToolbarIssues(stats: AggregatedStats): number {
   return countFrontendIssues(stats) + countServerIssues(stats);

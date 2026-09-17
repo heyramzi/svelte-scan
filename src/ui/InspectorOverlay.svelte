@@ -4,9 +4,9 @@
 // =========================
 import { backOut, cubicInOut } from 'svelte/easing'
 import { fade, scale } from 'svelte/transition'
-import type { InspectorController } from '../inspector/controller.svelte'
-import { resolveDomPath } from '../inspector/dom-path'
-import { buildRenderedMarkers } from './marker-utils'
+import type { InspectorController } from '#src/inspector/controller.svelte'
+import { resolveDomPath } from '#src/inspector/dom-path'
+import { buildRenderedMarkers } from '#src/ui/marker-utils'
 
 // =========================
 // PROPS

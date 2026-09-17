@@ -1,6 +1,6 @@
-import { tryCatchAsync } from "../result";
-import type { ExpectConfig, StepResult, TestAction, TestPlan, TestStep } from "./types";
-import { NAVIGATION_SETTLE_MS, SCREENSHOT_QUALITY } from "./constants";
+import { tryCatchAsync } from "#src/result";
+import type { ExpectConfig, StepResult, TestAction, TestPlan, TestStep } from "#src/expect/types";
+import { NAVIGATION_SETTLE_MS, SCREENSHOT_QUALITY } from "#src/expect/constants";
 
 export type Cookie = {
   name: string;

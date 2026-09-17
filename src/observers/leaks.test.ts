@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 /* oxlint-disable unbound-method -- test captures prototype refs to verify restore behavior */
 import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
-import { createLeakDetector } from "./leaks";
-import { createCollector } from "../core/collector";
-import type { LeakEvent } from "../core/types";
+import { createLeakDetector } from "#src/observers/leaks";
+import { createCollector } from "#src/core/collector";
+import type { LeakEvent } from "#src/core/types";
 
 describe("createLeakDetector", () => {
   let collector: ReturnType<typeof createCollector>;

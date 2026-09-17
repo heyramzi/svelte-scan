@@ -7,7 +7,12 @@
     "noEmit": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "#src/*": ["./src/*"],
+      "#bin/*": ["./bin/*"],
+      "#root/*": ["./*"]
+    }
   },
   "include": ["src"]
 }

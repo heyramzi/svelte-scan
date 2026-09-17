@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import type { AggregatedStats } from "../core/types";
+import type { AggregatedStats } from "#src/core/types";
 import {
   countFrontendIssues,
   countServerIssues,
@@ -7,7 +7,7 @@ import {
   formatFrontendForLLM,
   formatOverviewForLLM,
   getToolbarSeverity,
-} from "./toolbar-utils";
+} from "#src/ui/toolbar-utils";
 
 function createStats(overrides: Partial<AggregatedStats> = {}): AggregatedStats {
   return {

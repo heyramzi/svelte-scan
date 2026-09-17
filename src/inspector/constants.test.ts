@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vite-plus/test";
-import { MARKER_COLOR, DEFAULT_SETTINGS, STORAGE_PREFIX } from "./constants";
+import { MARKER_COLOR, DEFAULT_SETTINGS, STORAGE_PREFIX } from "#src/inspector/constants";
 
 describe("constants", () => {
   it("has a valid hex marker color", () => {

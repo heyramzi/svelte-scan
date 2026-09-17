@@ -1,5 +1,5 @@
-import type { SvelteScanConfig } from "./types";
-import { DEFAULT_CONFIG } from "./types";
+import type { SvelteScanConfig } from "#src/core/types";
+import { DEFAULT_CONFIG } from "#src/core/types";
 
 const STORAGE_KEY = "svelte-scan:config";
 

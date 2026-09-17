@@ -1,5 +1,5 @@
-import type { ChangedFile } from "./types";
-import { MAX_DIFF_SIZE_BYTES, RELEVANT_EXTENSIONS } from "./constants";
+import type { ChangedFile } from "#src/expect/types";
+import { MAX_DIFF_SIZE_BYTES, RELEVANT_EXTENSIONS } from "#src/expect/constants";
 
 // Parses unified diff output into structured ChangedFile objects
 export function parseDiff(rawDiff: string): ChangedFile[] {

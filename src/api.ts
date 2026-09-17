@@ -1,5 +1,5 @@
-import { createCollector } from "./core/collector";
-import type { AggregatedStats, Collector, ScanEvent } from "./core/types";
+import { createCollector } from "#src/core/collector";
+import type { AggregatedStats, Collector, ScanEvent } from "#src/core/types";
 
 const EVENT_TYPES: ScanEvent["type"][] = [
   "dom",

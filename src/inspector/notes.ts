@@ -11,7 +11,7 @@ import type {
   NoteSourceInfo,
   RectBox,
   MarkerFallback,
-} from "./types";
+} from "#src/inspector/types";
 
 let counter = 0;
 

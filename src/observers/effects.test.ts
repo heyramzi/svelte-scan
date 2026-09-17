@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from "vite-plus/test";
-import { createEffectTracker } from "./effects";
-import { createCollector } from "../core/collector";
+import { createEffectTracker } from "#src/observers/effects";
+import { createCollector } from "#src/core/collector";
 
 describe("createEffectTracker", () => {
   afterEach(() => {

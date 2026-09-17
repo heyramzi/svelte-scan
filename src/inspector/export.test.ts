@@ -5,8 +5,8 @@ import {
   formatDetailed,
   formatForensic,
   formatPayload,
-} from "./export";
-import type { ExportPayload, AnnotationSnapshot } from "./types";
+} from "#src/inspector/export";
+import type { ExportPayload, AnnotationSnapshot } from "#src/inspector/types";
 
 const BASE_SNAPSHOT: AnnotationSnapshot = {
   id: "n1",

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vite-plus/test";
-import { readNotes, writeNotes, readSettings, writeSettings, clearPageStorage } from "./storage";
-import { DEFAULT_SETTINGS } from "./constants";
-import type { InspectorNote, InspectorSettings } from "./types";
+import { readNotes, writeNotes, readSettings, writeSettings, clearPageStorage } from "#src/inspector/storage";
+import { DEFAULT_SETTINGS } from "#src/inspector/constants";
+import type { InspectorNote, InspectorSettings } from "#src/inspector/types";
 
 const store: Record<string, string> = {};
 const mockLocalStorage = {

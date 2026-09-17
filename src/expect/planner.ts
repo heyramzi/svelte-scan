@@ -1,5 +1,5 @@
-import { tryCatch } from "../result";
-import type { ChangedFile, TestPlan, TestStep } from "./types";
+import { tryCatch } from "#src/result";
+import type { ChangedFile, TestPlan, TestStep } from "#src/expect/types";
 
 export function generatePlanId(): string {
   const timestamp = Date.now().toString(36);

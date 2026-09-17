@@ -1,5 +1,5 @@
-import { type Collector, type Observer } from "../core/types";
-import { isIgnored, isSvibeOwned } from "../core/dom-utils";
+import { type Collector, type Observer } from "#src/core/types";
+import { isIgnored, isSvibeOwned } from "#src/core/dom-utils";
 
 function isElementNode(node: Node | null | undefined): node is Element {
   return Boolean(node && node.nodeType === Node.ELEMENT_NODE);

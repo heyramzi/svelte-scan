@@ -1,4 +1,4 @@
-import { type Collector, type Observer, type ServerLogPayload } from "../core/types";
+import { type Collector, type Observer, type ServerLogPayload } from "#src/core/types";
 
 type HotModule = {
   on(event: string, handler: (payload: ServerLogPayload | ServerLogPayload[]) => void): void;

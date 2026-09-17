@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
-import type { StepResult, TestPlan } from "./types";
-import { createReport, formatReportForToolbar, formatReportMarkdown } from "./reporter";
+import type { StepResult, TestPlan } from "#src/expect/types";
+import { createReport, formatReportForToolbar, formatReportMarkdown } from "#src/expect/reporter";
 
 const makePlan = (overrides?: Partial<TestPlan>): TestPlan => ({
   id: "plan-test",

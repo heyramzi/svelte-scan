@@ -1,5 +1,5 @@
-import type { Collector, Observer } from "../core/types";
-import { argsToString } from "../core/format";
+import type { Collector, Observer } from "#src/core/types";
+import { argsToString } from "#src/core/format";
 
 function extractSource(stack: string | undefined): string {
   if (!stack) return "unknown";

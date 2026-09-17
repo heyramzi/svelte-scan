@@ -8,15 +8,15 @@ import type {
   ExportPayload,
   ElementAnchor,
   NoteSourceInfo,
-} from "./types";
-import { DEFAULT_SETTINGS, DELETE_ALL_DELAY_MS } from "./constants";
-import { readNotes, writeNotes, readSettings, writeSettings } from "./storage";
-import { createPageFreezer } from "./freeze";
-import { createKeyboardClaimer } from "./keyboard";
-import { generateSelector } from "./selector";
-import { resolveSource, openInEditor } from "./source";
-import { buildDomPath, resolveDomPath } from "./dom-path";
-import { captureTextSelection, buildGroupBounds } from "./selection";
+} from "#src/inspector/types";
+import { DEFAULT_SETTINGS, DELETE_ALL_DELAY_MS } from "#src/inspector/constants";
+import { readNotes, writeNotes, readSettings, writeSettings } from "#src/inspector/storage";
+import { createPageFreezer } from "#src/inspector/freeze";
+import { createKeyboardClaimer } from "#src/inspector/keyboard";
+import { generateSelector } from "#src/inspector/selector";
+import { resolveSource, openInEditor } from "#src/inspector/source";
+import { buildDomPath, resolveDomPath } from "#src/inspector/dom-path";
+import { captureTextSelection, buildGroupBounds } from "#src/inspector/selection";
 import {
   buildElementNote,
   buildTextNote,
@@ -27,9 +27,9 @@ import {
   buildTargetSummary,
   buildSourceFromElement,
   buildFallbackMarker,
-} from "./notes";
-import { buildAnnotationSnapshot } from "./capture";
-import { formatPayload } from "./export";
+} from "#src/inspector/notes";
+import { buildAnnotationSnapshot } from "#src/inspector/capture";
+import { formatPayload } from "#src/inspector/export";
 
 export class InspectorController {
   // --- Reactive state ---

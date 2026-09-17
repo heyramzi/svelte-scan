@@ -19,6 +19,11 @@
     "logo.svg"
   ],
   "type": "module",
+  "imports": {
+    "#src/*": "./src/*",
+    "#bin/*": "./bin/*",
+    "#root/*": "./*"
+  },
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "svelte": "./src/index.ts",

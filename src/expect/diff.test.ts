@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
-import { buildDiffSummary, parseDiff } from "./diff";
-import { MAX_DIFF_SIZE_BYTES } from "./constants";
+import { buildDiffSummary, parseDiff } from "#src/expect/diff";
+import { MAX_DIFF_SIZE_BYTES } from "#src/expect/constants";
 
 const MODIFIED_DIFF = `diff --git a/src/routes/+page.svelte b/src/routes/+page.svelte
 index abc1234..def5678 100644

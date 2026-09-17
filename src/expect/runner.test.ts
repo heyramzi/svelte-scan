@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vite-plus/test";
-import { executePlan, executeStep } from "./runner";
-import type { ExpectConfig, TestPlan, TestStep } from "./types";
+import { executePlan, executeStep } from "#src/expect/runner";
+import type { ExpectConfig, TestPlan, TestStep } from "#src/expect/types";
 
 function createMockPage() {
   return {

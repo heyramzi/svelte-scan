@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vite-plus/test";
-import type { InspectorNote } from "../inspector/types";
-import { buildRenderedMarkers } from "./marker-utils";
+import type { InspectorNote } from "#src/inspector/types";
+import { buildRenderedMarkers } from "#src/ui/marker-utils";
 
 function mockRect(left: number, top: number, width: number, height: number): DOMRect {
   return {

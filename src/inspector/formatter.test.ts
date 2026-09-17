@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from "vite-plus/test";
-import { formatElementsForAI, formatOptimizationPrompt } from "./formatter";
-import type { SelectedElement } from "./types";
-import type { AggregatedStats } from "../core/types";
+import { formatElementsForAI, formatOptimizationPrompt } from "#src/inspector/formatter";
+import type { SelectedElement } from "#src/inspector/types";
+import type { AggregatedStats } from "#src/core/types";
 
 function makeRect(w: number, h: number): DOMRect {
   return {

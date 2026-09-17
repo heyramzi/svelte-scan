@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
-import { getProvider, resolveProvider } from "./providers";
+import { getProvider, resolveProvider } from "#src/expect/providers";
 
 describe("getProvider", () => {
   it("returns anthropic provider", () => {

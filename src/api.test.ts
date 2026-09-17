@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vite-plus/test";
-import { createSvelteScanAPI } from "./api";
-import type { SvelteScanAPI } from "./api";
+import { createSvelteScanAPI } from "#src/api";
+import type { SvelteScanAPI } from "#src/api";
 
 describe("svelte-scan API", () => {
   let api: SvelteScanAPI;

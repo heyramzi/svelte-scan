@@ -15,10 +15,8 @@ const SERVER_REPLAY_BUFFER_SIZE = 50;
 const replayBuffer: ServerLogPayload[] = [];
 
 /**
- * Inline script injected before /@vite/client to patch WebSocket.prototype.
- * Because this is a classic (non-module) script, it executes synchronously
- * before Vite's module-type client script registers its message listener.
- * This lets svelte-scan's pause/resume actually block HMR updates.
+ * Classic script injected before /@vite/client. Synchronous execution patches
+ * WebSocket before the module client registers its listener, so pause blocks HMR.
  */
 const HMR_PATCH_SCRIPT = `
 <script data-svelte-scan-hmr>

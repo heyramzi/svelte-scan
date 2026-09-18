@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode-go/glm-5.3",
+  "model": "opencode-go/muse-spark-1.3-contributor",
   "small_model": "opencode-go/glm-5.3-flash",
   "disabled_providers": [
     "openai",

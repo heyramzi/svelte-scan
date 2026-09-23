@@ -95,6 +95,7 @@ zsh and macOS:
 
 - Never name a shell variable `path`. zsh ties it to `PATH`, so `read -r path ...` empties `PATH` and the next line says `command not found: curl`.
 - Quote a `--include` glob, or zsh expands it first and the call dies with `no matches found`.
+- A list of paths in one variable stays one word in zsh, so `git add $P` looks for a single file named after the whole list. Use an array: `P=(a b)`, then `"${P[@]}"`.
 - Quote a separator that starts with `=`. A bare `===` is equals expansion and answers `== not found`.
 - Brace a variable that's followed by a colon. zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`.
 - `timeout` isn't installed on macOS. Use the Bash tool's own `timeout` parameter.

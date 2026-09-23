@@ -1,8 +1,14 @@
 name: Release
 
+# Only a changeset or a version bump can release anything.
 on:
   push:
     branches: [main]
+    paths:
+      - ".changeset/**"
+      - "package.json"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 

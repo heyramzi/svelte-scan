@@ -55,6 +55,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
+    "ci:local": "npm test",
     "test": "vp test run",
     "release": "changeset publish",
     "fallow": "fallow",

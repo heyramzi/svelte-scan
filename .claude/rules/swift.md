@@ -15,7 +15,7 @@ paths:
 - **Tests are Swift Testing** (`@Suite`, `@Test`, `#expect`), never XCTest, except XCUITest for E2E.
 - **Log through the project's subsystem helper** (Wavenote: `LogSubsystem.logger(_:)`), never `print`.
 - **`// MARK: -` for sections.** Comments say why, and the best one names the alternative you rejected.
-- **User-facing strings are localizable and never name a part of the machine.** The project's `user-facing-copy.md` has the list.
+- **User-facing strings are localizable, never name a part of the machine, and keep every sentence to 12 words, two sentences a string.** Ramzi, 30 Sep 2026, on a paywall paragraph: "way too verbose". cutkit's `ios/Scripts/lint-copy.mjs` enforces it; copy it into any app that lacks one.
 - **Segmented pickers and tab bars get `.controlSize(.large)`**, so they match iOS 27 and the tap target clears 44pt. The default is a squat strip, and Ramzi has had to flag it more than once (29 Sep 2026).
 - **A nested `enum Color` or `enum Font` shadows SwiftUI's**, so `Color(red:)` inside it stops compiling. Write `SwiftUI.Color` in generated token files, and typecheck them with `xcrun swiftc -typecheck` before calling them done.
 - **Ported code isn't yours to tidy.** Where a project says a file came from a sibling repo, leave its shape alone, or the next port becomes a merge conflict for nothing.

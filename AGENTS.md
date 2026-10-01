@@ -17,7 +17,7 @@ Rules that apply to every prompt. Every coding standard is its own file in `.cla
 
 Decide, then act. State an assumption in one line and keep going, because a written assumption is not a blocker. Suggest a simpler approach when you see one, then build it. Push back in two sentences, not a memo.
 
-Never edit an AGENTS.md or CLAUDE.md unless asked, and when asked, cut as much as you add. When a session teaches you something, heal the file that owned it in that same session: delete the line it contradicts, make the smallest edit, and leave the file no longer than you found it. A code lesson goes into the `.claude/rules/` file that owns it, an agent or skill lesson into its source under `vibe-kit/ai-doc/`, never into this file or a synced copy. Method: the `skill-manager` skill.
+Never edit an AGENTS.md or CLAUDE.md unless asked, and when asked, cut as much as you add. When a session teaches you something, heal the file that owned it in that same session: delete the line it contradicts, make the smallest edit, and leave the file no longer than you found it. A code lesson goes into the `.claude/rules/` file that owns it, an agent or skill lesson into its source under `vibe-kit/ai-doc/`, never into this file or a synced copy. Method: the `ai-architecture` skill.
 
 ## 2. Fix it, don't flag it
 

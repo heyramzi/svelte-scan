@@ -1,0 +1,1 @@
+../../../../../../../vibe-kit/ai-doc/skills/operations/kit/orchestration/assets/bench/test/visible.check.js

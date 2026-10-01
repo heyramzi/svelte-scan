@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/heyramzi/vibe-kit/main/schema/vibekit.schema.json",
+  "claude": {
+    "skills": [
+      "operations/kit/orchestration"
+    ],
+    "references": []
+  },
+  "slop": []
+}

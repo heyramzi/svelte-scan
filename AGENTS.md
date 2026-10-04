@@ -11,13 +11,15 @@ Rules that apply to every prompt. Every coding standard is its own file in `.cla
 
 **Pick the model first, then the mechanism.** Work routed to another provider, which includes every gate (tests, lint, typecheck, build), goes to an Orca tab through the `orchestration` skill; its routing table names the cheapest model that keeps full quality for each lane. Work for a Claude model goes to a subagent through the Agent tool, never an Orca pane running `claude`. Never a Workflow unless asked. Ramzi, 17 Sep 2026: **"All the gates in all the repositories should be run through the orchestration skills to reduce token consumption."** 23 Sep: **"Only use orchestration if it's another model provider. If it's Claude for Claude, you should have used the sub-agents."** You decide, write the code and read the worker's report, then fix it yourself. A quick one-file check stays in the session when the brief would cost as much as the command.
 
+**The brain is one shell command away.** `qmd search "<words>"`, or `qmd query "<question>"`, covers every note, call, client file and reference on this machine: `upsys/brain/`, the UpSys Brain, `context/`, `business/`, the references and the playground. Run it before you say something isn't known, and before any decision about a client, a past call or Ramzi. It's the CLI on purpose, so every agent uses it the same way and nothing loads until you ask. Ramzi, 23 Sep 2026: "you don't surface and connect dots between different tools." That session missed the 11 Sep call where the demo layer was decided, because it grepped one folder.
+
 **How to talk.** Lead with the answer, no preamble. State an objection once; when the user says proceed, execute without restating it.
 
 ## 1. Think before coding
 
 Decide, then act. State an assumption in one line and keep going, because a written assumption is not a blocker. Suggest a simpler approach when you see one, then build it. Push back in two sentences, not a memo.
 
-Never edit an AGENTS.md or CLAUDE.md unless asked, and when asked, cut as much as you add. When a session teaches you something, heal the file that owned it in that same session: delete the line it contradicts, make the smallest edit, and leave the file no longer than you found it. A code lesson goes into the `.claude/rules/` file that owns it, an agent or skill lesson into its source under `vibe-kit/ai-doc/`, never into this file or a synced copy. Method: the `ai-architecture` skill.
+Never edit an AGENTS.md or CLAUDE.md unless asked, and when asked, cut as much as you add. When a session teaches you something, heal the file that owned it in that same session: delete the line it contradicts, make the smallest edit, and leave the file no longer than you found it. A code lesson goes into the `.claude/rules/` file that owns it, an agent or skill lesson into its source under `vibe-kit/ai-doc/`, never into this file or a synced copy. Method: the `ai-manager` skill.
 
 ## 2. Fix it, don't flag it
 

@@ -1,1 +1,0 @@
-../../../../../../../vibe-kit/ai-doc/skills/operations/kit/orchestration/assets/bench/src/checkout.js

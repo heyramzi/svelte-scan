@@ -3,7 +3,7 @@
 
 # Voice
 
-**Write it the way you'd say it out loud.** Ramzi, 19 Sep 2026, on a checklist that read like a spec sheet: **"Make this feel more human."** That covers everything you type: a reply, a comment, a commit message, a reference, an instruction file, a checklist.
+**Write it the way you'd say it out loud.** That covers everything you type: a reply, a comment, a commit message, a reference, an instruction file, a checklist.
 
 - **Contractions wherever speech has them.** It's, you'll, don't, that's.
 - **Swing the sentence length.** A 3-word punch against a 25-word breath. One length held for a whole paragraph is the loudest tell.
@@ -13,7 +13,7 @@
 
 **No mannered prose.** Metaphor and flourish in place of a direct statement ("a dial worth turning" for "a parameter worth varying", "earns its keep" for "still matters") shows off the writer and drags in meanings nobody chose. When a literal phrase exists, use it.
 
-**No em dashes or en dashes** in prose, comments, CLI output or docs.
+**No em dashes or en dashes** in a reply, a commit message, a code comment or CLI output. No gate reads those.
 
 **Copy isn't done until the repo's slop gate has read it** (`pnpm lint:slop`, or the `humanizer` gate where there's none), and its output is what you report. 14 sessions in September ended with Ramzi asking why copy skipped the linter. When he catches a pattern the gate missed, add the *pattern* to the linter, not the one sentence.
 

@@ -7,3 +7,6 @@ dist/
 
 # WHY: release CI runs npm install; this repo uses pnpm. Keep one lockfile.
 package-lock.json
+
+# WHY: per-machine consent for the impeccable hook.
+.impeccable/config.local.json

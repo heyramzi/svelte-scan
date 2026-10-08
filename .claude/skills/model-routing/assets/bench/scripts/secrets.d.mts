@@ -1,0 +1,1 @@
+../../../../../../../vibe-kit/ai-doc/skills/engineering/models/model-routing/assets/bench/scripts/secrets.d.mts

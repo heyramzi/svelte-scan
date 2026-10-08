@@ -1,9 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/heyramzi/vibe-kit/main/schema/vibekit.schema.json",
   "claude": {
-    "skills": [
-      "operations/kit/orchestration"
-    ],
+    "skills": ["engineering/models/model-routing"],
     "references": []
   },
   "slop": []

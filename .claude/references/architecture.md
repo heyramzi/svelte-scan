@@ -8,8 +8,9 @@ Three modules, all dev-mode only.
   Observers emit events, the toolbar polls stats.
 - **Shared utilities** (`core/dom-utils.ts`, `core/format.ts`): DOM ancestor checks, component
   name resolution, arg stringification.
-- **Observers** (7): DOM mutations, effects, leaks, reactivity, console, server, interactions.
-  Each implements `{ start(), stop(), destroy() }`.
+- **Observers** (8): DOM mutations, effects, leaks, reactivity, console, server, interactions,
+  HMR. Seven implement `{ start(), stop(), destroy() }`; the HMR observer exposes
+  `{ pause(), resume(), paused, destroy() }` instead.
 - **Toolbar** (`ui/Toolbar.svelte`): pill plus expandable panel with tabs. CSS injected via a JS
   string, no external stylesheet.
 - **Canvas overlay** (`ui/canvas-overlay.ts`): colour-coded DOM mutation highlights on a single
@@ -31,5 +32,6 @@ data-attr > classes > nth-child), `source.ts` (`__svelte_meta` to file:line:colu
 diffs), `providers.ts` (Anthropic, OpenAI, Gemini), `runner.ts` (Playwright steps, dynamic
 import, no hard dep), `recorder.ts` (rrweb), `reporter.ts`.
 
-Tests are colocated (`file.test.ts`), jsdom environment; every observer, inspector module and
-expect submodule has one.
+Tests are colocated (`file.test.ts`), jsdom environment. Not every module has one: the console,
+server and HMR observers, the inspector's `capture`, `controller.svelte` and `keyboard`, and the
+expect `constants`, `types` and `index` files have none.

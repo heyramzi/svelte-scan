@@ -24,26 +24,36 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    # WHY: a green release run takes under a minute. Ten minutes is the floor and
+    # still stops a hung publish from holding the release concurrency group.
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      # WHY: this repo is pnpm ("packageManager": "pnpm@11"), and changeset
+      # WHY: this repo is pnpm ("packageManager" in package.json), and changeset
       # publish shells out to `pnpm publish`. Installing with npm left pnpm off
-      # PATH, so publish died with `spawn pnpm ENOENT`.
-      - uses: pnpm/action-setup@v4
+      # PATH, so publish died with `spawn pnpm ENOENT`. No `version:` input: the
+      # action reads packageManager, so CI and local pnpm can't drift apart.
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          # WHY: pnpm 11 (packageManager) needs Node 22+; Node 20 dies with
+          # WHY: pnpm needs Node 22 or newer. Node 20 dies with
           # ERR_UNKNOWN_BUILTIN_MODULE.
-          node-version: 22
+          node-version: 24
           cache: pnpm
           registry-url: https://npm.pkg.github.com
           scope: "@heyramzi"
 
+      # WHY: the lockfile pins @heyramzi/lint, which lives on GitHub Packages.
+      # setup-node writes an .npmrc that reads NODE_AUTH_TOKEN, so the token has
+      # to be set on the install step itself. Run 34543948537 died here with a
+      # 403 and "No authorization header was set".
       - run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # WHY: pnpm leaves setup-node's `${NODE_AUTH_TOKEN}` placeholder
       # unexpanded and falls through to a 401 (it tries OIDC first, then gives

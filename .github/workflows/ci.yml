@@ -5,16 +5,37 @@ name: CI
 on:
   workflow_dispatch:
 
+# WHY: packages: read lets the default token fetch the private @heyramzi/*
+# devDependencies from GitHub Packages. Everything else stays read-only.
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    # WHY: a green run takes under a minute. Ten minutes still leaves room for a
+    # slow runner and stops a hung install from burning billed time.
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      # WHY: no `version:` input. The action reads "packageManager" from
+      # package.json, so CI and local pnpm can't drift apart.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
+          cache: pnpm
+          registry-url: https://npm.pkg.github.com
+          scope: "@heyramzi"
 
-      - run: npm install
+      # WHY: the lockfile pins @heyramzi/lint, which lives on GitHub Packages.
+      # setup-node writes an .npmrc that reads NODE_AUTH_TOKEN, so the token has
+      # to be set on the install step itself. Without it the fetch 403s.
+      - run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: npm test
+      - run: pnpm test

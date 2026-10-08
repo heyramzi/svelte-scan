@@ -105,7 +105,7 @@ Abstraction layer for AI providers. Supports Anthropic (SDK + curl fallback), Op
 ```typescript
 import { resolveProvider } from "./providers";
 
-const provider = resolveProvider("anthropic"); // or "openai" | "gemini"
+const provider = resolveProvider("anthropic"); // or "google" | "xai"
 const response = await provider.generate(prompt);
 ```
 

@@ -38,9 +38,9 @@ Expect options:
   --headless            Run browser in headless mode (default)
   --headed              Run browser with visible UI
   --timeout <ms>        Step timeout in ms (default: 10000)
-  --model <model>       AI model for plan generation (default: claude-sonnet-4-20250514)
+  --model <model>       Gateway model id for plan generation (default: the provider's model)
   --diff <ref>          Git diff ref (default: HEAD)
-  --provider <name>     AI provider: anthropic, openai, gemini (default: anthropic)
+  --provider <name>     AI provider: anthropic, google, xai (default: anthropic)
   --ci                  CI mode: headless, auto-confirm, JSON output, exit 1 on failure
   --ci-timeout <ms>     CI mode timeout in ms (default: 300000)
   --cookies             Extract and inject cookies from base URL
@@ -84,7 +84,7 @@ function parseArgs(argv: string[]): CliArgs {
     baseUrl: DEFAULT_EXPECT_CONFIG.baseUrl,
     headless: DEFAULT_EXPECT_CONFIG.headless,
     timeout: DEFAULT_EXPECT_CONFIG.timeout,
-    model: "claude-sonnet-4-20250514",
+    model: "",
     diffRef: "HEAD",
     provider: DEFAULT_EXPECT_CONFIG.provider,
     ci: false,
@@ -190,8 +190,8 @@ function getGitDiff(ref: string): string {
   }
 }
 
-async function callAI(prompt: string, _model: string, providerName: string): Promise<string> {
-  const provider = resolveProvider(providerName);
+async function callAI(prompt: string, model: string, providerName: string): Promise<string> {
+  const provider = resolveProvider(providerName, model || undefined);
   return provider.generate(prompt);
 }
 
@@ -690,7 +690,7 @@ async function runExpect(args: CliArgs): Promise<void> {
     }
 
     console.log(buildDiffSummary(files));
-    console.log(`\nGenerating test plan (${args.model})...`);
+    console.log(`\nGenerating test plan (${args.model || args.provider})...`);
 
     const prompt = buildPlanPrompt(files, config.baseUrl, config.message);
     const response = await callAI(prompt, args.model, args.provider);

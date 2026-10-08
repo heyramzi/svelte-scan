@@ -39,23 +39,23 @@ function createGatewayProvider(name: string, model: string): AIProvider {
   };
 }
 
-const PROVIDERS: Record<string, () => AIProvider> = {
-  anthropic: () => createGatewayProvider("anthropic", "anthropic/claude-sonnet-4-6"),
-  google: () => createGatewayProvider("google", "google-ai-studio/gemini-3.8-flash"),
-  xai: () => createGatewayProvider("xai", "grok/grok-4-fast"),
+const PROVIDERS: Record<string, (model?: string) => AIProvider> = {
+  anthropic: (model) => createGatewayProvider("anthropic", model ?? "anthropic/claude-sonnet-5-5"),
+  google: (model) => createGatewayProvider("google", model ?? "google-ai-studio/gemini-3.8-flash"),
+  xai: (model) => createGatewayProvider("xai", model ?? "grok/grok-4-fast"),
 };
 
-export function getProvider(name: string): AIProvider {
+export function getProvider(name: string, model?: string): AIProvider {
   const factory = PROVIDERS[name];
   if (!factory) {
     throw new Error(
       `Unknown AI provider: "${name}". Available: ${Object.keys(PROVIDERS).join(", ")}`,
     );
   }
-  return factory();
+  return factory(model);
 }
 
-export function resolveProvider(nameOrEnv?: string): AIProvider {
+export function resolveProvider(nameOrEnv?: string, model?: string): AIProvider {
   const name = nameOrEnv ?? process.env.SVIBE_AI_PROVIDER ?? "anthropic";
-  return getProvider(name);
+  return getProvider(name, model);
 }

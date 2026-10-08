@@ -5,7 +5,7 @@ dist/
 .env.*
 .svelte-doctor/*
 
-# WHY: release CI runs npm install; this repo uses pnpm. Keep one lockfile.
+# WHY: this repo uses pnpm. A stray npm install would leave a second lockfile.
 package-lock.json
 
 # WHY: per-machine consent for the impeccable hook.

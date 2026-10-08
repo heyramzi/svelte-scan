@@ -55,7 +55,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "ci:local": "npm test",
+    "ci:local": "pnpm test",
     "test": "vp test run",
     "release": "changeset publish",
     "fallow": "fallow",
@@ -86,5 +86,5 @@
   "peerDependencies": {
     "svelte": "^5.0.0"
   },
-  "packageManager": "pnpm@12.9.1"
+  "packageManager": "pnpm@12.10.1"
 }

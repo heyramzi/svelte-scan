@@ -2,5 +2,12 @@
   "extends": ["./node_modules/@heyramzi/lint/config/oxlintrc.json"],
   "jsPlugins": ["@heyramzi/lint", "vite-plus/oxlint-plugin"],
   "rules": { "vite-plus/prefer-vite-plus-imports": "error" },
-  "ignorePatterns": [".agents/**", ".claude/**", ".opencode/**", "dist/**", "bin/**"]
+  "ignorePatterns": [
+    ".agents/**",
+    ".claude/**",
+    ".opencode/**",
+    ".github/skills/**",
+    "dist/**",
+    "bin/**"
+  ]
 }
